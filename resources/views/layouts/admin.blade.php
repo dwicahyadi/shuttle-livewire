@@ -25,7 +25,7 @@
     @livewireStyles
 </head>
 <body>
-    <div id="app" class="bg-light" >
+    <div id="app" class="bg-c-blue" >
         <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="#">
@@ -37,14 +37,46 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    @include('includes.menus')
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownMaster" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Master</a>
+                            <div class="dropdown-menu animate__animated animate__bounceIn animate__fast" aria-labelledby="dropDownMaster">
+                                <a class="dropdown-item" href="{{route('city')}}">Kota</a>
+                                <a class="dropdown-item" href="{{route('point')}}">Point</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Jadwal</a>
+                            <div class="dropdown-menu animate__animated animate__bounceIn animate__fast" aria-labelledby="dropDownSchedule">
+                                <a class="dropdown-item" href="{{route('schedule.create')}}">Buka Jadwal</a>
+                                <a class="dropdown-item" href="{{route('point')}}">Kelola Jadwal</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ route('reservation') }}">Reservasi</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownHistory" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">History</a>
+                            <div class="dropdown-menu animate__animated animate__bounceIn animate__fast" aria-labelledby="dropDownHistory">
+                                <a class="dropdown-item" href="{{route('history.reservation')}}">Reservasi</a>
+                                <a class="dropdown-item" href="{{route('history.transaction')}}">Transaksi</a>
+                                <a class="dropdown-item" href="{{route('point')}}">Transaksi</a>
+                            </div>
+                        </li>
+                    </ul>
 
                     <ul class="navbar-nav ml-auto text">
 
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link py-0" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link py-0" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -54,7 +86,7 @@
                             <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <img src="{{ asset('images/wallet.svg') }}" width="16">
-                                    <span class="text-primary">{{ session('bill') ?? 0 }}</span>
+                                    <span class="text-primary">20.000</span>
                                 </a>
                             </li>
                             <li class="nav-item dropdown">

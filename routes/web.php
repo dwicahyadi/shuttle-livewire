@@ -19,19 +19,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
 
-Route::livewire('/setting', 'setting')->layout('layouts.cahyadi')->name('setting');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::livewire('/city', 'city')->name('city');
-Route::livewire('/point', 'point')->name('point');
+    Route::livewire('/setting', 'setting')->layout('layouts.cahyadi')->name('setting');
 
-Route::livewire('/schedule/create', 'schedule.create')->name('schedule.create');
+    Route::livewire('/city', 'city')->name('city');
+    Route::livewire('/point', 'point')->name('point');
 
-Route::livewire('/reservation/', 'reservation')->name('reservation');
-Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');
-Route::livewire('/history/reservation', 'history.reservation')->name('history.reservation');
+    Route::livewire('/schedule/create', 'schedule.create')->name('schedule.create');
 
-Route::livewire('/reservation/create', 'reservation.create')->name('reservation.create');
-Route::livewire('/reservation/search', 'reservation.search')->name('reservation.search');
-Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
+    Route::livewire('/reservation/', 'reservation')->name('reservation');
+    Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');
+    Route::livewire('/history/reservation', 'history.reservation')->name('history.reservation');
+
+    Route::livewire('/settlement', 'settlement')->name('settlment');
+
+    Route::livewire('/reservation/create', 'reservation.create')->name('reservation.create');
+    Route::livewire('/reservation/search', 'reservation.search')->name('reservation.search');
+    Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
+
+});

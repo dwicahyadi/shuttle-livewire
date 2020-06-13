@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\BillHelper;
 use App\Models\Car;
 use App\Models\City;
 use App\Models\Customer;
@@ -149,6 +150,8 @@ class Reservation extends Component
                 'payment_by' => Auth::id(),
             ]
         );
+
+        session(['bill' => BillHelper::countBill()]);
 
 //        $this->updateCustomerCountReservationFinish();
     }

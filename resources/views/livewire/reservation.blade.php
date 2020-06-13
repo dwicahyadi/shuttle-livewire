@@ -1,94 +1,10 @@
 <div>
-    <style>
-        .bg-c-blue {
-            background:  linear-gradient(45deg,#3490dc, #52BEED);
-        }
-        .departureTime{
-            background-image:  url("{{ asset('images/calendar.svg') }}");
-            background-repeat: no-repeat;
-            background-size: 2rem 2rem;
-            background-position: bottom left;
-        }
 
-        .points{
-            background-image:  url("{{ asset('images/pin.svg') }}");
-            background-repeat: no-repeat;
-            background-size: 4rem 4rem;
-            background-position: bottom right;
-        }
-
-        .clocks{
-            background-image:  url("{{ asset('images/clock.svg') }}");
-            background-repeat: no-repeat;
-            background-size: 4rem 4rem;
-            background-position: bottom right;
-        }
-
-        .bg-c-green {
-            background: linear-gradient(45deg,#2ed8b6,#59e0c5);
-        }
-
-        .bg-c-yellow {
-            background: linear-gradient(45deg,#FFB64D,#ffcb80);
-        }
-
-        .bg-c-pink {
-            background: linear-gradient(45deg,#FF5370,#ff869a);
-        }
-        .form-control{
-            max-width: 550px;
-        }
-        .seat{
-            background-image: url('{{ asset('images/seat.svg') }}');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 5rem 5rem;
-            height: 10rem;
-            position: relative;
-        }
-        .ck-button {
-            margin:4px;
-            background-color:#EFEFEF;
-            border-radius:4px;
-            border:1px solid #D0D0D0;
-            overflow:auto;
-            float:left;
-        }
-
-        .ck-button:hover {
-            background:red;
-        }
-
-        .ck-button label {
-            float:left;
-            width:4.0em;
-        }
-
-        .ck-button label span {
-            text-align:center;
-            padding:3px 0px;
-            display:block;
-        }
-
-        .ck-button label input {
-            position:absolute;
-            top:-20px;
-        }
-
-        .ck-button input[type=checkbox] {
-            display:none;
-        }
-
-        .ck-button input:checked + span {
-            background-color:#911;
-            color:#fff;
-        }
-    </style>
 
     {{--Form--}}
-    <div class="row bg-light p-2" style="z-index: 999; height: 5rem">
-        <div class="cl-md-12">
-            <form class="form-inline my-2 my-lg-0" wire:submit.prevent="findDepartures">
+    <div class="row  p-2" style="z-index: 999; height: 5rem">
+        <div class="cl-md-12 mx-auto">
+            <form class="form-inline" wire:submit.prevent="findDepartures">
                 <div class="form-group border-right pr-2">
                     {{--                        <label class="mx-2">Tanggal</label>--}}
                     <input type="date" wire:model.lazy="date" class="form-control form-control-lg">
@@ -96,7 +12,6 @@
                 </div>
 
                 <div class="form-group">
-
                     <select class="form-control form-control-lg" wire:model.lazy="departurePointId" wire:change="setDeparturePoint">
                         <option value="">Berangkat dari</option>
                         @forelse($cities as $city)
@@ -139,20 +54,16 @@
     </div>
 
     {{--Indicator--}}
-    <div class="bg-c-blue sticky-top text-white shadow-sm" style="margin-right: -15px; margin-left: -15px;">
-        <div class="container">
+    <div class="text-white">
+        <div class="container bg-c-blue rounded-top p-4" style="margin-bottom: -1rem; min-height: 5rem">
             <div class="row">
-                <div class="col-md-2 p-2 border-right ">
-                    <div wire:offline>
-                        You are now offline.
-                    </div>
-                    <input type="text" wire:model="classAnimation">
+                <div class="col-md-2 border-right ">
                     <h2 class="mt-4">{{ $departurePoint->code ?? '---' }} <i class="fa fa-exchange-alt" wire:click="switchPoint"></i> {{ $arrivalPoint->code ?? '---' }}</h2>
                     <small>{{ $date }}</small>
                 </div>
 
                 @isset($selectedDeparture)
-                    <div class="col-md-6 p-2 border-right  animate__animated animate__slideInRight">
+                    <div class="col-md-6 border-right  animate__animated animate__slideInRight">
                         <div class="d-flex">
                             <h1 class="p-0 mt-4 flex-fill">{{ $selectedDeparture->time ?? '' }}</h1>
                         </div>
@@ -178,25 +89,30 @@
                 <hr>
             </div>
         </div>
+        <div class="container bg-white rounded-top mb-0">
+            <h1>Dwi Cahyadi</h1>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-{{ $classAnimation }} p-0">
+    <div class="container bg-white" style="margin-top: -1rem">
+        <div class="row p-4 sticky-top">
+            <div class="col-md-2 p-0">
                 <strong class="my-2">Pilih Keberangkatan</strong>
                 @forelse($departures as $departure)
-                    <div class="card  text-white my-2 shadow-sm p-1 @if($departure->id == $selectedDeparture['id']) bg-c-green @else bg-c-blue @endif" wire:key="list-departure">
-                        <div class="departureTime">
-                            <a style="cursor: pointer;" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
-                                <div class="card-body">
-                                    <div class="d-flex d-inline"><h4>{{$departure->time}}</h4></div>
-                                    <div class="text-right">
-                                        {{--                            <span class="badge badge-light p-1 text-black-50">Sudah Berangkat</span>--}}
-                                        <i class="far fa-user text-black-50"></i> <span class="text-black-50">{{ $departure->tickets->count() }}</span>
+
+                    <div class="card my-2 shadow-sm @if($departure->id == $selectedDeparture['id']) bg-c-green  @endif" wire:key="list-departure">
+                        <a style="cursor: pointer;" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset('images/calendar.svg') }}" class="img-fluid w-25 mr-2">
+                                    <div class="flex-fill">
+                                        <h5>{{ substr($departure->time, 0,5) }}</h5>
                                     </div>
+                                    <span class="text-black-50"><i class="fas fa-users"></i> {{ $departure->tickets->count() }}</span>
                                 </div>
-                            </a>
-                        </div>
+
+                            </div>
+                        </a>
                     </div>
                 @empty
                     <div class="col-md-12 p-4">
@@ -215,13 +131,13 @@
                     </div>
                     <table class="table table-borderless">
                         <tr>
-                            <td>
-                                <div class="border rounded rounded-lg px-2 pb-2">
+                            <td class="p-1">
+                                <div class="border rounded shadow-sm">
                                     <div class="seat">
-                                        <h4>1</h4>
+                                        <h4 class="m-4">1</h4>
                                         @isset($seats[1])
                                             @php($color = $seats[1]->payment_by ? 'bg-c-green' : 'bg-c-yellow')
-                                            <div wire:click="getReservation({{ $seats[1]->reservation->id }})" class="w-100 border-success text-center shadow-sm {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" >
+                                            <div wire:click="getReservation({{ $seats[1]->reservation->id }})" class="w-100 border-success text-center shadow-sm rounded-bottom {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" >
                                                 <small class="clearfix">{{ $seats[1]->phone }}</small>
                                                 {{ $seats[1]->reservation->id }}
                                             </div>
@@ -229,23 +145,23 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><h4></h4></td>
-                            <td><h4>D</h4></td>
+                            <td class="p-1"><h4></h4></td>
+                            <td class="p-1"><h4>D</h4></td>
                         </tr>
 
-                        @for($i = 2; $i <= 30; $i++)
+                        @for($i = 2; $i <= 10; $i++)
                             @php($seatPerRow = 3)
                             <tr>
                                 @for($col = 1; $col <= $seatPerRow; $col++)
-                                    <td>
-                                        <div class="border rounded rounded-lg px-2 pb-2 ">
+                                    <td class="p-1">
+                                        <div class="border rounded shadow-sm">
                                             <div class="seat">
-                                                <h4>{{ $i }}</h4>
+                                                <h4 class="m-4">{{ $i }}</h4>
                                                 @isset($seats[$i])
-                                                    @php($color = $seats[$i]->payment_by ? 'bg-success' : 'bg-warning')
-                                                    <div class="w-100 border-success text-center shadow-sm {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" wire:click="getReservation({{ $seats[$i]->reservation->id }})">
+                                                    @php($color = $seats[$i]->payment_by ? 'bg-c-green' : 'bg-c-yellow')
+                                                    <div wire:click="getReservation({{ $seats[$i]->reservation->id }})" class="w-100 border-success text-center shadow-sm rounded-bottom {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" >
                                                         <small class="clearfix">{{ $seats[$i]->phone }}</small>
-                                                        {{ $seats[$i]->name }}
+                                                        {{ $seats[$i]->reservation->id }}
                                                     </div>
                                                 @endisset
                                             </div>
@@ -317,12 +233,12 @@
                     @endisset
 
                     @if($isNew)
-                        <div class="card animate__animated animate__fadeIn">
-                            <div class="card-header bg-white d-flex align-content-between">
+                        <div class="card animate__animated animate__fadeIn p-4">
+                            <div class="d-flex">
                                 <h4 class="flex-fill">Reservasi Baru</h4>
                                 <button type="button" class="btn btn-light" wire:click="$emitUp('closeNewForm')"><i class="far fa-window-close"></i></button>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body p-0">
                                 <form onsubmit="return false">
                                     <div class="form-group">
                                         <label>Nomor Handphone</label>
@@ -445,6 +361,25 @@
         </div>
     </div>
 
+    @isset($reschedule)
+        <div id="ok" class="modal d-block" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content rounded shadow-lg">
+                    <div class="modal-header">
+                        <h3 id="myModalLabel">Modal header</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body…</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 
 <!-- Modal -->

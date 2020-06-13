@@ -1,0 +1,123 @@
+.card {
+    border-radius: 1.5rem;
+}
+
+.rounded-sm {
+    border-radius: 1rem !important;
+}
+
+.rounded {
+    border-radius: 1.5rem !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 1.5rem !important;
+    border-top-right-radius: 1.5rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: 1.5rem !important;
+    border-bottom-right-radius: 1.5rem !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: 1.5rem !important;
+    border-bottom-left-radius: 1.5rem !important;
+}
+
+.rounded-left {
+    border-top-left-radius: 1.5rem !important;
+    border-bottom-left-radius: 1.5rem !important;
+}
+
+.rounded-lg {
+    border-radius: 2rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.bg-c-blue {
+    background:  linear-gradient(45deg,#3490dc, #52BEED);
+}
+.departureTime{
+    background-image:  url("../images/calendar.svg");
+    background-repeat: no-repeat;
+    background-size: 2rem 2rem;
+    background-position: bottom left;
+}
+
+.points{
+    background-image:  url("../images/pin.svg");
+    background-repeat: no-repeat;
+    background-size: 4rem 4rem;
+    background-position: bottom right;
+}
+
+.clocks{
+    background-image:  url("../images/clock.svg");
+    background-repeat: no-repeat;
+    background-size: 4rem 4rem;
+    background-position: bottom right;
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+}
+
+.bg-c-pink {
+    background: linear-gradient(45deg,#FF5370,#ff869a);
+}
+.form-control{
+    max-width: 550px;
+}
+.seat{
+    background-image: url('../images/seat.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 6rem 6rem;
+    height: 6rem;
+    position: relative;
+}
+.ck-button {
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+    float:left;
+}
+
+.ck-button:hover {
+    background:red;
+}
+
+.ck-button label {
+    float:left;
+    width:4.0em;
+}
+
+.ck-button label span {
+    text-align:center;
+    padding:3px 0px;
+    display:block;
+}
+
+.ck-button label input {
+    position:absolute;
+    top:-20px;
+}
+
+.ck-button input[type=checkbox] {
+    display:none;
+}
+
+.ck-button input:checked + span {
+    background-color:#911;
+    color:#fff;
+}
