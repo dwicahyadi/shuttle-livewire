@@ -65,5 +65,8 @@ class SettingSeeder extends Seeder
         \App\Models\Discount::create(['code'=>'OPN','name'=>'Promo Opening','amount'=>20000,'active'=>true]);
         \App\Models\Discount::create(['code'=>'MHS','name'=>'Promo Mahasiswa','amount'=>10000,'active'=>true]);
 
+        /*user demo*/
+        \App\Models\User::create(['name'=>'Demo Akun','email'=>'demo@demo.com', 'password'=>bcrypt('password')]);
+
     }
 }
