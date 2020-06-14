@@ -78,7 +78,8 @@ class Create extends Component
                     'arrival_point_id' => $this->arrivalPointId,
                     'departure_point_id' => $this->departurePointId,
                     'price' =>$this->price,
-                    'status' => 'open',
+                    'status' => 'available',
+                    'is_open' => true
                 ]);
             }
             $currentDate = date ("Y-m-d", strtotime("+1 day", strtotime($currentDate)));

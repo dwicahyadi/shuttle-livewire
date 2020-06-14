@@ -21,7 +21,6 @@ class Reservation extends Component
 {
     use WithPagination;
 
-    public $classAnimation = '2';
     public $isNew, $isManifestForm;
     public $cities, $discounts, $cars, $drivers;
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
@@ -56,8 +55,6 @@ class Reservation extends Component
         $this->setArrivalPoint();
         $this->selectedDeparture = Departure::with(['tickets'])
             ->where('id',$this->selectedDepartureId)->first();
-
-
     }
     public function render()
     {

@@ -11,7 +11,7 @@ class CitySeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\City::create(['code'=>'CRB','name'=>'Cirebon']);
-        \App\Models\City::create(['code'=>'Baandung']);
+        \App\Models\City::create(['id'=>1, 'code'=>'CRB','name'=>'Cirebon']);
+        \App\Models\City::create(['id'=>2, 'code'=>'BDG', 'name'=>'Bandung']);
     }
 }

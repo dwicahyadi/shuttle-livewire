@@ -26,7 +26,7 @@
 </head>
 <body>
     <div id="app" class="bg-light" >
-        <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <img src="{{asset('images/logo_surya_2.png')}}" alt="logo">
@@ -37,7 +37,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    @include('includes.menus')
+                    @guest
+                    @else
+                        @include('includes.menus')
+                    @endguest
 
                     <ul class="navbar-nav ml-auto text">
 
@@ -45,11 +48,6 @@
                             <li class="nav-item">
                                 <a class="nav-link py-0" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link py-0" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item">
                                 <a href="" class="nav-link">
@@ -85,6 +83,7 @@
 
 
         <main class="container-fluid">
+            @livewire('loading-state')
             @yield('content')
         </main>
 

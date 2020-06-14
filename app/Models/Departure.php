@@ -15,6 +15,7 @@ class Departure extends Model
         'time',
         'status',
         'price',
+        'is_open'
     ];
 
     public function tickets()

@@ -27,8 +27,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::livewire('/city', 'city')->name('city');
     Route::livewire('/point', 'point')->name('point');
+    Route::livewire('/car', 'car')->name('car');
+    Route::livewire('/driver', 'driver')->name('driver');
+    Route::livewire('/discount', 'discount')->name('discount');
 
     Route::livewire('/schedule/create', 'schedule.create')->name('schedule.create');
+    Route::livewire('/schedule/manage', 'schedule.manage')->name('schedule.manage');
 
     Route::livewire('/reservation/', 'reservation')->name('reservation');
     Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');

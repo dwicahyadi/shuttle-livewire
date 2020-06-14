@@ -44,5 +44,26 @@ class SettingSeeder extends Seeder
 
         \App\Models\Setting::create([ 'name' => 'payment_gateway', 'value' => null  ]);
 
+
+        /*Cities*/
+        \App\Models\City::create(['id'=>1, 'code'=>'CRB','name'=>'Cirebon']);
+        \App\Models\City::create(['id'=>2, 'code'=>'BDG', 'name'=>'Bandung']);
+
+        /*Points*/
+        \App\Models\Point::create(['city_id'=>1,'code'=>'CRB','name'=>'Cirebon','address'=>'','phone'=>'','active'=>true]);
+        \App\Models\Point::create(['city_id'=>2,'code'=>'PST','name'=>'Pasteur','address'=>'','phone'=>'','active'=>true]);
+
+        /*Cars*/
+        \App\Models\Car::create(['code'=>'SHT01','license_number'=>'E1234AB','kilometers'=>0,'active'=>true]);
+        \App\Models\Car::create(['code'=>'SHT02','license_number'=>'E1234CD','kilometers'=>0,'active'=>true]);
+
+        /*Drivers*/
+        \App\Models\Driver::create(['name'=>'Contoh 1','address'=>'Cirebon','phone'=>'087777777','active'=>true]);
+        \App\Models\Driver::create(['name'=>'Contoh 2','address'=>'Cirebon','phone'=>'087777771','active'=>true]);
+
+        /*Discounts*/
+        \App\Models\Discount::create(['code'=>'OPN','name'=>'Promo Opening','amount'=>20000,'active'=>true]);
+        \App\Models\Discount::create(['code'=>'MHS','name'=>'Promo Mahasiswa','amount'=>10000,'active'=>true]);
+
     }
 }

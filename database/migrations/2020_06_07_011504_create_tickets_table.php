@@ -30,7 +30,7 @@ class CreateTicketsTable extends Migration
             $table->dateTime('reservation_at')->nullable();
             $table->unsignedInteger('payment_by')->nullable();
             $table->dateTime('payment_at')->nullable();
-            $table->unsignedInteger('settlment_id')->nullable();
+            $table->unsignedInteger('settlement_id')->nullable();
             $table->timestamps();
         });
     }

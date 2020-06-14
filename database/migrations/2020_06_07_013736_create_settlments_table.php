@@ -13,7 +13,7 @@ class CreateSettlmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settlments', function (Blueprint $table) {
+        Schema::create('settlements', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
             $table->string('note')->nullable();

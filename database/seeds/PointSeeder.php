@@ -11,6 +11,7 @@ class PointSeeder extends Seeder
      */
     public function run()
     {
-
+        \App\Models\Point::create(['city_id'=>1,'code'=>'CRB','name'=>'Cirebon','address'=>'','phone'=>'','active'=>true]);
+        \App\Models\Point::create(['city_id'=>2,'code'=>'PST','name'=>'Pasteur','address'=>'','phone'=>'','active'=>true]);
     }
 }

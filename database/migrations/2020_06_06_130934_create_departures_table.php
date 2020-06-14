@@ -23,6 +23,7 @@ class CreateDeparturesTable extends Migration
             $table->time('time');
             $table->string('status');
             $table->integer('price');
+            $table->boolean('is_open')->default(true);
             $table->timestamps();
         });
     }
