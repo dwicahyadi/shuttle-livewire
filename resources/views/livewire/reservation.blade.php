@@ -122,7 +122,7 @@
             </div>
             @isset($selectedDeparture)
                 @php($seats = $selectedDeparture->tickets->keyBy('seat'))
-                <div class="col-md-6 animate__animated {{ $classAnimation }} " wire:key="$selectedDeparture->id">
+                <div class="col-md-6 animate__animated " wire:key="$selectedDeparture->id">
                     <div class="d-flex">
                         <strong class="flex-fill">Denah Tempat Duduk</strong>
                         <button type="button" class="btn btn-primary m-1" title="Refresh" wire:click="$refresh"><i class="fas fa-sync-alt"></i></button>
