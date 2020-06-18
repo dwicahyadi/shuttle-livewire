@@ -22,7 +22,7 @@
         <td class="" width="{{ 100/$seatPerRow }}%"><h4></h4></td>
         <td class="" width="{{ 100/$seatPerRow }}%" style="vertical-align: middle; text-align: center">
             <img src="{{ asset('images/steer.svg') }}" alt="driver" class="w-25 clearfix" wire:click="$set('isManifestForm',1)" style="cursor: pointer"><br>
-            <strong>{{ $selectedDeparture->schedule->driver->name }}</strong>
+            <strong>{{ $selectedDeparture->schedule->driver->name ?? 'Driver' }}</strong>
         </td>
     </tr>
 
