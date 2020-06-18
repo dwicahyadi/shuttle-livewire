@@ -29,7 +29,6 @@ class Ticket extends Model
 
     public function departure()
     {
-        return $this->belongsTo(Departure
-        ::class);
+        return $this->belongsTo(Departure::class);
     }
 }

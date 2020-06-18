@@ -33,6 +33,7 @@ class Settlement extends Component
         );
 
         Ticket::where('payment_by', Auth::id())->update(['settlement_id'=> $settlement->id]);
+        $this->emit('updateBill');
 
     }
 }

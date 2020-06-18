@@ -36,7 +36,11 @@
         </div>
     </li>
 
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('settlment') }}">Settlement</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdwonSetting" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Setting</a>
+        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropdwonSetting">
+            <a class="dropdown-item" href="{{route('setting.user')}}">User</a>
+        </div>
     </li>
 </ul>

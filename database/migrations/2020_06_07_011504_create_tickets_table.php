@@ -25,7 +25,8 @@ class CreateTicketsTable extends Migration
             $table->integer('discount_amount')->nullable();
             $table->integer('price')->nullable();
             $table->string('status');
-            $table->boolean('isCancel')->nullable();
+            $table->boolean('is_cancel')->nullable();
+            $table->integer('count_print')->nullable();
             $table->unsignedInteger('reservation_by')->nullable();
             $table->dateTime('reservation_at')->nullable();
             $table->unsignedInteger('payment_by')->nullable();

@@ -17,6 +17,7 @@ class CreateSettlmentsTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->string('note')->nullable();
+            $table->integer('amount');
             $table->timestamps();
         });
     }

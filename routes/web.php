@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(\route('reservation'));
 });
 
 Auth::routes();
@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::livewire('/setting', 'setting')->layout('layouts.cahyadi')->name('setting');
+    Route::livewire('/setting', 'setting')->name('setting');
+    Route::livewire('/setting/user', 'setting.user')->name('setting.user');
 
     Route::livewire('/city', 'city')->name('city');
     Route::livewire('/point', 'point')->name('point');
@@ -43,5 +44,10 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/reservation/create', 'reservation.create')->name('reservation.create');
     Route::livewire('/reservation/search', 'reservation.search')->name('reservation.search');
     Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
+
+    /*prints*/
+    Route::get('print/ticket/{reservation}',function (\App\Models\Reservation $reservation){
+        return view('prints.ticket',['reservation'=>$reservation]);
+    })->name('print.ticket');
 
 });

@@ -21,18 +21,21 @@ class Reservation extends Component
 {
     use WithPagination;
 
-    public $isNew, $isManifestForm;
+    public $isNew, $isManifestForm, $isPrint, $isFindTicket;
     public $cities, $discounts, $cars, $drivers;
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
+    public $search, $searchReults;
 
-    public $departures, $selectedDepartureId, $selectedDeparture , $selectedReservation;
+    public $departures, $selectedDepartureId, $selectedDeparture , $selectedReservation, $totalSeats;
 
-    public $phone, $name, $address, $departureId;
+    public $phone, $name, $address, $departureId, $subTotal;
     public $selectedSeats = [];
     public $suggestCustomers;
     public $customer;
 
     public $reservation;
+
+    public $car_id, $driver_id, $costs;
 
     protected $updatesQueryString = ['date','departurePointId','arrivalPointId','selectedDepartureId',];
 
@@ -47,14 +50,14 @@ class Reservation extends Component
         $this->cars = Car::where('active',1)->get();
         $this->drivers = Driver::where('active',1)->get();
         $this->departures = [];
+        $this->searchReults = [];
         $this->date = request('date');
-        $this->departurePointId = request('departurePointId');
+        $this->departurePointId = request('departurePointId') ?? Auth::user()->point_id;
         $this->arrivalPointId = request('arrivalPointId');
         $this->selectedDepartureId = request('selectedDepartureId');
         $this->setDeparturePoint();
         $this->setArrivalPoint();
-        $this->selectedDeparture = Departure::with(['tickets'])
-            ->where('id',$this->selectedDepartureId)->first();
+        $this->getDeparture($this->selectedDepartureId);
     }
     public function render()
     {
@@ -62,6 +65,7 @@ class Reservation extends Component
         $this->departures = Departure::whereDate('date',$this->date)
             ->where('arrival_point_id',$this->arrivalPointId)
             ->where('departure_point_id',$this->departurePointId)
+            ->where('is_open',1)
             ->get();
         return view('livewire.reservation');
     }
@@ -78,14 +82,16 @@ class Reservation extends Component
     public function setDiscount()
     {
         $this->discount = Discount::find($this->discountId);
+
     }
 
     public function findDepartures()
     {
         $this->selectedDeparture = null;
-        $this->departures = Departure::whereDate('date',$this->date)
+        $this->departures = Departure::with(['schedule'])->whereDate('date',$this->date)
             ->where('arrival_point_id',$this->arrivalPointId)
             ->where('departure_point_id',$this->departurePointId)
+            ->where('is_open',1)
             ->get();
     }
 
@@ -97,6 +103,7 @@ class Reservation extends Component
         $this->setArrivalPoint();
         $this->setDeparturePoint();
         $this->findDepartures();
+        $this->isNew= false;
     }
 
     public function getDeparture($departureId)
@@ -104,15 +111,18 @@ class Reservation extends Component
         $this->resetReservationForm();
         $this->selectedReservation = null;
         $this->selectedDepartureId = $departureId;
-        $this->selectedDeparture = Departure::with(['tickets'])
+        $this->selectedDeparture = Departure::with(['schedule','tickets'])
             ->where('id',$departureId)->first();
+        $this->totalSeats = $this->selectedDeparture->schedule->seats ?? 0;
+        $this->driver_id = $this->selectedDeparture->schedule->driver_id ?? 0;
+        $this->car_id = $this->selectedDeparture->schedule->car_id ?? 0;
     }
 
     public function updatedPhone($value)
     {
         if(strlen($this->phone > 4))
         {
-            $this->suggestCustomers = Customer::where('phone','like',$this->phone.'%')->get();
+            $this->suggestCustomers = Customer::where('phone','like',$this->phone.'%')->limit(5)->get();
         }else{
             $this->suggestCustomers = [];
         }
@@ -125,6 +135,11 @@ class Reservation extends Component
         $this->name = $this->customer->name;
         $this->address = $this->customer->address;
         $this->suggestCustomers = null;
+    }
+
+    public function sumPrice()
+    {
+        $this->subTotal = ($this->selectedDeparture->price - ($this->discount->amount ?? 0)) * count($this->selectedSeats);
     }
 
     public function save()
@@ -148,7 +163,7 @@ class Reservation extends Component
             ]
         );
 
-        session(['bill' => BillHelper::countBill()]);
+        $this->emit('updateBill');
 
 //        $this->updateCustomerCountReservationFinish();
     }
@@ -237,6 +252,7 @@ class Reservation extends Component
 
     public function getReservation($reservationId)
     {
+        $this->isNew = false;
         $this->selectedReservation = \App\Models\Reservation::find($reservationId);
     }
 
@@ -254,18 +270,36 @@ class Reservation extends Component
 
     public function resetReservation()
     {
+        $this->isNew = true;
         $this->selectedReservation = null;
     }
 
-    public function updatingselectedDeparture($value)
+    public function cancelReservation()
     {
-        $this->classAnimation = 'animate__zoomOut';
+        $this->selectedReservation->tickets()->update(['is_cancel'=>true]);
+        $this->resetReservation();
+        $this->emit('saved');
+        $this->emit('updateBill');
     }
 
-    public function updatedselectedDeparture($value)
+    public function saveManifest()
     {
-        $this->classAnimation = 'animate__zoomIn';
+        $this->selectedDeparture->schedule()->update(['driver_id'=> $this->driver_id, 'car_id'=> $this->car_id]);
+        $this->isManifestForm = false;
     }
 
+    public function updatedSearch($value)
+    {
+        $this->searchReults = Ticket::where(function ($query){
+            $query->where('name','like','%'.$this->search.'%')
+                ->orWhere('phone','like','%'.$this->search.'%');
+        })->orderBy('id','DESC')->limit(5)->get();
+    }
 
+    public function getFromSearch($ticketId)
+    {
+        $ticket = Ticket::find($ticketId);
+        $this->getDeparture($ticket->departure_id);
+        $this->getReservation($ticket->reservation_id);
+    }
 }

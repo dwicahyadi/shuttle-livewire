@@ -68,5 +68,22 @@ class SettingSeeder extends Seeder
         /*user demo*/
         \App\Models\User::create(['name'=>'Demo Akun','email'=>'demo@demo.com', 'password'=>bcrypt('password')]);
 
+        /*Roles*/
+        \Spatie\Permission\Models\Role::create(['name'=>'MASTER', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Role::create(['name'=>'OPS', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Role::create(['name'=>'CSO', 'guard_name'=>'web']);
+
+        /*Permissions*/
+        \Spatie\Permission\Models\Permission::create(['name'=>'City', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Point', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Car', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Driver', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Discount', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Schedule', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Reservation', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Customer', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'User', 'guard_name'=>'web']);
+        \Spatie\Permission\Models\Permission::create(['name'=>'Setting', 'guard_name'=>'web']);
+
     }
 }

@@ -1,13 +1,13 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
-    <div class="container bg-white">
+    <div class="container">
         <div class="row mt-4">
             <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
-                <h1 class="my-3"><strong>Discount</strong></h1>
-                <p>Kelola daftar unit discount/promo</p>
+                <h1 class="my-3"><strong>Mobil</strong></h1>
+                <p>Kelola daftar unit mobil</p>
             </div>
-            <div class="col-md-3  animate__animated animate__fadeIn animate__fast">
+            <div class="col-md-6  animate__animated animate__fadeIn animate__fast">
                 @if(!$selectedId)
-                    <h4><i class="far fa-fw fa-file text-success"></i> Tambah Discount</h4>
+                    <h4><i class="far fa-fw fa-file text-success"></i> Tambah Mobil</h4>
                 @else
                     <h4><i class="far fa-fw fa-edit text-primary"></i> Edit {{$code}}</h4>
                 @endif
@@ -22,24 +22,13 @@
 
                         </div>
                     @endif
-                    <div class="form-group">
-                        <label class="sr-only">ID</label>
-                        <input type="text" wire:model="selectedId" class="form-control form-control-lg" readonly placeholder="ID">
-                    </div>
 
                     <div class="form-group">
-                        <label class="sr-only">Kode</label>
-                        <input type="text" wire:model="code" class="form-control form-control-lg" maxlength="10" required placeholder="Kode">
+                        <label class="sr-only">Kode Unit</label>
+                        <input type="text" wire:model="code" class="form-control form-control-lg"  required placeholder="Kode Unit">
                         <small id="helpId" class="text-muted">Maksimal 10 huruf</small>
                     </div>
-                    <div class="form-group">
-                        <label class="sr-only">Nama Diskon</label>
-                        <input type="text" wire:model="name" class="form-control form-control-lg" required placeholder="Nama Diskon">
-                    </div>
-                    <div class="form-group">
-                        <label class="sr-only">Besar Diskon</label>
-                        <input type="number" wire:model="amount" class="form-control form-control-lg" required placeholder="Besar Diskon">
-                    </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-lg">Simpan</button>
                         <button type="button" class="btn btn-danger btn-lg" wire:click="resetForm">Batalkan</button>
@@ -47,29 +36,29 @@
                 </form>
             </div>
 
-            <div class="col-md-9 animate__animated animate__fadeIn animate__fast">
-                <h4><i class="far fa-fw fa-list-alt text-primary"></i>  Daftar Diskon</h4>
+            <div class="col-md-6 animate__animated animate__fadeIn animate__fast">
+                <h4><i class="far fa-fw fa-list-alt text-primary"></i>  Daftar Mobil</h4>
                 <table class="table">
                     <thead class="thead-light">
                     <tr>
                         <th width="50rem">ID</th>
-                        <th>Kode</th>
-                        <th>Nama Dsikon</th>
-                        <th>Besar Diskon</th>
+                        <th>Kode Unit</th>
+                        <th>Nomor Polisi</th>
+                        <th>Kilometer Terkhir</th>
                         <th>Aktif</th>
                         <th width="50rem"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse($discounts as $discount)
+                    @forelse($cars as $car)
                         <tr>
-                            <td>{{$discount->id}}</td>
-                            <td>{{$discount->code}}</td>
-                            <td>{{$discount->name}}</td>
-                            <td align="right">{{number_format($discount->amount)}}</td>
-                            <td>{{$discount->active}}</td>
+                            <td>{{$car->id}}</td>
+                            <td>{{$car->code}}</td>
+                            <td>{{$car->license_number}}</td>
+                            <td align="right">{{number_format($car->kilometers)}}</td>
+                            <td>{{$car->active}}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary" title="Edit" wire:click="get({{$discount->id}})"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-sm btn-primary" title="Edit" wire:click="get({{$car->id}})"><i class="far fa-edit"></i></button>
                             </td>
                         </tr>
                     @empty
