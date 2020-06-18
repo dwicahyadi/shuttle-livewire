@@ -19,6 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->unsignedInteger('car_id')->nullable();
             $table->unsignedInteger('driver_id')->nullable();
             $table->integer('seats');
+            $table->integer('costs')->nullable();
             $table->timestamps();
         });
     }

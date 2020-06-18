@@ -1,5 +1,5 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
-    <div class="container">
+    <div class="container bg-white">
         <div class="row mt-4">
             <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
                 <h1 class="my-3"><strong>Kota</strong></h1>

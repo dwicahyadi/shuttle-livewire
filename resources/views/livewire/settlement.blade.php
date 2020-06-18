@@ -57,7 +57,7 @@
                         <table class="table">
                             @forelse($transactions->groupBy('discount_name') as $discount => $value)
                                 <tr>
-                                    <td>@empty($discount ) Harga Normal @endempty</td>
+                                    <td>@empty($discount ) Harga Normal @else {{ $discount }} @endempty</td>
                                     <td align="right"><h4>{{ number_format($value->sum('price')) }}</h4></td>
                                 </tr>
                             @empty

@@ -19,4 +19,9 @@ class Reservation extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

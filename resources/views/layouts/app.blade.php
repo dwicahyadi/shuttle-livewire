@@ -22,6 +22,21 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/bd-wizard.css')}}">
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .reservation-container {
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+        #col1, #col2, #col3 {
+            margin-bottom: -9999px;
+            padding-bottom: 9999px;
+        }
+    </style>
     @livewireStyles
 </head>
 <body>
@@ -50,9 +65,8 @@
                             </li>
                         @else
                             <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <img src="{{ asset('images/wallet.svg') }}" width="16">
-                                    <span class="text-primary">{{ session('bill') ?? 0 }}</span>
+                                <a href="{{route('settlment')}}" class="nav-link">
+                                    @livewire('navbar.bill')
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
