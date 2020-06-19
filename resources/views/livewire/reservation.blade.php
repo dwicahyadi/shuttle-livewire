@@ -189,8 +189,7 @@
                 </div>
                 <div class="modal-body">N
                     <h4>Konfirmasi pembayaran dengan Tunai sebesar</h4>
-                    <h1><small>Rp.</small>{{ number_format(count($selectedSeats) * ($ticketPrice ?? 0) ) }}</h1>
-
+                    <h1><small>Rp.</small>{{ number_format( $subTotal ) }}</h1>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

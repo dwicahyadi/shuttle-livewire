@@ -8,6 +8,11 @@ use Livewire\Component;
 class Bill extends Component
 {
     protected $listeners = ['updateBill'];
+
+    public function mount()
+    {
+        session(['bill' => BillHelper::countBill()]);
+    }
     public function render()
     {
         return view('livewire.navbar.bill');

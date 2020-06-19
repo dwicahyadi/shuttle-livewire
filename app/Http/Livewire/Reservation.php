@@ -189,8 +189,8 @@ class Reservation extends Component
         $this->save();
         $this->payment();
         $this->resetReservationForm();
-        $this->isNew = false;
         $this->selectedReservation = $this->reservation;
+
         $this->emit('saved');
     }
 

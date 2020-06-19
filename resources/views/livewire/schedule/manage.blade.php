@@ -1,5 +1,5 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
-    <div class="container">
+    <div class="container bg-white">
         <div class="row mt-4">
             <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
                 <h1 class="my-3"><strong>Jadwal</strong> . Kelola Jadwal</h1>
@@ -58,10 +58,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row p-2">
             @forelse($departures as $departure)
 
-                <div class="card my-2 col-md-3 shadow-sm m-1 @if(!$departure->is_open) bg-c-pink @endif" wire:key="{{ $departure->id }}">
+                <div class="card my-2 col-md-3 shadow-sm mt-1 @if(!$departure->is_open) bg-c-pink @endif" wire:key="{{ $departure->id }}">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('images/calendar.svg') }}" class="img-fluid w-25 mr-2">
