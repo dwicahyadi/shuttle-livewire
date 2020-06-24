@@ -10,7 +10,7 @@
                     <h4><i class="far fa-fw fa-file text-success"></i> Tambah User</h4>
                     <small class="text-muted">Untuk password user baru adalah <strong>suryashuttle</strong></small>
                 @else
-                    <h4><i class="far fa-fw fa-edit text-primary"></i> Edit {{$code}}</h4>
+                    <h4><i class="far fa-fw fa-edit text-primary"></i> Edit {{ $name }}</h4>
                 @endif
                 <form wire:submit.prevent="save">
                     @if (session()->has('message'))

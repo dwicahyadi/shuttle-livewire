@@ -30,7 +30,7 @@
     <div class="form-group">
         <label>Harga</label>
         <select class="form-control" wire:model="discountId" wire:change="setDiscount">
-            <option value="">Harga Normal Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
+            <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
             @forelse($discounts as $discount_)
                 <option value="{{ $discount_->id }}">{{ $discount_->name}} Rp.{{ number_format($selectedDeparture->price - $discount_->amount) }}</option>
             @empty
@@ -40,29 +40,27 @@
     </div>
 
     <div class="form-group">
-        <label>Kursi Tersedia</label>
-        <div class="clearfix">
-            @for($i = 1; $i <= $totalSeats; $i++)
-                @isset($seats[$i])
+        <label>Kursi</label>
+        <table class="table table-borderless">
+            @foreach($selectedSeats as $seat)
+                <tr class="border-bottom">
+                    <td style="width: 20rem">
+                        <h3><strong>Seat {{ $seat }}</strong></h3>
+                    </td>
 
-                @else
-                    <div class="ck-button">
-                        <label>
-                            <input type="checkbox" value="{{$i}}" wire:model="selectedSeats" wire:change="sumPrice"><span>{{$i}}</span>
-                        </label>
-                    </div>
-                @endisset
-            @endfor
-        </div>
+                    <td align="right">
+                        <small class="text-muted">{{ $discount->name ?? 'Umum' }}</small>
+                        <h4><small>Rp.</small>{{number_format($selectedDeparture->price - ($discount->amount ?? 0))}}</h4>
+                    </td>
+                </tr>
+            @endforeach
+            <tr>
+                <td colspan=""></td>
+                <td align="right"><h3><small>Rp.</small>{{ number_format($subTotal )}}</h3></td>
+            </tr>
+
+        </table>
     </div>
 
-    <div class="form-group text-left">
-        <h1 class="text-left"><small>Rp.</small>{{ number_format( $subTotal ) }}</h1>
-    </div>
     <hr>
-    <div class="form-group text-center">
-        <button type="submit" wire:click="saveOnly" class="btn btn-primary btn-lg">Simpan</button>
-        <button type="submit"  data-toggle="modal" data-target="#confirmSaveAndPayment"class="btn btn-success btn-lg">Bayar</button>
-        <button type="submit"  data-toggle="modal" data-target="#confirmSaveAndPayment"class="btn btn-success btn-lg">Cetak Tiket</button>
-    </div>
 </form>

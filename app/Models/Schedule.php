@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use App\Models\Car;
 use App\Models\Departure;
 use App\Models\Driver;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
@@ -30,5 +31,10 @@ class Schedule extends Model
     public function car()
     {
         return $this->belongsTo(Car::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasManyThrough(Ticket::class,Departure::class)->whereNull('tickets.is_cancel');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Model\Schedule;
+use App\Models\Schedule;
 use Illuminate\Database\Eloquent\Model;
 
 class Departure extends Model

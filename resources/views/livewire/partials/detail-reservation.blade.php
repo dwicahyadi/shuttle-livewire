@@ -13,18 +13,21 @@
     </p>
     <p>Tiket</p>
     <table class="table table-borderless">
-        @foreach($selectedReservation->tickets as $ticket)
-            <tr class="border-bottom">
-                <td style="width: 20rem">
-                    <h3><strong>Seat {{ $ticket->seat }}</strong></h3>
-                </td>
+        @if(count($selectedReservation->tickets))
+            @foreach($selectedReservation->tickets as $ticket)
+                <tr class="border-bottom">
+                    <td style="width: 20rem">
 
-                <td align="right">
-                    <small class="text-muted">{{ $ticket->discount_name }}</small>
-                    <h4><small>Rp.</small>{{number_format($ticket->price)}}</h4>
-                </td>
-            </tr>
-        @endforeach
+                        <h3><input type="checkbox" value="{{ $ticket->id }}" wire:model="selectedTickets"> <strong>Seat {{ $ticket->seat }}</strong></h3>
+                    </td>
+
+                    <td align="right">
+                        <small class="text-muted">{{ $ticket->discount_name }}</small>
+                        <h4><small>Rp.</small>{{number_format($ticket->price)}}</h4>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
         <tr>
             <td colspan=""></td>
             <td align="right"><h3><small>Rp.</small>{{ number_format($selectedReservation->tickets->sum('price') )}}</h3></td>

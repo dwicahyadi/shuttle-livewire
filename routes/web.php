@@ -23,8 +23,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::livewire('/dashboard', 'dashboard')->name('dashboard');
+
+    Route::livewire('/profile', 'profile')->name('profile');
     Route::livewire('/setting', 'setting')->name('setting');
     Route::livewire('/setting/user', 'setting.user')->name('setting.user');
+    Route::livewire('/setting/role', 'setting.role')->name('setting.role');
 
     Route::livewire('/city', 'city')->name('city');
     Route::livewire('/point', 'point')->name('point');
@@ -46,8 +50,19 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
 
     /*prints*/
-    Route::get('print/ticket/{reservation}',function (\App\Models\Reservation $reservation){
-        return view('prints.ticket',['reservation'=>$reservation]);
-    })->name('print.ticket');
+    Route::get('print/ticket/{reservation}','PrintController@ticket')->name('print.ticket');
+
+    Route::get('print/manifest/{schedule}',function (\App\Models\Schedule $schedule){
+        return view('prints.manifest', ['schedule'=>$schedule]);
+    })->name('print.manifest');
+
+    Route::get('job', function(){
+
+        $payload['to'] = '0932321';
+
+        dispatch(new \App\Jobs\SendSms($payload));
+
+        dd('done');
+    });
 
 });

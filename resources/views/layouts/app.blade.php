@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="{{asset('images/logo_surya_2.png')}}" alt="logo">
+                    <img src="{{ config('settings.company_logo') ?? asset('images/logo.svg') }}" alt="logo">
                 </a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                         data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -64,17 +64,20 @@
                                 <a class="nav-link py-0" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
+                            @can('Reservation')
                             <li class="nav-item">
                                 <a href="{{route('settlment')}}" class="nav-link">
                                     @livewire('navbar.bill')
                                 </a>
                             </li>
+                            @endcan
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}  <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                                     <span class="dropdown-divider"></span>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -104,9 +107,9 @@
 
         <footer class="border-top py-4">
             <div class="container text-right">
-                <img src="{{asset('images/logo.svg')}}" alt="logo"><br>
+                <img src="{{ config('settings.company_logo') ?? asset('images/logo.svg') }}" alt="logo"><br>
                 <strong>{{config('settings.company_name')}}</strong><br>
-                <small>{{config('settings.company_tagline')}}</small>
+                <small>{{config('settings.company_address')}}</small>
             </div>
         </footer>
     </div>

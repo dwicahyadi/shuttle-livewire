@@ -26,7 +26,7 @@ class Reservation extends Component
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
     public $search, $searchReults;
 
-    public $departures, $selectedDepartureId, $selectedDeparture , $selectedReservation, $totalSeats;
+    public $departures, $selectedDepartureId, $selectedDeparture , $selectedReservation, $totalSeats, $paymentMethod;
 
     public $phone, $name, $address, $departureId, $subTotal;
     public $selectedSeats = [];
@@ -34,7 +34,7 @@ class Reservation extends Component
     public $customer;
 
     public $reservation;
-
+    public  $selectedTickets = [];
     public $car_id, $driver_id, $costs;
 
     protected $updatesQueryString = ['date','departurePointId','arrivalPointId','selectedDepartureId',];
@@ -54,6 +54,16 @@ class Reservation extends Component
         $this->date = request('date');
         $this->departurePointId = request('departurePointId') ?? Auth::user()->point_id;
         $this->arrivalPointId = request('arrivalPointId');
+
+        if(!$this->arrivalPointId)
+        {
+            if($this->departurePointId == 1)
+            {
+                $this->arrivalPointId = 2;
+            }else{
+                $this->arrivalPointId = 1;
+            }
+        }
         $this->selectedDepartureId = request('selectedDepartureId');
         $this->setDeparturePoint();
         $this->setArrivalPoint();
@@ -82,6 +92,7 @@ class Reservation extends Component
     public function setDiscount()
     {
         $this->discount = Discount::find($this->discountId);
+        $this->sumPrice();
 
     }
 
@@ -109,6 +120,7 @@ class Reservation extends Component
     public function getDeparture($departureId)
     {
         $this->resetReservationForm();
+        $this->subTotal = 0;
         $this->selectedReservation = null;
         $this->selectedDepartureId = $departureId;
         $this->selectedDeparture = Departure::with(['schedule','tickets'])
@@ -116,6 +128,21 @@ class Reservation extends Component
         $this->totalSeats = $this->selectedDeparture->schedule->seats ?? 0;
         $this->driver_id = $this->selectedDeparture->schedule->driver_id ?? 0;
         $this->car_id = $this->selectedDeparture->schedule->car_id ?? 0;
+    }
+
+    public function pickSeat($seat)
+    {
+        $this->isNew = true;
+        $this->selectedReservation = null;
+        if (in_array($seat, $this->selectedSeats))
+        {
+            $key = array_search($seat, $this->selectedSeats);
+            unset($this->selectedSeats[$key]);
+        }else{
+            $this->selectedSeats[] = $seat;
+        }
+        sort($this->selectedSeats);
+        $this->sumPrice();
     }
 
     public function updatedPhone($value)
@@ -158,6 +185,7 @@ class Reservation extends Component
         $this->reservation->tickets()->update(
             [
                 'status'=>'paid',
+                'payment_method'=> $this->paymentMethod,
                 'payment_at'=> now(),
                 'payment_by' => Auth::id(),
             ]
@@ -234,6 +262,7 @@ class Reservation extends Component
             $ticket->reservation_by = Auth::id();
             $ticket->reservation_at = now();
             $ticket->status = 'unpaid';
+            $ticket->count_print = 0;
             $ticket->save();
         }
     }
@@ -245,14 +274,16 @@ class Reservation extends Component
         $this->name = null;
         $this->address = null;
         $this->selectedSeats = [];
+        $this->paymentMethod = 'CASH PAYMENT';
 
         $this->discountId = 0;
-        $this->setDiscount();
     }
 
     public function getReservation($reservationId)
     {
         $this->isNew = false;
+        $this->resetReservationForm();
+        $this->selectedTickets = [];
         $this->selectedReservation = \App\Models\Reservation::find($reservationId);
     }
 
@@ -279,7 +310,25 @@ class Reservation extends Component
         $this->selectedReservation->tickets()->update(['is_cancel'=>true]);
         $this->resetReservation();
         $this->emit('saved');
-        $this->emit('updateBill');
+    }
+
+    public function cancelTicket()
+    {
+        Ticket::whereIn('id',$this->selectedTickets)->update(['is_cancel'=>true]);
+//        $this->selectedReservation->tickets()->update(['is_cancel'=>true]);
+        $this->selectedTickets = [];
+        $this->getReservation($this->selectedReservation->id);
+        if(!count($this->selectedReservation->tickets))
+            $this->resetReservation();
+        $this->emit('saved');
+    }
+
+    public function cancelPayment()
+    {
+        $this->selectedReservation->tickets()->update(['payment_by'=> null, 'payment_at'=> null]);
+        $this->resetReservation();
+        $this->emit('saved');
+
     }
 
     public function saveManifest()
@@ -302,4 +351,6 @@ class Reservation extends Component
         $this->getDeparture($ticket->departure_id);
         $this->getReservation($ticket->reservation_id);
     }
+
+
 }

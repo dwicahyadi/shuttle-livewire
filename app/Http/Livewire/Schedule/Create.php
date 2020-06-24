@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Schedule;
 
-use App\Model\Schedule;
+use App\Models\Schedule;
 use App\Models\Point;
 use Livewire\Component;
 

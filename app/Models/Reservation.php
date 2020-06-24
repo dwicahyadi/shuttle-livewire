@@ -17,7 +17,7 @@ class Reservation extends Model
 
     public function tickets()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class)->whereNull('tickets.is_cancel');
     }
 
     public function customer()

@@ -1,4 +1,5 @@
 <div xmlns:wire="http://www.w3.org/1999/xhtml">
+    @php( $methods = ['ONLINE PAYMENT','CARD PAYMENT','CASH PAYMENT'])
     <div class="container">
         <div class="row bg-white">
             <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
@@ -57,7 +58,7 @@
                         <table class="table">
                             @forelse($transactions->groupBy('discount_name') as $discount => $value)
                                 <tr>
-                                    <td>@empty($discount ) Harga Normal @else {{ $discount }} @endempty</td>
+                                    <td>@empty($discount ) Umum @else {{ $discount }} @endempty</td>
                                     <td align="right"><h4>{{ number_format($value->sum('price')) }}</h4></td>
                                 </tr>
                             @empty
@@ -69,6 +70,16 @@
                                 <td></td>
                                 <td align="right"><h1>{{ number_format($transactions->sum('price')) }}</h1></td>
                             </tr>
+                        </table>
+
+                        <table class="table table-borderless">
+                            @foreach($methods as $method)
+                                <tr>
+                                    <td>{{ $method }}</td>
+                                    <td align="right">{{ number_format($transactions->where('payment_method',$method)->sum('price')) }}</td>
+                                </tr>
+
+                            @endforeach
                         </table>
 
                         <form wire:submit.prevent="save">

@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-	Schema::defaultStringLength(191);
-        if(Schema::hasTable('settins'))
+        Schema::defaultStringLength(191);
+        if(Schema::hasTable('settings'))
         {
             config([
                 'settings' => \App\Models\Setting::all([

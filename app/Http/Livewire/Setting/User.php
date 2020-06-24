@@ -17,15 +17,42 @@ class User extends Component
 
     public function save()
     {
-        $user = $this->selectedId ? \App\Models\User()::find($this->selectedId) : new \App\Models\User();
+        if($this->selectedId)
+        {
+            $user = \App\Models\User::find($this->selectedId);
+        }else{
+            $user = new \App\Models\User();
+            $user->password = bcrypt('suryashuttle');
+        }
         $user->name = $this->name;
         $user->email = $this->email;
         $user->phone = $this->phone;
-        $user->password = bcrypt('suryashuttle');
         $user->point_id = $this->point_id;
         $user->save();
 
         $user->syncRoles($this->role);
+        $this->resetForm();
         session()->flash('message', $this->name.' disimpan.');
+    }
+
+    public function get($id)
+    {
+        $user = \App\Models\User::find($id);
+        $this->selectedId = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
+        $this->point_id = $user->point_id;
+        $this->role = $user->roles[0]->name ?? '';
+    }
+
+    public function resetForm()
+    {
+        $this->selectedId = '';
+        $this->name = '';
+        $this->email = '';
+        $this->phone = '';
+        $this->point_id = '';
+        $this->role = '';
     }
 }

@@ -1,25 +1,30 @@
-@php($seatPerRow = 3)
+@php($seatPerRow = config('settings.seat_per_row'))
 @php($seats = $selectedDeparture->tickets->keyBy('seat'))
 <table class="table table-borderless">
     <tr>
         <td class="" width="{{ 100/$seatPerRow }}%">
-            <div class="border  shadow-sm bg-white">
-                <div class="seat">
-                    <h4 class="m-1">1</h4>
-                    @isset($seats[1])
-                        @php($color = $seats[1]->payment_by ? 'bg-c-green' : 'bg-c-yellow')
-                        <div wire:click="getReservation({{ $seats[1]->reservation->id }})" class="w-100 border-success text-center shadow-sm  {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" >
-                            @if($selectedReservation['id'] == $seats[1]->reservation->id)
-                                <h5 class="text-white bg-primary">Dipilih</h5>
-                            @endif
-                            <small class="clearfix">{{ $seats[1]->phone }}</small>
-                            <span class="clearfix">{{ $seats[1]->name }}</span>
+            @isset($seats[1])
+                <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[1]->reservation->id }})">
+                    <div class="seat">
+                        <h4>{{ 1 }} @if($seats[1]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
+                        <div class="text-center">
+                            <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[1]->name,10,'...') }} </strong><br>
+                            <small class="bg-warning px-1">{{ $seats[1]->discount_name ?? 'Umum' }}</small>
                         </div>
-                    @endisset
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="border p-2 @if(in_array(1, $selectedSeats)) bg-info @endif" wire:click="pickSeat({{ 1 }})">
+                    <div class="seat">
+                        <h4>{{ 1 }}</h4>
+
+                    </div>
+                </div>
+            @endisset
         </td>
-        <td class="" width="{{ 100/$seatPerRow }}%"><h4></h4></td>
+        @if($seatPerRow > 2)
+            <td class="" width="{{ 100/$seatPerRow }}%"><h4></h4></td>
+        @endif
         <td class="" width="{{ 100/$seatPerRow }}%" style="vertical-align: middle; text-align: center">
             <img src="{{ asset('images/steer.svg') }}" alt="driver" class="w-25 clearfix" wire:click="$set('isManifestForm',1)" style="cursor: pointer"><br>
             <strong>{{ $selectedDeparture->schedule->driver->name ?? 'Driver' }}</strong>
@@ -31,25 +36,30 @@
         <tr>
             @for($col = 1; $col <= $seatPerRow; $col++)
                 <td class="">
-                    <div class="border  shadow-sm">
-                        <div class="seat">
-                            <h4 class="m-1">{{ $i }}</h4>
-                            @isset($seats[$i])
-                                @php($color = $seats[$i]->payment_by ? 'bg-c-green' : 'bg-c-yellow')
-                                <div wire:click="getReservation({{ $seats[$i]->reservation->id }})" class="w-100 border-success text-center shadow-sm  {{ $color }}" style="position:absolute; bottom: 0; cursor: pointer" >
-                                    @if($selectedReservation['id'] == $seats[$i]->reservation->id)
-                                        <h5 class="text-white bg-primary">Dipilih</h5>
-                                    @endif
-                                    <small class="clearfix">{{ $seats[$i]->phone }}</small>
-                                    {{ $seats[$i]->name}}
+                    @isset($seats[$i])
+                        <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[$i]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[$i]->reservation->id }})">
+                            <div class="seat">
+                                <h4>{{ $i }} @if($seats[$i]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
+                                <div class="text-center">
+                                    <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[$i]->name,10,'...') }} </strong><br>
+                                    <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum' }}</small>
                                 </div>
-                            @endisset
+                            </div>
                         </div>
-                    </div>
-                    @if($col < $seatPerRow)
-                        @php($i++)
-                    @endif
+                    @else
+                        <div class="border p-2 @if(in_array($i, $selectedSeats)) bg-info @endif" wire:click="pickSeat({{ $i }})">
+                            <div class="seat">
+                                <h4>{{ $i }}</h4>
 
+                            </div>
+                        </div>
+                    @endisset
+                    @if($col < $seatPerRow)
+                        <?php
+                            $i++;
+                            if($i > $totalSeats) break;
+                        ?>
+                    @endif
                 </td>
             @endfor
 

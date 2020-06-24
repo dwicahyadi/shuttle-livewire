@@ -45,14 +45,14 @@
 
 <ul class="list-group">
     @forelse($departures as $departure)
-        <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary  @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
+        <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
             <div class="d-flex">
                 <div class="mr-2">
                     <i class="text-black-50 far fa-clock fa-2x mt-2"></i>
                 </div>
                 <div class="flex-fill">
                     <strong class="clearfix">{{ substr($departure->time, 0,5) }}</strong>
-                    <small class="text-muted">Note: -</small>
+                    <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
                 </div>
                 <div>
                     <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets->count() }}</label>
