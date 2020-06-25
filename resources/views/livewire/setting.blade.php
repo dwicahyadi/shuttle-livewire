@@ -113,6 +113,10 @@
                                 <input type="text" class="form-control" wire:model.lazy="sms_services_url">
                             </div>
                             <div class="form-group">
+                                <label>SMS API User</label>
+                                <input type="text" class="form-control" wire:model.lazy="sms_services_user">
+                            </div>
+                            <div class="form-group">
                                 <label>SMS API key</label>
                                 <input type="text" class="form-control" wire:model.lazy="sms_services_key">
                             </div>
