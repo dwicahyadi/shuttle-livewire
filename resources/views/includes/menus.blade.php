@@ -1,11 +1,11 @@
 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
     <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="{{ route('reservation') }}">Home</a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropDownMaster" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">Master</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownMaster">
+        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownMaster" style="z-index: 9981">
             @can('City')<a class="dropdown-item" href="{{route('city')}}">Kota</a>@endcan
             @can('Point')<a class="dropdown-item" href="{{route('point')}}">Point</a>@endcan
             @can('Car')<a class="dropdown-item" href="{{route('car')}}">Mobil</a>@endcan

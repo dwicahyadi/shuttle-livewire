@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\BillHelper;
+use App\Helpers\SmsHelper;
 use App\Models\Car;
 use App\Models\City;
 use App\Models\Customer;
@@ -178,6 +179,8 @@ class Reservation extends Component
         $this->checkExistCustomere();
         $this->createNewReservation();
         $this->createTicket();
+        SmsHelper::generateMsg($this->reservation->id);
+
     }
 
     public function payment()
@@ -192,8 +195,7 @@ class Reservation extends Component
         );
 
         $this->emit('updateBill');
-
-//        $this->updateCustomerCountReservationFinish();
+        $this->updateCustomerCountReservationFinish();
     }
 
     public function saveOnly()
@@ -295,8 +297,10 @@ class Reservation extends Component
 
     private function updateCustomerCountReservationFinish(): void
     {
+        $this->customer = $this->reservation->customer;
         $this->customer->count_reservation_finished++;
         $this->customer->save();
+        $this->customer = null;
     }
 
     public function resetReservation()
@@ -342,7 +346,7 @@ class Reservation extends Component
         $this->searchReults = Ticket::where(function ($query){
             $query->where('name','like','%'.$this->search.'%')
                 ->orWhere('phone','like','%'.$this->search.'%');
-        })->orderBy('id','DESC')->limit(5)->get();
+        })->orderBy('id','DESC')->limit(10)->get();
     }
 
     public function getFromSearch($ticketId)

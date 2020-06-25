@@ -43,25 +43,27 @@
       </div>--}}
 </form>
 
-<ul class="list-group">
-    @forelse($departures as $departure)
-        <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
-            <div class="d-flex">
-                <div class="mr-2">
-                    <i class="text-black-50 far fa-clock fa-2x mt-2"></i>
+<div style="height: 40rem; overflow-y: scroll">
+    <ul class="list-group">
+        @forelse($departures as $departure)
+            <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
+                <div class="d-flex">
+                    <div class="mr-2">
+                        <i class="text-black-50 far fa-clock fa-2x mt-2"></i>
+                    </div>
+                    <div class="flex-fill">
+                        <strong class="clearfix">{{ substr($departure->time, 0,5) }}</strong>
+                        <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
+                    </div>
+                    <div>
+                        <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets->count() }}</label>
+                    </div>
                 </div>
-                <div class="flex-fill">
-                    <strong class="clearfix">{{ substr($departure->time, 0,5) }}</strong>
-                    <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
-                </div>
-                <div>
-                    <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets->count() }}</label>
-                </div>
+            </li>
+        @empty
+            <div class="col-md-12 p-4">
+                <h1 class="text-muted">Tidak ada keberangkatan</h1>
             </div>
-        </li>
-    @empty
-        <div class="col-md-12 p-4">
-            <h1 class="text-muted">Tidak ada keberangkatan</h1>
-        </div>
-    @endforelse
-</ul>
+        @endforelse
+    </ul>
+</div>

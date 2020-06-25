@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div wire:loading class="animate__animated animate__fadeIn rounded bg-secondary text-center shadow text-white p-4" style="width: 10rem;
-	height: 5rem;
+	height: 4rem;
 	position: absolute;
 	top:0;
 	bottom: 0;
@@ -10,16 +10,16 @@
 	margin: auto;">
         <strong>loading..</strong>
     </div>
-    <div class="row p-0" style="min-height: 50rem">
+    <div class="row p-0" style="min-height: 100%">
         <div class="col-md-3 p-0 bg-white border-right">
-            <div class="bg-light text-center border border-right-0 p-2 sticky-top" style="height: 5rem;">
+            <div class="bg-light text-center border border-right-0 p-2 sticky-top" style="height: 4rem;">
                 <div class="d-flex w-100 mx-auto justify-content-between">
-                    <button type="button" class="btn btn-light" wire:click="$set('isFindTicket',0)">
+                    <button type="button" class="btn btn-light btn-sm" wire:click="$set('isFindTicket',0)">
                         <img src="{{ asset('images/calendar (1).svg') }}" alt="new" width="18">
                         <br> Cari Jadwal
                     </button>
 
-                    <button type="button" class="btn btn-light" wire:click="$set('isFindTicket',1)">
+                    <button type="button" class="btn btn-light btn-sm" wire:click="$set('isFindTicket',1)">
                         <img src="{{ asset('images/receptionist.svg') }}" alt="new" width="18">
                         <br> Cari Reservasi
                     </button>
@@ -36,15 +36,15 @@
         </div>
         @isset($selectedDeparture)
             <div class="col-md-4 p-0 bg-white border-right animate__animated animate__fadeIn">
-                <div class="bg-light text-center border p-2 sticky-top" style="height: 5rem;">
+                <div class="bg-light text-center border p-2 sticky-top" style="height: 4rem;">
                     @isset($selectedDeparture)
                         <div class="d-flex w-100 mx-auto justify-content-between">
-                            <button type="button" class="btn btn-light" onclick="window.open('{{ route('print.manifest', ['schedule'=> $selectedDeparture->schedule->id]) }}', '', 'width=500,height=500')">
+                            <button type="button" class="btn btn-light btn-sm" onclick="window.open('{{ route('print.manifest', ['schedule'=> $selectedDeparture->schedule->id]) }}', '', 'width=500,height=500')">
                                 <img src="{{ asset('images/news.svg') }}" alt="new" width="18">
                                 <br> Manifest
                             </button>
 
-                            <button type="button" class="btn btn-light" title="Refresh" wire:click="$refresh">
+                            <button type="button" class="btn btn-light btn-sm" title="Refresh" wire:click="$refresh">
                                 <img src="{{ asset('images/reload.svg') }}" alt="new" width="18">
                                 <br> Reload
                             </button>
@@ -64,21 +64,21 @@
                 @endisset
             </div>
             <div class="col-md-5 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="bg-light text-center border p-2 sticky-top" style="height: 5rem;">
+                <div class="bg-light text-center border p-2 sticky-top" style="height: 4rem;">
                     @isset($selectedReservation)
                         @php($paid = $selectedReservation->tickets[0]->payment_by ?? 0)
                         <div class="d-flex w-100 mx-auto justify-content-between">
-                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#confirmPayment" @if($paid) style="display: none" @endif>
+                            <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#confirmPayment" @if($paid) style="display: none" @endif>
                                 <img src="{{ asset('images/pay.svg') }}" alt="new" width="18">
                                 <br> Bayar
                             </button>
 
-                            <button type="button" class="btn btn-light" wire:click="$refresh" onclick="window.open('{{ route('print.ticket', ['reservation'=> $selectedReservation]) }}', '', 'width=500,height=500')" @if(!$paid) style="display: none" @endif>
+                            <button type="button" class="btn btn-light btn-sm" wire:click="$refresh" onclick="window.open('{{ route('print.ticket', ['reservation'=> $selectedReservation]) }}', '', 'width=500,height=500')" @if(!$paid) style="display: none" @endif>
                                 <img src="{{ asset('images/print.svg') }}" alt="new" width="18">
                                 <br> Cetak <span class="badge badge-danger">{{ $selectedReservation->tickets[0]->count_print }}</span>
                             </button>
 
-                            <button type="button" class="btn btn-light" wire:click="resetReservation" hidden>
+                            <button type="button" class="btn btn-light btn-sm" wire:click="resetReservation" hidden>
                                 <img src="{{ asset('images/watch.svg') }}" alt="new" width="18">
                                 <br> Mutasi
                             </button>
@@ -97,12 +97,12 @@
                                 </button>
                             @endcan
 
-                            <button type="button" class="btn btn-light">
+                            <button type="button" class="btn btn-light btn-sm">
                                 <img src="{{ asset('images/share.svg') }}" alt="new" width="18">
                                 <br> Bagikan
                             </button>
 
-                            <button type="button" class="btn btn-light" wire:click="resetReservation">
+                            <button type="button" class="btn btn-light btn-sm" wire:click="resetReservation">
                                 <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
                                 <br> Baru
                             </button>
@@ -112,12 +112,12 @@
                     @else
                         @if($isNew)
                             <div class="d-flex w-100 mx-auto justify-content-between">
-                                <button type="button" class="btn btn-light" wire:click="saveOnly">
+                                <button type="button" class="btn btn-light btn-sm" wire:click="saveOnly">
                                     <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
                                     <br> Simpan
                                 </button>
 
-                                <button type="submit"  data-toggle="modal" data-target="#confirmSaveAndPayment"class="btn btn-light">
+                                <button type="submit"  data-toggle="modal" data-target="#confirmSaveAndPayment"class="btn btn-light btn-sm">
                                     <img src="{{ asset('images/pay.svg') }}" alt="new" width="18">
                                     <br> Bayar
                                 </button>

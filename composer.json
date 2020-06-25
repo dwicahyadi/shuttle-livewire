@@ -17,7 +17,9 @@
         "laravel/ui": "^2.0",
         "livewire/livewire": "^1.0",
         "maatwebsite/excel": "^3.1",
-        "spatie/laravel-permission": "^3.13"
+        "spatie/laravel-permission": "^3.13",
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

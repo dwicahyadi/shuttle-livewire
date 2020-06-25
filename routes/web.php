@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect(\route('reservation'));
 });
 
+Route::get('/myReservation/{reservationId}', function ($reservationId) {
+    $reservation = \App\Models\Reservation::find($reservationId);
+    return view('reservation_detail',['reservation'=>$reservation]);
+})->name('cust.view');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -58,7 +62,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('job', function(){
 
-        $payload['to'] = '0932321';
+        $payload['phone'] = '087779537772';
+        $payload['message'] = '087779537772';
 
         dispatch(new \App\Jobs\SendSms($payload));
 

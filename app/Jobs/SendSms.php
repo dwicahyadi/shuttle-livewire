@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Helpers\SmsHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -13,10 +14,11 @@ class SendSms implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $payload;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $payload
      */
     public function __construct($payload)
     {
@@ -30,6 +32,6 @@ class SendSms implements ShouldQueue
      */
     public function handle()
     {
-        Storage::put('file.txt','yourname');
+        SmsHelper::sendMsg($this->payload['phone'],$this->payload['message']);
     }
 }
