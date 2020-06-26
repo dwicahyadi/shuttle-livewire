@@ -32,7 +32,7 @@ class SmsHelper
     public static function generateMsg($reservationId)
     {
         $reservation = \App\Models\Reservation::find($reservationId);
-        $link = self::shortUrl(route('cust.view',['reservation'=>$reservation]));
+        $link = self::shortUrl(route('cust.view',['reservationId'=>$reservationId]));
         $payload['phone'] = $reservation->customer->phone;
         $payload['message'] = "Hore! Bookingan kamu bhsl.
         Pastikan datang max 10 mnt sblm kbrgktn.
