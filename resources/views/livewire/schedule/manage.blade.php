@@ -106,7 +106,7 @@
                                 <br> Simpan
                             </button>
 
-                            <button type="button" class="btn btn-light" wire:click="toggleStatus({{ $departure->id }})">
+                            <button type="button" class="btn btn-light" wire:click="toggleStatus({{ $selectedDepartureId }})">
                                 <img src="{{ asset('images/key.svg') }}" alt="new" width="24">
                                 <br> @if(!$selectedDeparture->is_open) Buka @else Tutup @endif
                             </button>
