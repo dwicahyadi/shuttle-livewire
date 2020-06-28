@@ -337,7 +337,7 @@ class Reservation extends Component
 
     public function saveManifest()
     {
-        $this->selectedDeparture->schedule()->update(['driver_id'=> $this->driver_id, 'car_id'=> $this->car_id]);
+        $this->selectedDeparture->schedule()->update(['driver_id'=> $this->driver_id, 'car_id'=> $this->car_id, 'costs'=>$this->costs]);
         $this->isManifestForm = false;
     }
 

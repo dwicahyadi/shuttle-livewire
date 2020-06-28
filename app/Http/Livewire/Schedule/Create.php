@@ -58,13 +58,14 @@ class Create extends Component
         $currentDate = $this->fromDate;
 
         while (strtotime($currentDate) <= strtotime($this->toDate)) {
-            $schedule = new Schedule();
-//            $schedule->code = date('ymdhis').rand(0,999);
-            $schedule->seats = $this->seats;
-            $schedule->save();
+
 
             foreach ($this->departureTimes as $departureTime)
             {
+                $schedule = new Schedule();
+                $schedule->seats = $this->seats;
+                $schedule->save();
+
                 $code = $this->departurePoint->code
                     .$this->arrivalPoint->code
                     .date('ymd',strtotime($currentDate))

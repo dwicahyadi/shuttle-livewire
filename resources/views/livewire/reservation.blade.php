@@ -39,7 +39,7 @@
                 <div class="bg-light text-center border p-2 sticky-top" style="height: 4rem;">
                     @isset($selectedDeparture)
                         <div class="d-flex w-100 mx-auto justify-content-between">
-                            <button type="button" class="btn btn-light btn-sm" onclick="window.open('{{ route('print.manifest', ['schedule'=> $selectedDeparture->schedule->id]) }}', '', 'width=500,height=500')">
+                            <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#confirmManifest">
                                 <img src="{{ asset('images/news.svg') }}" alt="new" width="18">
                                 <br> Manifest
                             </button>
@@ -281,6 +281,32 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" wire:click="cancelTicket">Yakin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade show" id="confirmManifest" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Cetak Manifest</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>Setelah cetak manifet:
+                        <ul>
+                            <li> Penumpang yang sudah bayar tidak dapat di-reschedule</li>
+                            <li> Penumpang belum bayar dinyatakan "Dibatalkan"</li>
+                        </ul>
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.open('{{ route('print.manifest', ['schedule'=> $selectedDeparture->schedule->id ?? 0]) }}', '', 'width=500,height=500')">Yakin</button>
                 </div>
             </div>
         </div>

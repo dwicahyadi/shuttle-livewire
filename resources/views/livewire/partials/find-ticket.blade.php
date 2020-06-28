@@ -15,8 +15,8 @@
                     @endif
                     <div class="flex-fill">
                         <strong>{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $searchResult->name) !!}</strong> <span class="clearfix">{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $searchResult->phone) !!}</span>
-                        <h5>CBN - BDG Seat <strong>{{ $searchResult->seat }}</strong></h5>
-                        <span class="clearfix">{{ $searchResult->departure->date }} <strong>{{ $searchResult->departure->time }}</strong></span>
+                        <h5>{{ $transaction->departure->departure_point->code ?? '' }} - {{ $transaction->departure->departure_point->code ?? '' }} Seat <strong>{{ $searchResult->seat }}</strong></h5>
+                        <span class="clearfix">{{ $searchResult->departure->date ?? '' }} <strong>{{ $searchResult->departure->time ?? '' }}</strong></span>
                     </div>
                 </div>
             </li>

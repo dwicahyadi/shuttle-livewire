@@ -23,8 +23,8 @@
                             </td>
                             <td width="40%">
                                 <strong>{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $transaction->name) !!}</strong> <span class="clearfix">{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $transaction->phone) !!}</span>
-                                <h5>CBN - BDG Seat <strong>{{ $transaction->seat }}</strong></h5>
-                                <span class="clearfix">{{ $transaction->departure->date }} <strong>{{ $transaction->departure->time }}</strong></span>
+                                <h5>{{ $transaction->departure->departure_point->code ?? '' }} - {{ $transaction->departure->departure_point->code ?? '' }} Seat <strong>{{ $transaction->seat }}</strong></h5>
+                                <span class="clearfix">{{ $transaction->departure->date ?? ''}} <strong>{{ $transaction->departure->time ?? '' }}</strong></span>
                             </td>
                             <td>
 

@@ -16,12 +16,12 @@
 @forelse($reservation->tickets as $ticket)
     <div style="width: 300px; page-break-before: always">
         <div style="text-align: center; margin-top: 5px">
-            <img src="{{ asset('images/logo_surya_2.png') }}" alt="logo" width="120">
+            <img src="{{ asset('images/logo bw.png') }}" alt="logo" width="120">
         </div>
         <br>
         <div>
             <small>No. Tiket</small><br>
-            <strong>TKT123</strong>
+            <strong>{{ $ticket->departure->code.'-'.$ticket->seat }}</strong>
         </div>
         <div>
             <small>Tanggal / Jam Kbrgktn</small><br>
