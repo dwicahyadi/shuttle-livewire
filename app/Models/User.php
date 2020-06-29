@@ -45,4 +45,9 @@ User extends Authenticatable
     {
         return $this->belongsTo(Point::class);
     }
+
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
+    }
 }

@@ -17,7 +17,7 @@
 @php($tickets = $schedule->tickets()->whereNotNull('payment_by')->get() )
 <div style="width: 300px; page-break-before: always">
     <div style="text-align: center; margin-top: 5px">
-        <img src="{{ asset('images/logo_surya_2.png') }}" alt="logo" width="120">
+        <img src="{{ asset('images/logo bw.png') }}" alt="logo" width="120">
     </div>
     <br>
     <h2>Manifest</h2>
@@ -41,6 +41,10 @@
         <tr>
             <td>Mobil</td>
             <td>: {{ $schedule->car->code ?? '-' }} {{ $schedule->car->license_number ?? '-' }} </td>
+        </tr>
+        <tr>
+            <td>Kas jalan</td>
+            <td>: {{ number_format($schedule->costs ?? 0) }} </td>
         </tr>
     </table>
 

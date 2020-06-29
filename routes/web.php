@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/reservation/', 'reservation')->name('reservation');
     Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');
     Route::livewire('/history/reservation', 'history.reservation')->name('history.reservation');
+    Route::livewire('/history/settlement', 'history.settlement')->name('history.settlement');
 
     Route::livewire('/settlement', 'settlement')->name('settlment');
 
@@ -56,18 +57,8 @@ Route::middleware(['auth'])->group(function () {
     /*prints*/
     Route::get('print/ticket/{reservation}','PrintController@ticket')->name('print.ticket');
 
-    Route::get('print/manifest/{schedule}',function (\App\Models\Schedule $schedule){
-        return view('prints.manifest', ['schedule'=>$schedule]);
-    })->name('print.manifest');
+    Route::get('print/manifest/{schedule}', 'PrintController@manifest')->name('print.manifest');
 
-    Route::get('job', function(){
-
-        $payload['phone'] = '087779537772';
-        $payload['message'] = '087779537772';
-
-        dispatch(new \App\Jobs\SendSms($payload));
-
-        dd('done');
-    });
+    Route::get('print/settlement/{settlement}', 'PrintController@settlement')->name('print.settlement');
 
 });

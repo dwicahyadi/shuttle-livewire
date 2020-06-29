@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only">Nama</label>
-                        <input type="text" wire:model="name" class="form-control form-control-lg" required placeholder="Nama Point">
+                        <input type="text" wire:model="name" class="form-control form-control-lg" required placeholder="Nama Driver">
                     </div>
                     <div class="form-group">
                         <label class="sr-only">Alamat</label>

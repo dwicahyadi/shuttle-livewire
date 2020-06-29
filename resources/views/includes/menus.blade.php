@@ -35,7 +35,7 @@
         <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownHistory">
             <a class="dropdown-item" href="{{route('history.reservation')}}">Reservasi</a>
             <a class="dropdown-item" href="{{route('history.transaction')}}">Transaksi</a>
-            <a class="dropdown-item" href="{{route('point')}}">Transaksi</a>
+            <a class="dropdown-item" href="{{route('history.settlement')}}">Settlement</a>
         </div>
     </li>
     @endcan

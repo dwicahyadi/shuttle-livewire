@@ -97,7 +97,7 @@
                                 </button>
                             @endcan
 
-                            <button type="button" class="btn btn-light btn-sm">
+                            <button type="button" class="btn btn-light btn-sm" onclick="window.open('{{ $selectedReservation->schedule->short_link ?? 'https://suryashuttle.com' }}', '', 'width=800,height=600')">
                                 <img src="{{ asset('images/share.svg') }}" alt="new" width="18">
                                 <br> Bagikan
                             </button>
@@ -106,8 +106,6 @@
                                 <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
                                 <br> Baru
                             </button>
-
-
                         </div>
                     @else
                         @if($isNew)
@@ -181,7 +179,7 @@
 
                             <div class="form-group">
                                 <label>Kas Jalan</label>
-                                <input type="number" class="form-control" required>
+                                <input type="number" class="form-control" wire:model="costs" required>
                             </div>
                             <hr>
                             <button type="submit" wire:click="saveManifest" class="btn btn-primary btn-lg">Simpan</button>

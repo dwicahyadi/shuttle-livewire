@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\SmsHelper;
 use App\Http\Livewire\Setting\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,7 @@ class Profile extends Component
         $user->phone = $this->phone;
         $user->point_id = $this->point_id;
         $user->save();
+        SmsHelper::sendMsg($user->phone,'sys.suryahuttle.com : Profile '. $this->name. ' diperbaharui.');
         session()->flash('message', $this->name.' disimpan.');
     }
 
@@ -53,6 +55,7 @@ class Profile extends Component
         if (Hash::check($this->oldPassword, Auth::user()->getAuthPassword()))
         {
             \App\Models\User::where('id',$this->selectedId)->update(['password'=>bcrypt($this->newPassword)]);
+            SmsHelper::sendMsg($this->phone,'sys.suryahuttle.com : Password '. $this->name. ' berubah.');
             session()->flash('message', 'Password diperbarui');
         }else{
             session()->flash('message', 'Password lama salah!');

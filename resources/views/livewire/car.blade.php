@@ -33,8 +33,8 @@
                         <small id="helpId" class="text-muted">Maksimal 10 huruf</small>
                     </div>
                     <div class="form-group">
-                        <label class="sr-only">Nomor Pilisi</label>
-                        <input type="text" wire:model="license_number" class="form-control form-control-lg" required placeholder="Nomor Pilisi">
+                        <label class="sr-only">Nomor Polisi</label>
+                        <input type="text" wire:model="license_number" class="form-control form-control-lg" required placeholder="Nomor Polisi">
                     </div>
                     <div class="form-group">
                         <label class="sr-only">Kilometer Terakhir</label>

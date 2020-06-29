@@ -1,4 +1,4 @@
-<div xmlns:wire="http://www.w3.org/1999/xhtml">
+<div class="container bg-white" xmlns:wire="http://www.w3.org/1999/xhtml">
     <div class="row mt-4 bg-white">
         <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
             <h1 class="my-3"><strong>History</strong> . Reservasi</h1>
@@ -8,12 +8,12 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 offset-2 animate__animated animate__fadeIn animate__fast">
+        <div class="col-md-12 animate__animated animate__fadeIn animate__fast">
             <div class="sticky-top bg-white p-2 d-flex">
                 <div class="flex-fill">
                     <input type="text" wire:model="search" class="form-control-lg form-control" placeholder="Cari nama atau no telepon">
                 </div>
-             </div>
+            </div>
             <table class="table">
                 <tbody>
                 @forelse($transactions as $transaction)
@@ -23,8 +23,8 @@
                         </td>
                         <td width="40%">
                             <strong>{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $transaction->name) !!}</strong> <span class="clearfix">{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $transaction->phone) !!}</span>
-                            <h5>{{ $transaction->departure->departure_point->code ?? '' }} - {{ $transaction->departure->departure_point->code ?? '' }} Seat <strong>{{ $transaction->seat }}</strong></h5>
-                            <span class="clearfix">{{ $transaction->departure->date }} <strong>{{ $transaction->departure->time }}</strong></span>
+                            <h5>{{ $transaction->departure->departure_point->code ?? '' }} - {{ $transaction->departure->arrival_point->code ?? '' }} Seat <strong>{{ $transaction->seat }}</strong></h5>
+                            <span class="clearfix">{{ $transaction->departure->date ?? ''}} <strong>{{ $transaction->departure->time ?? '' }}</strong></span>
                         </td>
                         <td>
 

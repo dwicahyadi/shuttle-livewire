@@ -22,11 +22,8 @@ class Settlement extends Component
 
     public function render()
     {
-        $transactions = Ticket::where(function ($query){
-            $query->where('name','like','%'.$this->search.'%')
-                ->orWhere('phone','like','%'.$this->search.'%');
-        })->where('payment_by', Auth::id())->orderBy('id','DESC')->get();
+        $settlements = Auth::user()->settlements()->orderBy('id','desc')->paginate(5);
 
-        return view('livewire.settlement',['transactions'=>$transactions]);
+        return view('livewire.history.settlement',['settlements'=>$settlements]);
     }
 }
