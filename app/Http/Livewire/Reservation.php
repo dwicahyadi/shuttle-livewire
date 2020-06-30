@@ -194,7 +194,7 @@ class Reservation extends Component
                 'payment_by' => Auth::id(),
             ]
         );
-        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, '']))
+        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, 'message'=>'Terimakasih. Pembayaran berjasil dilakukan']));
         $this->emit('updateBill');
         $this->updateCustomerCountReservationFinish();
     }
