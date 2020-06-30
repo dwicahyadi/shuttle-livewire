@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Helpers\BillHelper;
 use App\Helpers\SmsHelper;
+use App\Jobs\SendSms;
 use App\Models\Car;
 use App\Models\City;
 use App\Models\Customer;
@@ -193,7 +194,7 @@ class Reservation extends Component
                 'payment_by' => Auth::id(),
             ]
         );
-
+        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, '']))
         $this->emit('updateBill');
         $this->updateCustomerCountReservationFinish();
     }

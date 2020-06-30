@@ -32,15 +32,16 @@ class SmsHelper
     public static function generateMsg($reservationId)
     {
         $reservation = \App\Models\Reservation::find($reservationId);
-        $link = ShortLinkHelper::shortUrl(route('cust.view', ['reservationId' => $reservationId]));
+        if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
+            $link = ShortLinkHelper::shortUrl('https://google.com');
+        }else{
+            $link = ShortLinkHelper::shortUrl(route('cust.view', ['reservationId' => $reservationId]));
+        }
         $reservation->short_url = $link ?? '';
         $reservation->save();
 
         $payload['phone'] = $reservation->customer->phone;
-        $payload['message'] = "Hore! Bookingan kamu bhsl.
-        Pastikan datang max 10 mnt sblm kbrgktn.
-        Deetail booking: $link
-        -dikirim otmtis by system";
+        $payload['message'] = "Hore! Bookingan kamu berhasil.\r\nPastikan datang max 10 mnt sblm kbrgktn\r\nDetail booking: $link\r\n -SURYASHUTTLE";
 
         dispatch(new \App\Jobs\SendSms($payload));
     }
