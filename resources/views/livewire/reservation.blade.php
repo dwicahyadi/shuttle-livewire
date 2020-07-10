@@ -28,118 +28,20 @@
 
 
             </div>
-            @if($isFindTicket)
-                @include('livewire.partials.find-ticket')
-            @else
-                @include('livewire.partials.find-Schedule')
-            @endif
+            @livewire('reservation.partial.schedules')
         </div>
-        @isset($selectedDeparture)
-            <div class="col-md-4 p-0 bg-white border-right animate__animated animate__fadeIn">
-                <div class="bg-light text-center border p-2 sticky-top" style="height: 4rem;">
-                    @isset($selectedDeparture)
-                        <div class="d-flex w-100 mx-auto justify-content-between">
-                            <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#confirmManifest">
-                                <img src="{{ asset('images/news.svg') }}" alt="new" width="18">
-                                <br> Manifest
-                            </button>
-
-                            <button type="button" class="btn btn-light btn-sm" title="Refresh" wire:click="$refresh">
-                                <img src="{{ asset('images/reload.svg') }}" alt="new" width="18">
-                                <br> Reload
-                            </button>
-                        </div>
-                    @endisset
-                </div>
-
-                @isset($selectedDeparture)
-
-                    <div class="text-center p-2">
-                        <h6 class="">{{ $selectedDeparture->code ?? '' }} </h6>
-                        <h4 class="">{{ $selectedDeparture->departure_point->code ?? '---' }} <i class="fa fa-exchange-alt"></i> {{ $selectedDeparture->arrival_point->code ?? '---' }}</h4>
-                        <h6 class="">{{ $selectedDeparture->date ?? '' }} {{ $selectedDeparture->time ?? '' }}</h6>
-
-                    </div>
-                    @include('livewire.partials.seats-layout')
-                @endisset
-            </div>
-            <div class="col-md-5 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="bg-light text-center border p-2 sticky-top" style="height: 4rem;">
-                    @isset($selectedReservation)
-                        @php($paid = $selectedReservation->tickets[0]->payment_by ?? 0)
-                        <div class="d-flex w-100 mx-auto justify-content-between">
-                            <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#confirmPayment" @if($paid) style="display: none" @endif>
-                                <img src="{{ asset('images/pay.svg') }}" alt="new" width="18">
-                                <br> Bayar
-                            </button>
-
-                            <button type="button" class="btn btn-light btn-sm" wire:click="$refresh" onclick="window.open('{{ route('print.ticket', ['reservation'=> $selectedReservation]) }}', '', 'width=500,height=500')" @if(!$paid) style="display: none" @endif>
-                                <img src="{{ asset('images/print.svg') }}" alt="new" width="18">
-                                <br> Cetak <span class="badge badge-danger">{{ $selectedReservation->tickets[0]->count_print }}</span>
-                            </button>
-
-                            <button type="button" class="btn btn-light btn-sm" wire:click="resetReservation" hidden>
-                                <img src="{{ asset('images/watch.svg') }}" alt="new" width="18">
-                                <br> Mutasi
-                            </button>
-
-                            @if($selectedTickets)
-                            <button type="button" class="btn btn-danger animate__animated animate__fadeIn" data-toggle="modal" data-target="#confirmCancel" @if($paid) style="display: none" @endif>
-                                <img src="{{ asset('images/trash.svg') }}" alt="new" width="18">
-                                <br> Batalkan
-                            </button>
-                            @endif
-
-                            @can('Cancel Payment')
-                                <button type="button" class="btn btn-danger animate__animated animate__fadeIn"  @if(!$paid) style="display: none" @endif wire:click="cancelPayment">
-                                    <img src="{{ asset('images/trash.svg') }}" alt="cancel" width="18">
-                                    <br> Batalkan Payment
-                                </button>
-                            @endcan
-
-                            <button type="button" class="btn btn-light btn-sm" onclick="window.open('{{ 'https://'.$selectedReservation->short_url ?? 'https://suryashuttle.com' }}', '', 'width=800,height=600')">
-                                <img src="{{ asset('images/share.svg') }}" alt="new" width="18">
-                                <br> Bagikan
-                            </button>
-
-                            <button type="button" class="btn btn-light btn-sm" wire:click="resetReservation">
-                                <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
-                                <br> Baru
-                            </button>
-                        </div>
-                    @else
-                        @if($isNew)
-                            <div class="d-flex w-100 mx-auto justify-content-between">
-                                <button type="button" class="btn btn-light btn-sm" wire:click="saveOnly">
-                                    <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
-                                    <br> Simpan
-                                </button>
-
-                                <button type="submit"  data-toggle="modal" data-target="#confirmSaveAndPayment"class="btn btn-light btn-sm">
-                                    <img src="{{ asset('images/pay.svg') }}" alt="new" width="18">
-                                    <br> Bayar
-                                </button>
-                            </div>
-                        @endif
-                    @endisset
 
 
-                </div>
-                @if($isNew)
-                    @error('phone')  @enderror
-                    @include('livewire.partials.new-form')
-                @endif
+        <div class="col-md-4 p-0 bg-white border-right animate__animated animate__fadeIn">
+            @livewire('reservation.partial.seat-layout')
+        </div>
+        <div class="col-md-5 p-0 bg-white animate__animated animate__fadeIn">
+            @livewire('reservation.partial.reservation-form')
 
-                @isset($selectedReservation)
-                    @include('livewire.partials.detail-reservation')
-                @endisset
-            </div>
-        @else
-            <div class="col-md-9 bg-white animate__animated animate__fadeIn text-center">
-                <img src="{{ asset('images/receptionist.jpg') }}" alt="img" class="img-fluid m-4">
-                <h5 class="text-muted mx-auto">{{ config('settings.company_tagline') }}</h5>
-            </div>
-        @endisset
+            @isset($selectedReservation)
+                @include('livewire.partials.detail-reservation')
+            @endisset
+        </div>
     </div>
 
     @if($isManifestForm)

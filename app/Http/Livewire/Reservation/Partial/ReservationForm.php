@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Reservation\Partial;
 
-use App\Helpers\BillHelper;
 use App\Helpers\SmsHelper;
 use App\Jobs\SendSms;
 use App\Models\Car;
@@ -17,9 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-define('CODE_PESSENGER_RESERVATION','PSG');
-
-class Reservation extends Component
+class ReservationForm extends Component
 {
     use WithPagination;
 
@@ -79,7 +76,7 @@ class Reservation extends Component
             ->where('departure_point_id',$this->departurePointId)
             ->where('is_open',1)
             ->get();
-        return view('livewire.reservation');
+        return view('livewire.reservation.partial.reservation-form');
     }
 
     public function setDeparturePoint()
@@ -359,3 +356,5 @@ class Reservation extends Component
 
 
 }
+
+
