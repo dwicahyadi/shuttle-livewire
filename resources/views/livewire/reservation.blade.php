@@ -88,6 +88,11 @@
                                 <img src="{{ asset('images/trash.svg') }}" alt="new" width="18">
                                 <br> Batalkan
                             </button>
+
+                            <button type="button" class="btn btn-light animate__animated animate__fadeIn" wire:click="initReschedule">
+                                <img src="{{ asset('images/calendar (1).svg') }}" alt="new" width="18">
+                                <br> Reschedule
+                            </button>
                             @endif
 
                             @can('Cancel Payment')
@@ -126,7 +131,6 @@
 
                 </div>
                 @if($isNew)
-                    @error('phone')  @enderror
                     @include('livewire.partials.new-form')
                 @endif
 
@@ -145,7 +149,7 @@
     @if($isManifestForm)
         <div class="modal d-block" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
-                <div class="modal-content rounded shadow-lg">
+                <div class="modal-content shadow-lg">
                     <div class="modal-header">
                         <h4 class="modal-title">Manifest</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="$set('isManifestForm',0)">×</button>
@@ -191,27 +195,25 @@
     @endif
 
 
-    @if($isPrint)
+    @if($isReschedule)
+        @php($currentDeparture = $selectedReservation->tickets[0]->departure)
         <div class="modal d-block" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content rounded shadow-lg">
+                <div class="modal-content shadow-lg">
                     <div class="modal-header">
-                        <h4 class="modal-title">Cetak manifest</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="$set('isManifestForm',0)">×</button>
+                        <h4 class="modal-title">Reschedule</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" wire:click="$set('isReschedule',0)">×</button>
                     </div>
-                    <div class="modal-body print-area">
-                        <h1>Print area</h1>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" onclick="window.print()"> Cetak</button>
+                    <div class="modal-body">
+                        @livewire('reservation.partial.reschedule')
                     </div>
                 </div>
             </div>
         </div>
-@endif
+    @endif
 
 <!-- Modal -->
-    <div class="modal fade show" id="confirmSaveAndPayment" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal" id="confirmSaveAndPayment" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document" >
             <div class="modal-content">
                 <div class="modal-header">
@@ -220,7 +222,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">N
+                <div class="modal-body p-0">
                     <h4>Konfirmasi pembayaran dengan sebesar</h4>
                     <h1><small>Rp.</small>{{ number_format( $subTotal ) }}</h1>
                     <select class="form-control-lg form-control" wire:model="paymentMethod">
@@ -309,4 +311,5 @@
             </div>
         </div>
     </div>
+
 </div>

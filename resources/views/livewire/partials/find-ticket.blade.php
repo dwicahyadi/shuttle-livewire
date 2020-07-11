@@ -4,9 +4,9 @@
     <ul class="list-group">
         @forelse($searchReults as $searchResult)
             <li class="list-group-item list-group-item-action @if($searchResult->is_cancel) text-danger @endif  @if($searchResult->reservation_id == ($selectedReservation->id ?? 0)) bg-primary  text-white @endif"
-                @if($searchResult->is_cancel) wire:click="getFromSearch({{ $searchResult->id }})"  @else wire:click="getFromSearch({{ $searchResult->id }})"  @endif
+                @if(!$searchResult->is_cancel) wire:click="getFromSearch({{ $searchResult->id }})"  @endif
 
-                wire:key="{{$searchResult->id}}">
+                wire:key="ticket{{$searchResult->id}}">
                 <div class="d-flex">
                     @if($searchResult->is_cancel)
                         <img src="{{ asset('images/trash.svg') }}" alt="new" width="32" class="mr-2">
@@ -15,8 +15,9 @@
                     @endif
                     <div class="flex-fill">
                         <strong>{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $searchResult->name) !!}</strong> <span class="clearfix">{!!  str_ireplace($search,'<span class="bg-warning">'.$search.'</span>', $searchResult->phone) !!}</span>
-                        <h5>{{ $transaction->departure->departure_point->code ?? '' }} - {{ $transaction->departure->arrival_point->code ?? '' }} Seat <strong>{{ $searchResult->seat }}</strong></h5>
+                        <h5>{{ $searchResult->departure->departure_point->code ?? '' }} - {{ $searchResult->departure->arrival_point->code ?? '' }} Seat <strong>{{ $searchResult->seat }}</strong></h5>
                         <span class="clearfix">{{ $searchResult->departure->date ?? '' }} <strong>{{ $searchResult->departure->time ?? '' }}</strong></span>
+                        @if($searchResult->is_cancel) <span class="text-danger">Cancel</span>  @endif
                     </div>
                 </div>
             </li>
