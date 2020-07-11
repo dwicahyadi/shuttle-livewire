@@ -21,6 +21,12 @@ Route::get('/myReservation/{reservationId}', function ($reservationId) {
     $reservation = \App\Models\Reservation::find($reservationId);
     return view('reservation_detail',['reservation'=>$reservation]);
 })->name('cust.view');
+
+Route::get('/s/{reservationId}', function ($reservationId) {
+    $reservation = \App\Models\Reservation::find($reservationId);
+    return view('reservation_detail',['reservation'=>$reservation]);
+})->name('cust.view');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {

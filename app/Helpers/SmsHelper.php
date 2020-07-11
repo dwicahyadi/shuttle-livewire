@@ -33,9 +33,10 @@ class SmsHelper
     {
         $reservation = \App\Models\Reservation::find($reservationId);
         if($_SERVER['REMOTE_ADDR'] == '127.0.0.1'){
-            $link = ShortLinkHelper::shortUrl('https://google.com');
+            //$link = ShortLinkHelper::shortUrl('https://google.com');
         }else{
-            $link = ShortLinkHelper::shortUrl(route('cust.view', ['reservationId' => $reservationId]));
+            //$link = ShortLinkHelper::shortUrl(route('cust.view', ['reservationId' => $reservationId]));
+            $link = 'sys.suryashuttle.com/s/'.$reservationId;
         }
         $reservation->short_url = $link ?? '';
         $reservation->save();
