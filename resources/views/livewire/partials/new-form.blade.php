@@ -50,12 +50,13 @@
     <div class="form-group">
         <label>Harga</label>
         <select class="form-control" wire:model="discountId" wire:change="setDiscount">
-            <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
             @forelse($discounts as $discount_)
                 <option value="{{ $discount_->id }}">{{ $discount_->name}} Rp.{{ number_format($selectedDeparture->price - $discount_->amount) }}</option>
             @empty
 
             @endforelse
+            <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
+
         </select>
     </div>
 

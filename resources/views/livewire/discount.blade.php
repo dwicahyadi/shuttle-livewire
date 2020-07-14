@@ -67,7 +67,12 @@
                             <td>{{$discount->code}}</td>
                             <td>{{$discount->name}}</td>
                             <td align="right">{{number_format($discount->amount)}}</td>
-                            <td>{{$discount->active}}</td>
+                            <td>@if($discount->active)
+                                    <button type="button" class="btn btn-sm btn-success" wire:click="toggleAvtive({{$discount->id}})">Active</button>
+                                @else
+                                    <button type="button" class="btn btn-sm btn-danger" wire:click="toggleAvtive({{$discount->id}})">Inactive</button>
+                                @endif
+                            </td>
                             <td>
                                 <button class="btn btn-sm btn-primary" title="Edit" wire:click="get({{$discount->id}})"><i class="far fa-edit"></i></button>
                             </td>

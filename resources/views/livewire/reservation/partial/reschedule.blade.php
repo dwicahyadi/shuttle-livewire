@@ -1,4 +1,4 @@
-<div>
+<div xmlns:wire="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-md-6" style="height: 25rem; overflow-y: scroll">
             <form class="p-2" wire:submit.prevent="findDepartures">
@@ -73,8 +73,6 @@
         </div>
 
         <div class="col-md-6" style="height: 25rem; overflow-y: scroll">
-            {{ var_dump($selectedTickets) }}
-            {{ var_dump($selectedSeats) }}
             @php($seatPerRow = config('settings.seat_per_row'))
             @php($seats = $selectedDeparture->tickets->keyBy('seat'))
             <table class="table table-borderless">
@@ -150,7 +148,7 @@
     <div class="row">
         <div class="col-md-12 text-right">
             @if(count($selectedSeats) == count($selectedTickets))
-             <button type="button" class="btn btn-primary" wire:click="reschedule">Simpan</button>
+             <button type="button" class="btn btn-primary mt-2" wire:click="reschedule">Simpan</button>
             @endif
         </div>
     </div>

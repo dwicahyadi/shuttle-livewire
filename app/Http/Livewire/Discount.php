@@ -43,5 +43,12 @@ class Discount extends Component
         $this->amount = 0;
         $this->active = true;
     }
+
+    public function toggleAvtive($id)
+    {
+        $discount = \App\Models\Discount::find($id);
+        $discount->active = !$discount->active;
+        $discount->save();
+    }
 }
 

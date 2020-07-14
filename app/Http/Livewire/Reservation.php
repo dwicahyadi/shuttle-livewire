@@ -43,7 +43,7 @@ class Reservation extends Component
 
     protected $listeners = [
         'saved' => '$refresh',
-        'successRescedule'
+        'successRescedule',
     ];
 
     public function mount()
@@ -352,6 +352,8 @@ class Reservation extends Component
         $this->getDeparture($ticket->departure_id);
         $this->getReservation($ticket->reservation_id);
     }
+
+
 
     public function initReschedule()
     {
