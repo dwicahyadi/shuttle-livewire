@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
+        /*$schedule->call(function () {
             City::create(['code'=>rand(10,100),'name'=>rand(10,100)]);
-        })->everyMinute();
+        })->everyMinute();*/
     }
 
     /**
