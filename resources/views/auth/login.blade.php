@@ -7,7 +7,7 @@
         <div class="col-md-4">
             <div class="card mt-4 shadow-sm">
                 <div class="card-body">
-                    <img src="{{ asset('images/logo_surya_2.png') }}" alt="logo" class="img-fluid w-50 my-4 mx-auto">
+                    <img src="{{ config('settings.company_logo') ?? asset('images/logo.svg') }}" alt="logo" class="img-fluid w-50 my-4 mx-auto">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
