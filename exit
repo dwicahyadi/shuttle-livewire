@@ -1,0 +1,170 @@
+[33mcommit b0fb4844f884df1b35c896919af4100663e9e0b7[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m)[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Tue Jul 14 22:54:26 2020 +0700
+
+    fix reschedule, toggle diskon status, fix tampilan
+
+[33mcommit 1c039135a365d833d4df09ec6f2c5777900f7fbd[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sun Jul 12 00:54:35 2020 +0700
+
+    penambahan fungsi reschedule dan edit customer
+
+[33mcommit a78fb53c65607bf5be138ad3a3c5c7320c6aedbe[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sat Jul 11 20:53:41 2020 +0700
+
+    solusi semntara untukshorten link
+
+[33mcommit 20be4c5b0b8c0371a585eae5c821993e0412f7bb[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Tue Jun 30 15:13:13 2020 +0700
+
+    fix error 1
+
+[33mcommit 32198c4b529e9d418425b05edf83ffb3304600ed[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Tue Jun 30 14:36:14 2020 +0700
+
+    fix queue
+
+[33mcommit 3960af2a44bb2175910eca64856398801e633ec7[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Mon Jun 29 13:16:31 2020 +0700
+
+    perbaikan tombol bagikan
+
+[33mcommit 6eaeaa498624d1efa651001aa8fcdbd3cc38a2cb[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Mon Jun 29 11:31:23 2020 +0700
+
+    revisi typo + cetak settlement
+
+[33mcommit e87476a7e4cc7f9bc181f20939be8bfee740911b[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sun Jun 28 21:42:45 2020 +0700
+
+    chek typo
+
+[33mcommit 6d6b0c45833abe8da13836009967b30b74b3260f[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 26 14:40:45 2020 +0700
+
+    fix bug kelola jadwal
+
+[33mcommit c2a5e2ea2ec17747c976370ec2c062fce0f3b9ef[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 26 08:23:24 2020 +0700
+
+    fix bug shorten link
+
+[33mcommit 717967be17c97c0368ff07f354361c921ac8704d[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 26 02:17:01 2020 +0700
+
+    add filed api user diseeting sms
+
+[33mcommit 1f9c2059593498e88913556bcfe87709bfe92655[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 26 02:13:23 2020 +0700
+
+    impelemntasi SMS
+
+[33mcommit 8d8c986242f7a6db803620cb785717b82e1096fc[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Thu Jun 25 00:18:38 2020 +0700
+
+    add role permission
+
+[33mcommit ace086dd52637ebb3026c8063d670e7377ca2b5c[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 19 13:14:47 2020 +0700
+
+    tagihan menggunakan session lagsung d hitung sejak awal login
+
+[33mcommit f7a22cac678df83ec6edead6bd34aeb4abb7b7f4[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 19 13:13:38 2020 +0700
+
+    tagihan menggunakan session lagsung d hitung sejak awal login
+
+[33mcommit b019d7260cdc41afbb0286ff1bdb1942d0294136[m
+Merge: e9ea281 0e8ae83
+Author: adi <adi@adi.com>
+Date:   Fri Jun 19 01:54:46 2020 +0800
+
+    Merge branch 'dev' of https://github.com/dwicahyadi/shuttle-livewire into dev
+    
+    xx
+
+[33mcommit 0e8ae83e9f4dabd3a5ee4f2454e13f2bda256f66[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 19 00:54:02 2020 +0700
+
+    fix bug driver name
+
+[33mcommit e9ea281740446769cbcd2f142321b852b9932dc7[m
+Merge: 3d10e5b 3127f1d
+Author: adi <adi@adi.com>
+Date:   Fri Jun 19 01:47:02 2020 +0800
+
+    Merge branch 'dev' of https://github.com/dwicahyadi/shuttle-livewire into dev
+    
+    nah
+
+[33mcommit 3127f1dd3832b9e6b2a9300a9787d0b5f7ced46e[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Fri Jun 19 00:39:31 2020 +0700
+
+    update view reservasi, penambhan role permission, modul setting, cetak tiket
+
+[33mcommit 3d10e5bfde9c8a45740b395e4fbd289c8828b168[m
+Merge: 2fc7ad0 ddb40bd
+Author: adi <adi@adi.com>
+Date:   Sun Jun 14 21:43:16 2020 +0800
+
+    Merge branch 'dev' of https://github.com/dwicahyadi/shuttle-livewire into dev
+    
+    merge commit
+
+[33mcommit 2fc7ad094fccb244e43fc89fc1cc8877e86b6950[m
+Author: adi <adi@adi.com>
+Date:   Sun Jun 14 21:40:05 2020 +0800
+
+    fix gegara mysql beda versi
+
+[33mcommit ddb40bd507c2c655f7c03b08558593fb08f6d530[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sun Jun 14 20:35:18 2020 +0700
+
+    hapus class tidak digunakan d reservasi
+
+[33mcommit 3fbaf5d447a3db0a0c5311996a480fbf9cc16afd[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sun Jun 14 16:06:37 2020 +0700
+
+    tambah demo user di seeder;
+
+[33mcommit d32e4e863dff90570c82a5244f1b48dddae476ee[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sun Jun 14 15:55:16 2020 +0700
+
+    melengkapi menu dan tambah logo di login
+
+[33mcommit 59b09e1125f10d8c967e283753599c0a68fd763b[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Sat Jun 13 23:37:47 2020 +0700
+
+    merapihkan flow
+
+[33mcommit 9c528fda775ac3ce61b9767ec425ecf9a487fea7[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Thu Jun 11 14:46:39 2020 +0700
+
+    tambah branch baru untuk dev
+
+[33mcommit bd9e38e943a87a7474f2aa0bd51fec7d5014c439[m
+Author: Dwi Cahyadi <cahyadi2@gmail.com>
+Date:   Thu Jun 11 14:17:58 2020 +0700
+
+    first upload

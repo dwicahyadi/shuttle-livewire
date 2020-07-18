@@ -73,7 +73,8 @@ class Reservation extends Component
     public function render()
     {
         if (!$this->date) $this->date = date('Y-m-d');
-        $this->departures = Departure::whereDate('date', $this->date)
+        $this->departures = Departure::with(['schedule','tickets'])
+            ->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
@@ -99,10 +100,11 @@ class Reservation extends Component
     public function findDepartures()
     {
         $this->selectedDeparture = null;
-        $this->departures = Departure::with(['schedule'])->whereDate('date', $this->date)
+        $this->departures = Departure::with(['schedule','tickets'])->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
+            ->orderBy('time')
             ->get();
     }
 
@@ -169,6 +171,9 @@ class Reservation extends Component
         $this->subTotal = ($this->selectedDeparture->price - ($this->discount->amount ?? 0)) * count($this->selectedSeats);
     }
 
+    /*
+     * @todo: fix bug seteleh reschedule mesti rfresh untuk bisa save
+     * */
     public function save()
     {
         $this->validate([
@@ -191,7 +196,9 @@ class Reservation extends Component
                 'payment_by' => Auth::id(),
             ]
         );
-        dispatch(new SendSms(['phone' => $this->reservation->customer->phone, 'message' => 'Terimakasih. Pembayaran berjasil dilakukan']));
+
+        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, 'message'=>'Terimakasih. Pembayaran berhasil dilakukan']));
+
         $this->emit('updateBill');
         $this->updateCustomerCountReservationFinish();
     }

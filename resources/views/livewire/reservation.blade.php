@@ -95,23 +95,30 @@
                                 </button>
                             @endif
 
-
-                            @can('Cancel Payment')
-                                <button type="button" class="btn btn-danger animate__animated animate__fadeIn"  @if(!$paid) style="display: none" @endif wire:click="cancelPayment">
-                                    <img src="{{ asset('images/trash.svg') }}" alt="cancel" width="18">
-                                    <br> Batalkan Payment
+                            <div class="btn-group dropleft">
+                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('images/gear.svg') }}" alt="new" width="18">
+                                    <br> Option
                                 </button>
-                            @endcan
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <button type="button" class="dropdown-item" onclick="window.open('{{ 'https://'.$selectedReservation->short_url ?? 'https://suryashuttle.com' }}', '', 'width=800,height=600')">
+                                        <img src="{{ asset('images/share.svg') }}" alt="new" width="18">
+                                         Bagikan
+                                    </button>
 
-                            <button type="button" class="btn btn-sm" onclick="window.open('{{ 'https://'.$selectedReservation->short_url ?? 'https://suryashuttle.com' }}', '', 'width=800,height=600')">
-                                <img src="{{ asset('images/share.svg') }}" alt="new" width="18">
-                                <br> Bagikan
-                            </button>
-
-                            <button type="button" class="btn btn-sm" wire:click="resetReservation">
-                                <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
-                                <br> Baru
-                            </button>
+                                    @can('Cancel Payment')
+                                        <button type="button" class="dropdown-item"  @if(!$paid) style="display: none" @endif wire:click="cancelPayment">
+                                            <img src="{{ asset('images/trash.svg') }}" alt="new" width="18">
+                                             Batalkan Payment
+                                        </button>
+                                    @endcan
+                                    <button type="button" class="dropdown-item" wire:click="resetReservation">
+                                        <img src="{{ asset('images/add.svg') }}" alt="new" width="18">
+                                         Baru
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     @else
                         @if($isNew)
@@ -133,6 +140,9 @@
                 </div>
 
                 <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+                    @if($errors->any())
+                        {!! implode('', $errors->all('<div>:message</div>')) !!}
+                    @endif
                     @if($isNew)
                         @include('livewire.partials.new-form')
                     @endif
@@ -146,6 +156,7 @@
             <div class="col-md-9 bg-white animate__animated animate__fadeIn text-center">
                 <img src="{{ asset('images/receptionist.jpg') }}" alt="img" class="img-fluid m-4">
                 <h5 class="text-muted mx-auto">{{ config('settings.company_tagline') }}</h5>
+                @livewire('partial.package-list')
             </div>
         @endisset
     </div>

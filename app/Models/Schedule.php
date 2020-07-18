@@ -37,4 +37,14 @@ class Schedule extends Model
     {
         return $this->hasManyThrough(Ticket::class,Departure::class)->whereNull('tickets.is_cancel');
     }
+
+    public function paidTickets()
+    {
+        return $this->hasManyThrough(Ticket::class,Departure::class)->whereNull('tickets.is_cancel')->whereNotNull('tickets.payment_by');
+    }
+
+    public function sumTicketsAmount()
+    {
+        return $this->paidTickets()->selectRaw('departure_id, sum(tickets.price) as amount')->groupBy('departure_id');
+    }
 }

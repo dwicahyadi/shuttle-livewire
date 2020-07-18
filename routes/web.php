@@ -29,6 +29,13 @@ Route::get('/s/{reservationId}', function ($reservationId) {
 
 Auth::routes();
 
+Route::get('pivot', function (){
+   return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
+});
+Route::get('coba', function (){
+    return \App\Helpers\ReportHelper::ocupancy(1,'2020-07-05');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
@@ -66,5 +73,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('print/manifest/{schedule}', 'PrintController@manifest')->name('print.manifest');
 
     Route::get('print/settlement/{settlement}', 'PrintController@settlement')->name('print.settlement');
+
+
+    /*reports*/
+    Route::livewire('/report/income_statement', 'report.income-statement')->name('report.income-statement');
+    Route::livewire('/report/settlements', 'report.settlements')->name('report.settlements');
+    Route::livewire('/report/ocupancy', 'report.ocupancy')->name('report.ocupancy');
 
 });
