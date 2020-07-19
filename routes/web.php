@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
 
     /*prints*/
-    Route::get('print/ticket/{reservation}','PrintController@ticket')->name('print.ticket');
+    Route::get('print/ticket/{reservationId}','PrintController@ticket')->name('print.ticket');
 
     Route::get('print/manifest/{schedule}', 'PrintController@manifest')->name('print.manifest');
 

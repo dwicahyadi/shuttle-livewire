@@ -58,6 +58,12 @@
             <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
 
         </select>
+        <label class="my-2"><input type="checkbox" wire:click="toggleTransfer"> Pembayaran melalui Transfer</label>
+        @if($expire)
+            <div class="my-2 p-1 bg-warning">
+                Maksimal waktu transfer adalah <strong>{{ $expire }}</strong> atau reservasi akan dibatalkan secara otomatis.
+            </div>
+        @endif
     </div>
 
     <div class="form-group">
@@ -81,6 +87,10 @@
             </tr>
 
         </table>
+    </div>
+
+    <div class="form-group">
+
     </div>
 
     <hr>

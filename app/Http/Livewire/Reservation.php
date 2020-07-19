@@ -13,6 +13,7 @@ use App\Models\Discount;
 use App\Models\Driver;
 use App\Models\Point;
 use App\Models\Ticket;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,14 +24,14 @@ class Reservation extends Component
 {
     use WithPagination;
 
-    public $isNew, $isManifestForm, $isPrint, $isFindTicket, $isReschedule, $isEditCustomer;
+    public $isNew, $isManifestForm, $isPrint, $isFindTicket, $isReschedule, $isEditCustomer, $onlyFilled;
     public $cities, $discounts, $cars, $drivers;
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
     public $search, $searchReults;
 
     public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod;
 
-    public $phone, $name, $address, $departureId, $subTotal;
+    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire;
     public $selectedSeats = [];
     public $suggestCustomers;
     public $customer;
@@ -69,11 +70,14 @@ class Reservation extends Component
         $this->setDeparturePoint();
         $this->setArrivalPoint();
         $this->getDeparture($this->selectedDepartureId);
+        $this->isTransfer= false;
+        $this->onlyFilled= false;
     }
     public function render()
     {
         if (!$this->date) $this->date = date('Y-m-d');
-        $this->departures = Departure::with(['schedule','tickets'])
+        $this->departures = Departure::with(['schedule'])
+            ->withCount('tickets')
             ->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
@@ -100,7 +104,7 @@ class Reservation extends Component
     public function findDepartures()
     {
         $this->selectedDeparture = null;
-        $this->departures = Departure::with(['schedule','tickets'])->whereDate('date', $this->date)
+        $this->departures = Departure::with(['schedule'])->withCount('tickets')->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
@@ -117,6 +121,7 @@ class Reservation extends Component
         $this->setDeparturePoint();
         $this->findDepartures();
         $this->isNew = false;
+        $this->selectedDepartureId = null;
     }
 
     public function getDeparture($departureId)
@@ -188,6 +193,7 @@ class Reservation extends Component
 
     public function payment()
     {
+        $this->reservation->update(['expired_at'=> null,'is_expired'=>false]);
         $this->reservation->tickets()->update(
             [
                 'status' => 'paid',
@@ -248,6 +254,7 @@ class Reservation extends Component
         $this->reservation->user_id = Auth::id();
         $this->reservation->customer_id = $this->customer->id;
         $this->reservation->code = CODE_PESSENGER_RESERVATION . Auth::id() . date('ymdHis');
+        $this->reservation->expired_at = $this->expire;
         $this->reservation->save();
         $this->updateCustomerReservationCount();
     }
@@ -380,5 +387,18 @@ class Reservation extends Component
         $this->customer->address = $this->address;
         $this->customer->save();
         $isEditCustomer = 0;
+    }
+
+    public function toggleTransfer()
+    {
+        $this->isTransfer = !$this->isTransfer;
+        $this->expire = $this->isTransfer ?
+            Carbon::now()->addMinutes(config('settings.max_minutes_for_transfer_bank'))->format('Y-m-d H:i:s') :
+            null;
+    }
+
+    public function toggleonlyFilled()
+    {
+        $this->onlyFilled = !$this->onlyFilled;
     }
 }
