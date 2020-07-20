@@ -3,8 +3,10 @@
 namespace App\Console;
 
 use App\Models\City;
+use App\Models\Reservation;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,9 +27,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        /*$schedule->call(function () {
-            City::create(['code'=>rand(10,100),'name'=>rand(10,100)]);
-        })->everyMinute();*/
+        $schedule->call(function () {
+            //
+        })->everyMinute();
     }
 
     /**

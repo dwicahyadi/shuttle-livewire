@@ -11,52 +11,52 @@
             @can('Car')<a class="dropdown-item" href="{{route('car')}}">Mobil</a>@endcan
             @can('Driver')<a class="dropdown-item" href="{{route('driver')}}">Sopir</a>@endcan
             @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Diskon</a>@endcan
+            @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Cutomer</a>@endcan
         </div>
     </li>
     @can('Schedule')
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Jadwal</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownSchedule">
-            <a class="dropdown-item" href="{{route('schedule.create')}}">Buka Jadwal</a>
-            <a class="dropdown-item" href="{{route('schedule.manage')}}">Kelola Jadwal</a>
-        </div>
-    </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Jadwal</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownSchedule">
+                <a class="dropdown-item" href="{{route('schedule.create')}}">Buka Jadwal</a>
+                <a class="dropdown-item" href="{{route('schedule.manage')}}">Kelola Jadwal</a>
+            </div>
+        </li>
     @endcan
 
     @can('Reservation')
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('reservation') }}">Reservasi</a>
-    </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropDownReservation" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Reservasi</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownReservation">
+                <a class="dropdown-item" href="{{route('reservation')}}">Buat Reservasi</a>
+                <a class="dropdown-item" href="{{route('reservation.create')}}">Monitor Pembayaran Transfer</a>
+            </div>
+        </li>
 
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropDownHistory" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">History</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownHistory">
-            <a class="dropdown-item" href="{{route('history.reservation')}}">Reservasi</a>
-            <a class="dropdown-item" href="{{route('history.transaction')}}">Transaksi</a>
-            <a class="dropdown-item" href="{{route('history.settlement')}}">Settlement</a>
-        </div>
-    </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropDownHistory" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">History</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownHistory">
+                <a class="dropdown-item" href="{{route('history.reservation')}}">Reservasi</a>
+                <a class="dropdown-item" href="{{route('history.transaction')}}">Transaksi</a>
+                <a class="dropdown-item" href="{{route('history.settlement')}}">Settlement</a>
+            </div>
+        </li>
     @endcan
 
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdwonSetting" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Setting</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropdwonSetting">
-            <a class="dropdown-item" href="{{route('setting.user')}}">User</a>
-        </div>
-    </li>
+    @can('Setting')
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdwonSetting" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Setting</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropdwonSetting">
+                <a class="dropdown-item" href="{{route('setting.user')}}">User</a>
+            </div>
+        </li>
+    @endcan
 
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdwonSetting" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Data Customer</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropdwonSetting">
-            <a class="dropdown-item" href="{{route('setting.user')}}">User</a>
-        </div>
-    </li>
-
-    @can('Reservation')
+    @can('View Report')
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropDownHistory" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">Laporan</a>

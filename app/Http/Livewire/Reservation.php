@@ -31,7 +31,7 @@ class Reservation extends Component
 
     public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod;
 
-    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire;
+    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber;
     public $selectedSeats = [];
     public $suggestCustomers;
     public $customer;
@@ -72,6 +72,7 @@ class Reservation extends Component
         $this->getDeparture($this->selectedDepartureId);
         $this->isTransfer= false;
         $this->onlyFilled= false;
+        $this->uniqueNumber = 0;
     }
     public function render()
     {
@@ -255,6 +256,7 @@ class Reservation extends Component
         $this->reservation->customer_id = $this->customer->id;
         $this->reservation->code = CODE_PESSENGER_RESERVATION . Auth::id() . date('ymdHis');
         $this->reservation->expired_at = $this->expire;
+        if($this->uniqueNumber) $this->reservation->transfer_amount = $this->subTotal + $this->uniqueNumber;
         $this->reservation->save();
         $this->updateCustomerReservationCount();
     }
@@ -392,9 +394,17 @@ class Reservation extends Component
     public function toggleTransfer()
     {
         $this->isTransfer = !$this->isTransfer;
-        $this->expire = $this->isTransfer ?
-            Carbon::now()->addMinutes(config('settings.max_minutes_for_transfer_bank'))->format('Y-m-d H:i:s') :
-            null;
+        if ($this->isTransfer)
+        {
+            $this->expire = Carbon::now()
+                ->addMinutes(config('settings.max_minutes_for_transfer_bank'))
+                ->format('Y-m-d H:i:s');
+
+            $this->uniqueNumber = rand(1,99);
+        }else{
+            $this->expire = null;
+            $this->uniqueNumber = 0;
+        }
     }
 
     public function toggleonlyFilled()

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +35,7 @@ Route::get('pivot', function (){
    return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
 });
 Route::get('coba', function (){
-    return \App\Helpers\ReportHelper::ocupancy(1,'2020-07-05');
+    DB::table('reservations')->where('expired_at','<=', Carbon::now())->update(['is_expired'=>true]);
 });
 
 Route::middleware(['auth'])->group(function () {

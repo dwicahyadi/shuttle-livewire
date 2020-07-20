@@ -12,7 +12,7 @@
     </div>
     <div class="row p-0">
         <div class="col-md-3 p-0 bg-white">
-            <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+            <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                 <div class="d-flex w-100 mx-auto justify-content-between">
                     <button type="button" class="btn btn-sm" wire:click="$set('isFindTicket',0)">
                         <img src="{{ asset('images/calendar (1).svg') }}" alt="new" width="18">
@@ -27,7 +27,7 @@
                 </div>
 
             </div>
-            <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+            <div class=""  style="height: 90vh; overflow: auto;">
                 @if($isFindTicket)
                     @include('livewire.partials.find-ticket')
                 @else
@@ -38,7 +38,7 @@
         </div>
         @isset($selectedDeparture)
             <div class="col-md-4 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+                <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                     @isset($selectedDeparture)
                         <div class="d-flex w-100 mx-auto justify-content-between">
                             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#confirmManifest">
@@ -55,7 +55,7 @@
                 </div>
 
                 @isset($selectedDeparture)
-                    <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+                    <div class=""  style="height: 90vh; overflow: auto;">
                         <div class="bg-light shadow-sm p-2 d-flex justify-content-start">
                             <div class="mr-2 border-right p-2">
                                 <h1 class="my-4">{{ substr($selectedDeparture->time , 0, 5) }}</h1>
@@ -76,7 +76,7 @@
                 @endisset
             </div>
             <div class="col-md-5 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+                <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                     @isset($selectedReservation)
                         @php($paid = $selectedReservation->tickets[0]->payment_by ?? 0)
                         <div class="d-flex w-100 mx-auto justify-content-between">
@@ -146,7 +146,7 @@
 
                 </div>
 
-                <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+                <div class=""  style="height: 90vh; overflow: auto; overflow-x: hidden">
                     @if($errors->any())
                         {!! implode('', $errors->all('<div>:message</div>')) !!}
                     @endif
