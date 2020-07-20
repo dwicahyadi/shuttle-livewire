@@ -45,8 +45,9 @@ class SmsHelper
         if ($reservation->transfer_amount)
         {
             $msg = "Silakan lakukan transfer sebesar ".number_format($reservation->transfer_amount)." ke rek BCA 12312323 an Surya Shuttle sebelum ". $reservation->expired_at.". Terimakasih. -SURYASHUTTLE";
+        }else{
+            $msg = "Hore! Bookingan kamu berhasil.\r\nPastikan datang max 10 mnt sblm kbrgktn\r\nDetail booking: $link\r\n -SURYASHUTTLE";
         }
-        $msg = "Hore! Bookingan kamu berhasil.\r\nPastikan datang max 10 mnt sblm kbrgktn\r\nDetail booking: $link\r\n -SURYASHUTTLE";
         $payload['phone'] = $reservation->customer->phone;
         $payload['message'] = $msg;
 
