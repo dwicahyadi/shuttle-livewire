@@ -57,7 +57,7 @@
         @forelse($tickets->whereNotNull('payment_by') as $ticket)
             <tr>
                 <td>{{ $ticket->seat }}</td>
-                <td>{{ $ticket->name }}/{{ $ticket->phone }} </td>
+                <td>{{ $ticket->name }}</td>
             </tr>
             <tr>
                 <td></td>

@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +35,7 @@ Route::get('pivot', function (){
    return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
 });
 Route::get('coba', function (){
-    return \App\Helpers\ReportHelper::ocupancy(1,'2020-07-05');
+    DB::table('reservations')->where('expired_at','<=', Carbon::now())->update(['is_expired'=>true]);
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -63,12 +65,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::livewire('/settlement', 'settlement')->name('settlment');
 
-    Route::livewire('/reservation/create', 'reservation.create')->name('reservation.create');
-    Route::livewire('/reservation/search', 'reservation.search')->name('reservation.search');
-    Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
+    Route::livewire('/reservation/transfer_monitor', 'transfer-payment-monitor')->name('reservation.transfer_monitor');
 
     /*prints*/
-    Route::get('print/ticket/{reservation}','PrintController@ticket')->name('print.ticket');
+    Route::get('print/ticket/{reservationId}','PrintController@ticket')->name('print.ticket');
 
     Route::get('print/manifest/{schedule}', 'PrintController@manifest')->name('print.manifest');
 

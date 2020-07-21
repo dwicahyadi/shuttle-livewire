@@ -12,7 +12,7 @@
     </div>
     <div class="row p-0">
         <div class="col-md-3 p-0 bg-white">
-            <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+            <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                 <div class="d-flex w-100 mx-auto justify-content-between">
                     <button type="button" class="btn btn-sm" wire:click="$set('isFindTicket',0)">
                         <img src="{{ asset('images/calendar (1).svg') }}" alt="new" width="18">
@@ -26,9 +26,8 @@
 
                 </div>
 
-
             </div>
-            <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+            <div class=""  style="height: 90vh; overflow: auto;">
                 @if($isFindTicket)
                     @include('livewire.partials.find-ticket')
                 @else
@@ -39,7 +38,7 @@
         </div>
         @isset($selectedDeparture)
             <div class="col-md-4 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+                <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                     @isset($selectedDeparture)
                         <div class="d-flex w-100 mx-auto justify-content-between">
                             <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#confirmManifest">
@@ -56,11 +55,19 @@
                 </div>
 
                 @isset($selectedDeparture)
-                    <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
-                        <div class="text-center p-2">
-                            <h6 class="">{{ $selectedDeparture->code ?? '' }} </h6>
-                            <h4 class="">{{ $selectedDeparture->departure_point->code ?? '---' }} <i class="fa fa-exchange-alt"></i> {{ $selectedDeparture->arrival_point->code ?? '---' }}</h4>
-                            <h6 class="">{{ $selectedDeparture->date ?? '' }} {{ $selectedDeparture->time ?? '' }}</h6>
+                    <div class=""  style="height: 90vh; overflow: auto;">
+                        <div class="bg-light shadow-sm p-2 d-flex justify-content-start">
+                            <div class="mr-2 border-right p-2">
+                                <h1 class="my-4">{{ substr($selectedDeparture->time , 0, 5) }}</h1>
+                            </div>
+                            <div>
+                                <span class="clearfix">Dari : <strong>{{ $selectedDeparture->departure_point->name ?? '---' }}</strong></span>
+                                <span class="clearfix">Tujuan : <strong>{{ $selectedDeparture->arrival_point->name ?? '---' }}</strong></span>
+                                <span class="clearfix">Tujuan : <strong>{{ $selectedDeparture->date}}</strong></span>
+                                <small class="">{{ $selectedDeparture->code ?? '' }} </small>
+
+                            </div>
+
 
                         </div>
                         @include('livewire.partials.seats-layout')
@@ -69,7 +76,7 @@
                 @endisset
             </div>
             <div class="col-md-5 p-0 bg-white animate__animated animate__fadeIn">
-                <div class="shadow-sm sticky-top p-2 bg-white" style="height: 4rem;">
+                <div class="shadow-sm sticky-top p-2 bg-white border-top" style="height: 4rem;">
                     @isset($selectedReservation)
                         @php($paid = $selectedReservation->tickets[0]->payment_by ?? 0)
                         <div class="d-flex w-100 mx-auto justify-content-between">
@@ -78,7 +85,7 @@
                                 <br> Bayar
                             </button>
 
-                            <button type="button" class="btn btn-sm" wire:click="$refresh" onclick="window.open('{{ route('print.ticket', ['reservation'=> $selectedReservation]) }}', '', 'width=500,height=500')" @if(!$paid) style="display: none" @endif>
+                            <button type="button" class="btn btn-sm" wire:click="$refresh" onclick="window.open('{{ route('print.ticket', ['reservationId'=> $selectedReservation->id]) }}', '', 'width=500,height=500')" @if(!$paid) style="display: none" @endif>
                                 <img src="{{ asset('images/print.svg') }}" alt="new" width="18">
                                 <br> Cetak <span class="badge badge-danger">{{ $selectedReservation->tickets[0]->count_print }}</span>
                             </button>
@@ -139,7 +146,7 @@
 
                 </div>
 
-                <div class=""  style="height: 30rem; overflow-y: scroll; overflow-x: hidden">
+                <div class=""  style="height: 90vh; overflow: auto; overflow-x: hidden">
                     @if($errors->any())
                         {!! implode('', $errors->all('<div>:message</div>')) !!}
                     @endif

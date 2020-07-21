@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Reservation extends Model
 {
@@ -13,6 +15,7 @@ class Reservation extends Model
         'expired_at',
         'is_expired',
         'user_id',
+        'transfer_amount',
     ];
 
     public function tickets()
@@ -23,5 +26,10 @@ class Reservation extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function expired()
+    {
+        return DB::table($this->getTable())->where('expired_at','>=', Carbon::now());
     }
 }

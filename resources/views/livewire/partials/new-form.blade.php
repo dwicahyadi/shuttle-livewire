@@ -58,6 +58,12 @@
             <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
 
         </select>
+        <label class="my-2"><input type="checkbox" wire:click="toggleTransfer"> Pembayaran melalui Transfer</label>
+        @if($expire)
+            <div class="my-2 p-1 bg-warning">
+                Maksimal waktu transfer adalah <strong>{{ $expire }}</strong> atau reservasi akan dibatalkan secara otomatis.
+            </div>
+        @endif
     </div>
 
     <div class="form-group">
@@ -66,21 +72,25 @@
             @foreach($selectedSeats as $seat)
                 <tr class="border-bottom">
                     <td style="width: 20rem">
-                        <h3><strong>Seat {{ $seat }}</strong></h3>
+                        <h5><strong>Seat {{ $seat }}</strong></h5>
                     </td>
 
                     <td align="right">
                         <small class="text-muted">{{ $discount->name ?? 'Umum' }}</small>
-                        <h4><small>Rp.</small>{{number_format($selectedDeparture->price - ($discount->amount ?? 0))}}</h4>
+                        <h5><small>Rp.</small>{{number_format($selectedDeparture->price - ($discount->amount ?? 0))}}</h5>
                     </td>
                 </tr>
             @endforeach
             <tr>
                 <td colspan=""></td>
-                <td align="right"><h3><small>Rp.</small>{{ number_format($subTotal )}}</h3></td>
+                <td align="right"><h4><small>Rp.</small>{{ number_format($subTotal )}} {{ $uniqueNumber ? '+'.$uniqueNumber : '' }}</h4></td>
             </tr>
 
         </table>
+    </div>
+
+    <div class="form-group">
+
     </div>
 
     <hr>

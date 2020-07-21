@@ -105,13 +105,13 @@
         </main>
 
 
-        <footer class="border-top py-4">
+    {{--    <footer class="border-top py-4">
             <div class="container text-right">
                 <img src="{{ config('settings.company_logo') ?? asset('images/logo.svg') }}" alt="logo"><br>
                 <strong>{{config('settings.company_name')}}</strong><br>
                 <small>{{config('settings.company_address')}}</small>
             </div>
-        </footer>
+        </footer>--}}
     </div>
 
     @livewireScripts

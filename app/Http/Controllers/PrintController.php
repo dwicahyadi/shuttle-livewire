@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PrintController extends Controller
 {
-    public function ticket(Reservation $reservation)
+    public function ticket($reservationId)
     {
+        $reservation = Reservation::with('tickets')->find( $reservationId);
         if($reservation->tickets[0]->count_print > 0)
         {
             if(!Auth::user()->can('Re-print'))

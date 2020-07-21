@@ -42,8 +42,14 @@ class SmsHelper
         $reservation->short_url = $link ?? '';
         $reservation->save();
 
+        if ($reservation->transfer_amount)
+        {
+            $msg = "Silakan lakukan transfer sebesar ".number_format($reservation->transfer_amount)." ke rek ".config('settings.company_bank_account')." sebelum ". $reservation->expired_at.". Terimakasih. -SURYASHUTTLE";
+        }else{
+            $msg = "Hore! Bookingan kamu berhasil.\r\nPastikan datang max 10 mnt sblm kbrgktn\r\nDetail booking: $link\r\n -SURYASHUTTLE";
+        }
         $payload['phone'] = $reservation->customer->phone;
-        $payload['message'] = "Hore! Bookingan kamu berhasil.\r\nPastikan datang max 10 mnt sblm kbrgktn\r\nDetail booking: $link\r\n -SURYASHUTTLE";
+        $payload['message'] = $msg;
 
         dispatch(new \App\Jobs\SendSms($payload));
     }

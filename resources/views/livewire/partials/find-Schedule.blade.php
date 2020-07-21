@@ -5,7 +5,7 @@
         @error('date')<br>{{ $message }}@enderror
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-4">
         <div class="input-group">
             <select class="form-control" wire:model.lazy="departurePointId" wire:change="setDeparturePoint">
                 <option value="">Berangkat dari</option>
@@ -36,7 +36,16 @@
                 @endforelse
             </select>
         </div>
-        <button type="button" class="btn btn-block" wire:click="switchPoint"  title="Klik untuk Switch Point"><i class="fa fa-exchange-alt"></i></button>
+        <div class="mt-2">
+            <button type="button" class="btn btn-block btn-outline-primary mt-2" wire:click="switchPoint"  title="Klik untuk Switch Point">
+                <i class="fa fa-exchange-alt"></i> Swithh Point
+            </button>
+        </div>
+
+        <div class="mt-2">
+            <label><input type="checkbox" wire:click="toggleonlyFilled" wire:model="onlyFilled"> Hanya tampilkan yang sudah terisi</label>
+        </div>
+
     </div>
     {{--  <div class="form-group">
           <button type="submit" class="btn btn-primary btn-block">Cari</button>
@@ -45,6 +54,10 @@
 
 <ul class="list-group">
     @forelse($departures as $departure)
+        @if($onlyFilled)
+            @continue(!$departure->tickets_count)
+        @endif
+
         <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
             <div class="d-flex">
                 <div class="mr-2">
@@ -55,7 +68,7 @@
                     <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
                 </div>
                 <div>
-                    <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets->count() }}</label>
+                    <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets_count }}</label>
                 </div>
             </div>
         </li>

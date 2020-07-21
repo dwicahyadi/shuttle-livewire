@@ -1,4 +1,10 @@
 <div class="p-2">
+    @if($selectedReservation->expired_at)
+        <div class="p-2 bg-warning">
+            Pembayaran melalui transfer. Akan dibatalkan otomatis pada <strong>{{ $selectedReservation->expired_at }}</strong>
+        </div>
+    @endif
+
     <p>
         <small>Kode</small><br>
         <strong>{{ $selectedReservation->code ?? '----' }}</strong>
@@ -11,50 +17,60 @@
         <small>Nama Pemesan</small><br>
         <strong>{{ $selectedReservation->customer->name }}</strong>
     </p>
+
     <p>Tiket</p>
     <table class="table table-borderless">
         @if(count($selectedReservation->tickets))
-            @foreach($selectedReservation->tickets as $ticket)
-                @if($ticket->departure_id == $selectedDepartureId)
-                    <tr class="border-bottom">
-                        <td style="width: 20rem">
-
-                            <h3><input type="checkbox" value="{{ $ticket->id }}" wire:model="selectedTickets"> <strong>Seat {{ $ticket->seat }}</strong></h3>
-                        </td>
-
-                        <td align="right">
-                            <small class="text-muted">{{ $ticket->discount_name }}</small>
-                            <h4><small>Rp.</small>{{number_format($ticket->price)}}</h4>
-                        </td>
-                    </tr>
-                @else
-                    <tr class="border-bottom text-muted">
-                        <td style="width: 20rem">
-                            <a href="{{ route('reservation',[
-                                'date'=>$ticket->departure->date,
-                                'departurePointId'=>$ticket->departure->departure_point->id,
-                                'arrivalPointId'=>$ticket->departure->arrival_point->id,
-                                'selectedDepartureId'=>$ticket->departure_id,
+            @foreach($selectedReservation->tickets->groupBy('departure_id') as $index => $row)
+                <tr>
+                    <td colspan="2">
+                        <a href="{{ route('reservation',[
+                                'date'=>$row[0]->departure->date,
+                                'departurePointId'=>$row[0]->departure->departure_point->id,
+                                'arrivalPointId'=>$row[0]->departure->arrival_point->id,
+                                'selectedDepartureId'=>$row[0]->departure_id,
                             ]) }}">
-                                {{ $ticket->departure->departure_point->code }} -
-                                {{ $ticket->departure->arrival_point->code }} |
-                                {{ $ticket->departure->date}}
-                                {{ $ticket->departure->time}}
-                            </a>
-                            <h3><strong>Seat {{ $ticket->seat }}</strong></h3>
-                        </td>
+                            {{ $row[0]->departure->departure_point->code }} -
+                            {{ $row[0]->departure->arrival_point->code }} |
+                            {{ $row[0]->departure->date}}
+                            {{ $row[0]->departure->time}}
+                        </a>
+                    </td>
+                </tr>
 
-                        <td align="right">
-                            <small class="text-muted">{{ $ticket->discount_name }}</small>
-                            <h4><small>Rp.</small>{{number_format($ticket->price)}}</h4>
-                        </td>
-                    </tr>
-                @endif
+                @forelse($row as $ticket)
+                    @if($ticket->departure_id == $selectedDepartureId)
+                        <tr class="border-bottom">
+                            <td style="width: 20rem">
+
+                                <h5><input type="checkbox" value="{{ $ticket->id }}" wire:model="selectedTickets"> <strong>Seat {{ $ticket->seat }}</strong></h5>
+                            </td>
+
+                            <td align="right">
+                                <small class="text-muted">{{ $ticket->discount_name }}</small>
+                                <h5><small>Rp.</small>{{number_format($ticket->price)}}</h5>
+                            </td>
+                        </tr>
+                    @else
+                        <tr class="border-bottom text-muted">
+                            <td style="width: 20rem">
+                                <h5><strong>Seat {{ $ticket->seat }}</strong></h5>
+                            </td>
+
+                            <td align="right">
+                                <small class="text-muted">{{ $ticket->discount_name }}</small>
+                                <h5><small>Rp.</small>{{number_format($ticket->price)}}</h5>
+                            </td>
+                        </tr>
+                    @endif
+                @empty
+
+                @endforelse
             @endforeach
         @endif
         <tr>
-            <td colspan=""></td>
-            <td align="right"><h3><small>Rp.</small>{{ number_format($selectedReservation->tickets->sum('price') )}}</h3></td>
+            <td colspan="">Total</td>
+            <td align="right"><h4><small>Rp.</small>{{ number_format($selectedReservation->tickets->sum('price') )}}</h4></td>
         </tr>
 
     </table>
