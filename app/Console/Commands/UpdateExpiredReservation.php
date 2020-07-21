@@ -56,6 +56,6 @@ class UpdateExpiredReservation extends Command
 
             }
         }
-        $this->line($reservations->count().' reservation/s set as expired');
+//        $this->line($reservations->count().' reservation/s set as expired');
     }
 }

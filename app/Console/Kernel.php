@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('reservation:updateExpired')->everyMinute()->runInBackground();
+        $schedule->command('reservation:updateExpired')->everyMinute();
     }
 
     /**
