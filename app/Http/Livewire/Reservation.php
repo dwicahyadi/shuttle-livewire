@@ -131,7 +131,7 @@ class Reservation extends Component
         $this->subTotal = 0;
         $this->selectedReservation = null;
         $this->selectedDepartureId = $departureId;
-        $this->selectedDeparture = Departure::with(['schedule', 'tickets'])
+        $this->selectedDeparture = Departure::with(['schedule', 'tickets','departure_point','arrival_point'])
             ->where('id', $departureId)->first();
         $this->totalSeats = $this->selectedDeparture->schedule->seats ?? 0;
         $this->driver_id = $this->selectedDeparture->schedule->driver_id ?? 0;

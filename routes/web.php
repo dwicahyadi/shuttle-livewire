@@ -65,9 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::livewire('/settlement', 'settlement')->name('settlment');
 
-    Route::livewire('/reservation/create', 'reservation.create')->name('reservation.create');
-    Route::livewire('/reservation/search', 'reservation.search')->name('reservation.search');
-    Route::livewire('/reservation/report', 'reservation.report')->name('reservation.report');
+    Route::livewire('/reservation/transfer_monitor', 'transfer-payment-monitor')->name('reservation.transfer_monitor');
 
     /*prints*/
     Route::get('print/ticket/{reservationId}','PrintController@ticket')->name('print.ticket');

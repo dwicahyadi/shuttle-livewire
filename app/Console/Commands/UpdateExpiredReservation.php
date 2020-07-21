@@ -47,7 +47,13 @@ class UpdateExpiredReservation extends Command
         if($reservations){
             foreach ($reservations as $reservation) {
                 $reservation->update(['is_expired'=>true]);
-                SmsHelper::sendMsg($reservation->customer->phone,'Mohon maaf reservasi anda dibatalkan secara otomatis karena belum melakukan pembayran. -SHURYASHUTTLE');
+                $reservation->tickets()->update(['is_cancel'=>true]);
+
+                $payload['phone'] = $reservation->customer->phone;
+                $payload['message'] = 'Mohon maaf reservasi anda dibatalkan secara otomatis karena belum melakukan pembayran. -SHURYASHUTTLE';
+
+                dispatch(new \App\Jobs\SendSms($payload));
+
             }
         }
         $this->line($reservations->count().' reservation/s set as expired');

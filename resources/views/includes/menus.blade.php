@@ -31,7 +31,7 @@
                aria-haspopup="true" aria-expanded="false">Reservasi</a>
             <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownReservation">
                 <a class="dropdown-item" href="{{route('reservation')}}">Buat Reservasi</a>
-                <a class="dropdown-item" href="{{route('reservation.create')}}">Monitor Pembayaran Transfer</a>
+                <a class="dropdown-item" href="{{route('reservation.transfer_monitor')}}">Monitor Pembayaran Transfer</a>
             </div>
         </li>
 
