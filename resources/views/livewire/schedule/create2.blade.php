@@ -4,6 +4,16 @@
             <div class="col-md-12  animate__animated animate__fadeIn animate__fast">
                 <h1 class="my-3"><strong>Jadwal</strong> . Buka Jadwal Multi Point</h1>
                 <p>Buka Jadwal untuk periode</p>
+                @if (session()->has('message'))
+                    <div class="alert alert-success alert-dismissible animate__animated animate__bounceIn fade" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        {{ session('message') }}
+
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -88,10 +98,9 @@
 
                             <div class="form-group">
                                 <label>Harga Normal Tiket</label>
-                                <input type="text" wire:model="price" class="form-control">
+                                <input type="text" wire:model="price" class="form-control" placeholder="exp 100000;12000">
+                                <small>Pisahkan masing harga dengan simbol titk koma (;)</small>
                             </div>
-
-                            {{ json_encode($routes) }}
 
                             @forelse($routes as $index => $route)
                                 <div class="form-group">
