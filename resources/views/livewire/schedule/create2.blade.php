@@ -30,7 +30,7 @@
                         <div>
                             <h4>Step {{ $step }}. Tentukan Point</h4>
 
-                            <div class="form-group">
+                         {{--   <div class="form-group">
                                 <select class="form-control" wire:model="arrayPoints" multiple style="height: 10rem">
                                     @forelse($cities as $city)
                                         <optgroup label="[{{$city->code}}] {{$city->name}}">
@@ -44,11 +44,11 @@
 
                                     @endforelse
                                 </select>
-                            </div>
+                            </div>--}}
 
-                            @foreach($arrayPoints as $item)
+                    {{--        @foreach($arrayPoints as $item)
                                 <strong>{{ $points[$item]->name }}</strong> ->
-                            @endforeach
+                            @endforeach--}}
 
                             <div class="form-group">
                                 <label>Jumlah Point</label>
