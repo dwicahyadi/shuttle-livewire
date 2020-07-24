@@ -15,7 +15,7 @@ class AddPointsToTickets extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             $table->unsignedBigInteger('departure_point_id')->nullable();
-            $table->unsignedBigInteger('departure_point_id')->nullable();
+            $table->unsignedBigInteger('arrival_point_id')->nullable();
         });
     }
 
