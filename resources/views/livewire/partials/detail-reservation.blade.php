@@ -26,8 +26,8 @@
                     <td colspan="2">
                         <a href="{{ route('reservation',[
                                 'date'=>$row[0]->departure->date,
-                                'departurePointId'=>$row[0]->departure->departure_point->id,
-                                'arrivalPointId'=>$row[0]->departure->arrival_point->id,
+                                'departurePointId'=>$row[0]->departure_point_id,
+                                'arrivalPointId'=>$row[0]->arrival_point_id,
                                 'selectedDepartureId'=>$row[0]->departure_id,
                             ]) }}">
                             {{ $row[0]->departure->departure_point->code }} -

@@ -18,6 +18,8 @@ class Reservation extends Model
         'transfer_amount',
     ];
 
+    protected $hidden = ['created_at','updated_at'];
+
     public function tickets()
     {
         return $this->hasMany(Ticket::class)->whereNull('tickets.is_cancel');

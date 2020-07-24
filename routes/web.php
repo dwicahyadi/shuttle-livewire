@@ -34,8 +34,9 @@ Auth::routes();
 Route::get('pivot', function (){
    return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
 });
-Route::get('coba', function (){
-    DB::table('reservations')->where('expired_at','<=', Carbon::now())->update(['is_expired'=>true]);
+Route::get('coba/{id}', function ($id){
+    $schedule = \App\Models\Schedule::with('departures')->find($id);
+    return $schedule;
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -57,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::livewire('/schedule/create', 'schedule.create')->name('schedule.create');
     Route::livewire('/schedule/manage', 'schedule.manage')->name('schedule.manage');
+
+    Route::livewire('/schedule/create2', 'schedule.create2')->name('schedule.create2');
 
     Route::livewire('/reservation/', 'reservation')->name('reservation');
     Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');

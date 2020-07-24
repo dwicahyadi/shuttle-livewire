@@ -1,15 +1,18 @@
 @php($seatPerRow = config('settings.seat_per_row'))
-@php($seats = $selectedDeparture->tickets->keyBy('seat'))
+@php($seats = $seatLayout)
 <table class="table table-borderless">
     <tr>
         <td class="" width="{{ 100/$seatPerRow }}%">
             @isset($seats[1])
-                <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[1]->reservation->id }})">
-                    <div class="seat">
-                        <h4>{{ 1 }} @if($seats[1]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
+                <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif " wire:click="getReservation({{ $seats[1]->reservation->id }})">
+                    <div class="seat  @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif">
+                        <h4>{{ 1 }} @if($seats[1]->payment_by) <span class="text-success">LUNAS</span> @endif </h4>
                         <div class="text-center">
+                            @if($seats[1]->departure_point_id != $departurePointId)
+                                <small class="bg-danger clearfix text-white">Beda Point</small>
+                            @endif
                             <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[1]->name,10,'...') }} </strong><br>
-                            <small class="bg-warning px-1">{{ $seats[1]->discount_name ?? 'Umum' }}</small>
+{{--                            <small class="bg-warning px-1">{{ $seats[1]->discount_name ?? 'Umum' }}</small>--}}
                         </div>
                     </div>
                 </div>
@@ -17,7 +20,6 @@
                 <div class="border p-2 @if(in_array(1, $selectedSeats)) bg-info @endif" wire:click="pickSeat({{ 1 }})">
                     <div class="seat">
                         <h4>{{ 1 }}</h4>
-
                     </div>
                 </div>
             @endisset
@@ -41,8 +43,11 @@
                             <div class="seat">
                                 <h4>{{ $i }} @if($seats[$i]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                                 <div class="text-center">
+                                    @if($seats[$i]->departure_point_id != $departurePointId)
+                                        <small class="bg-danger clearfix text-white">Beda Point</small>
+                                    @endif
                                     <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[$i]->name,10,'...') }} </strong><br>
-                                    <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum' }}</small>
+{{--                                    <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum' }}</small>--}}
                                 </div>
                             </div>
                         </div>

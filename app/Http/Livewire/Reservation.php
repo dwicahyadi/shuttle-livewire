@@ -12,6 +12,7 @@ use App\Models\Departure;
 use App\Models\Discount;
 use App\Models\Driver;
 use App\Models\Point;
+use App\Models\Schedule;
 use App\Models\Ticket;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +26,11 @@ class Reservation extends Component
     use WithPagination;
 
     public $isNew, $isManifestForm, $isPrint, $isFindTicket, $isReschedule, $isEditCustomer, $onlyFilled;
-    public $cities, $discounts, $cars, $drivers;
+    public $cities, $discounts, $cars, $drivers, $points;
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
     public $search, $searchReults;
 
-    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod;
+    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod, $seatLayout;
 
     public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber;
     public $selectedSeats = [];
@@ -37,7 +38,7 @@ class Reservation extends Component
     public $customer;
 
     public $reservation;
-    public  $selectedTickets = [];
+    public  $selectedTickets;
     public $car_id, $driver_id, $costs;
 
     protected $updatesQueryString = ['date', 'departurePointId', 'arrivalPointId', 'selectedDepartureId',];
@@ -50,6 +51,7 @@ class Reservation extends Component
     public function mount()
     {
         $this->cities = City::with(['points'])->get();
+        $this->points = Point::all()->keyBy('id');
         $this->discounts = Discount::where('active', 1)->get();
         $this->cars = Car::where('active', 1)->get();
         $this->drivers = Driver::where('active', 1)->get();
@@ -77,8 +79,9 @@ class Reservation extends Component
     public function render()
     {
         if (!$this->date) $this->date = date('Y-m-d');
-        $this->departures = Departure::with(['schedule'])
-            ->withCount('tickets')
+        $this->departures = Departure::with(['schedule'=>function($q){
+            return $q->withCount('tickets');
+        }])
             ->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
@@ -89,11 +92,11 @@ class Reservation extends Component
 
     public function setDeparturePoint()
     {
-        $this->departurePoint = Point::with('city')->find($this->departurePointId);
+        $this->departurePoint = $this->points[$this->departurePointId];
     }
     public function setArrivalPoint()
     {
-        $this->arrivalPoint = Point::with('city')->find($this->arrivalPointId);
+        $this->arrivalPoint = $this->points[$this->arrivalPointId];
     }
 
     public function setDiscount()
@@ -105,12 +108,15 @@ class Reservation extends Component
     public function findDepartures()
     {
         $this->selectedDeparture = null;
-        $this->departures = Departure::with(['schedule'])->withCount('tickets')->whereDate('date', $this->date)
-            ->where('arrival_point_id', $this->arrivalPointId)
-            ->where('departure_point_id', $this->departurePointId)
-            ->where('is_open', 1)
-            ->orderBy('time')
-            ->get();
+        $this->selectedDepartureId = null;
+        $this->departures = Departure::with(['schedule'=>function($q){
+            return $q->withCount('tickets');
+        }])
+            ->whereDate('date', $this->date)
+        ->where('arrival_point_id', $this->arrivalPointId)
+        ->where('departure_point_id', $this->departurePointId)
+        ->where('is_open', 1)
+        ->get();
     }
 
     public function switchPoint()
@@ -131,11 +137,18 @@ class Reservation extends Component
         $this->subTotal = 0;
         $this->selectedReservation = null;
         $this->selectedDepartureId = $departureId;
-        $this->selectedDeparture = Departure::with(['schedule', 'tickets','departure_point','arrival_point'])
+        $this->selectedDeparture = Departure::with(['schedule.tickets'=>function($q){
+            return $q->where('tickets.arrival_point_id', $this->arrivalPointId)->orWhere('tickets.departure_point_id', $this->departurePointId);
+        },'departure_point','arrival_point'])
             ->where('id', $departureId)->first();
         $this->totalSeats = $this->selectedDeparture->schedule->seats ?? 0;
         $this->driver_id = $this->selectedDeparture->schedule->driver_id ?? 0;
         $this->car_id = $this->selectedDeparture->schedule->car_id ?? 0;
+        if ($this->selectedDeparture)
+            $this->seatLayout = $this->selectedDeparture->schedule
+                ->tickets->whereNull('is_cancel')
+                ->keyBy((string) 'seat');
+
     }
 
     public function pickSeat($seat)
@@ -266,6 +279,8 @@ class Reservation extends Component
         foreach ($this->selectedSeats as $seat) {
             $ticket = new Ticket();
             $ticket->reservation_id = $this->reservation->id;
+            $ticket->departure_point_id = $this->departurePointId;
+            $ticket->arrival_point_id = $this->arrivalPointId;
             $ticket->phone = $this->customer->phone;
             $ticket->name = $this->customer->name;
             $ticket->seat = $seat;

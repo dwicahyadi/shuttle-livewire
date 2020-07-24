@@ -64,11 +64,12 @@
                     <i class="text-black-50 far fa-clock fa-2x mt-2"></i>
                 </div>
                 <div class="flex-fill">
+
                     <strong class="clearfix">{{ substr($departure->time, 0,5) }}</strong>
-                    <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
+                    <small class="text-muted">Note: {{ $departure->note }}</small>
                 </div>
                 <div>
-                    <label class="badge badge-success">{{ $departure->schedule->seats - $departure->tickets_count }}</label>
+                    <label class="badge badge-success">{{ $departure->schedule->seats - $departure->schedule->tickets_count }}</label>
                 </div>
             </div>
         </li>

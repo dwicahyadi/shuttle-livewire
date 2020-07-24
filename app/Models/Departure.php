@@ -9,7 +9,7 @@ class Departure extends Model
 {
     protected $fillable = [
         'code',
-        'shedule_id',
+        'schedule_id',
         'departure_point_id',
         'arrival_point_id',
         'date',
@@ -18,6 +18,8 @@ class Departure extends Model
         'price',
         'is_open'
     ];
+
+    protected $hidden = ['created_at','updated_at'];
 
     public function allTickets()
     {

@@ -11,4 +11,7 @@ class Customer extends Model
         'address',
         'count_reservation_finished',
         'count_reservation',];
+
+    protected $hidden = ['created_at','updated_at'];
+
 }

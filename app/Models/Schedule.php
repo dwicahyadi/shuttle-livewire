@@ -17,6 +17,7 @@ class Schedule extends Model
         'cost',
         'seats',
     ];
+    protected $hidden = ['created_at','updated_at'];
 
     public function departures()
     {

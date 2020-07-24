@@ -16,4 +16,5 @@ class Point extends Model
     {
         return $this->belongsTo(City::class);
     }
+
 }

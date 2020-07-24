@@ -19,7 +19,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">Jadwal</a>
             <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownSchedule">
-                <a class="dropdown-item" href="{{route('schedule.create')}}">Buka Jadwal</a>
+                <a class="dropdown-item" href="{{route('schedule.create2')}}">Buka Jadwal</a>
                 <a class="dropdown-item" href="{{route('schedule.manage')}}">Kelola Jadwal</a>
             </div>
         </li>
