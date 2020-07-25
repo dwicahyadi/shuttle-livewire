@@ -83,6 +83,7 @@ class Reservation extends Component
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
+            ->orderBy('time','asc')
             ->get();
         return view('livewire.reservation');
     }
@@ -109,7 +110,7 @@ class Reservation extends Component
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
-            ->orderBy('time')
+            ->orderBy('time','asc')
             ->get();
     }
 

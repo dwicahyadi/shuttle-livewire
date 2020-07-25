@@ -6,7 +6,7 @@
             <input type="text" wire:model="phone" class="form-control" required>
             <span class="text-danger">@error('phone')
                 {{ $message }}
-            @enderror</span>
+                @enderror</span>
             @if($suggestCustomers)
 
                 <ul class="list-group position-absolute w-100 shadow">
@@ -27,11 +27,11 @@
         <div class="form-group col-6">
             <label>Nama</label>
             <input type="text" wire:model="name"  class="form-control" required @if($customer)
-                readonly
-            @endif>
+            readonly
+                @endif>
             <span class="text-danger">@error('name')
                 {{ $message }}
-            @enderror</span>
+                @enderror</span>
         </div>
     </div>
     <div class="form-group">
@@ -43,19 +43,20 @@
 
         </div>
         <input type="text" wire:model="address" class="form-control" @if($customer)
-                readonly
+        readonly
             @endif>
     </div>
 
     <div class="form-group">
         <label>Harga</label>
         <select class="form-control" wire:model="discountId" wire:change="setDiscount">
+            <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
+
             @forelse($discounts as $discount_)
                 <option value="{{ $discount_->id }}">{{ $discount_->name}} Rp.{{ number_format($selectedDeparture->price - $discount_->amount) }}</option>
             @empty
 
             @endforelse
-            <option value="">Umum Rp.{{ number_format($selectedDeparture->price ?? 0)  }}</option>
 
         </select>
         <label class="my-2"><input type="checkbox" wire:click="toggleTransfer"> Pembayaran melalui Transfer</label>
@@ -110,7 +111,7 @@
                         <input type="text" wire:model="phone"  class="form-control" readonly>
                         <span class="text-danger">@error('phone')
                             {{ $message }}
-                        @enderror</span>
+                            @enderror</span>
                     </div>
 
                     <div class="form-group">
