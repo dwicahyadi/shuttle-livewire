@@ -50,7 +50,7 @@ class UpdateExpiredReservation extends Command
                 $reservation->tickets()->update(['is_cancel'=>true]);
 
                 $payload['phone'] = $reservation->customer->phone;
-                $payload['message'] = 'Mohon maaf reservasi anda dibatalkan secara otomatis karena belum melakukan pembayran. -SHURYASHUTTLE';
+                $payload['message'] = 'Mohon maaf reservasi anda dibatalkan secara otomatis karena belum melakukan pembayran. -SURYASHUTTLE';
 
                 dispatch(new \App\Jobs\SendSms($payload));
 
