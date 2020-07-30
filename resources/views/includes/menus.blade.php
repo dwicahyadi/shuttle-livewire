@@ -1,25 +1,26 @@
 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('reservation') }}">Home</a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropDownMaster" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">Master</a>
-        <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownMaster" style="z-index: 9981">
-            @can('City')<a class="dropdown-item" href="{{route('city')}}">Kota</a>@endcan
-            @can('Point')<a class="dropdown-item" href="{{route('point')}}">Point</a>@endcan
-            @can('Car')<a class="dropdown-item" href="{{route('car')}}">Mobil</a>@endcan
-            @can('Driver')<a class="dropdown-item" href="{{route('driver')}}">Sopir</a>@endcan
-            @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Diskon</a>@endcan
-            @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Cutomer</a>@endcan
-        </div>
-    </li>
     @can('Schedule')
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule" data-toggle="dropdown"
+            <a class="nav-link dropdown-toggle" href="#" id="dropDownMaster" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">Master</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownMaster" style="z-index: 9981">
+                @can('City')<a class="dropdown-item" href="{{route('city')}}">Kota</a>@endcan
+                @can('Point')<a class="dropdown-item" href="{{route('point')}}">Point</a>@endcan
+                @can('Car')<a class="dropdown-item" href="{{route('car')}}">Mobil</a>@endcan
+                @can('Driver')<a class="dropdown-item" href="{{route('driver')}}">Sopir</a>@endcan
+                @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Diskon</a>@endcan
+                @can('Discount')<a class="dropdown-item" href="{{route('discount')}}">Cutomer</a>@endcan
+            </div>
+        </li>
+    @endcan
+    @can('Schedule')
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropDownSchedule apa " data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">Jadwal</a>
-            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownSchedule">
-                <a class="dropdown-item" href="{{route('schedule.create2')}}">Buka Jadwal</a>
+            <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownSchedule" style="z-index: 9981">
+                <a class="dropdown-item" href="{{route('schedule.create')}}">Buka Jadwal</a>
+                <a class="dropdown-item" href="{{route('schedule.create2')}}">Buka Jadwal (Multi Point)</a>
+                <a class="dropdown-item" href="{{route('schedule.upload')}}">Upload Jadwal (Multi Point)</a>
                 <a class="dropdown-item" href="{{route('schedule.manage')}}">Kelola Jadwal</a>
             </div>
         </li>

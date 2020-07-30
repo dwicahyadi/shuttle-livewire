@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/schedule/manage', 'schedule.manage')->name('schedule.manage');
 
     Route::livewire('/schedule/create2', 'schedule.create2')->name('schedule.create2');
+    Route::livewire('/schedule/upload', 'schedule.upload')->name('schedule.upload');
 
     Route::livewire('/reservation/', 'reservation')->name('reservation');
     Route::livewire('/history/transaction', 'history.transaction')->name('history.transaction');

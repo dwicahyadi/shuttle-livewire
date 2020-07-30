@@ -57,7 +57,7 @@ class Reservation extends Component
         $this->drivers = Driver::where('active', 1)->get();
         $this->departures = [];
         $this->searchReults = [];
-        $this->date = request('date');
+        $this->date = request('date') ?? date('Y-m-d');
         $this->departurePointId = request('departurePointId') ?? Auth::user()->point_id;
         $this->arrivalPointId = request('arrivalPointId');
 
@@ -68,6 +68,7 @@ class Reservation extends Component
                 $this->arrivalPointId = 1;
             }
         }
+        $this->queryDepartures();
         $this->selectedDepartureId = request('selectedDepartureId');
         $this->setDeparturePoint();
         $this->setArrivalPoint();
@@ -78,15 +79,6 @@ class Reservation extends Component
     }
     public function render()
     {
-        if (!$this->date) $this->date = date('Y-m-d');
-        $this->departures = Departure::with(['schedule'=>function($q){
-            return $q->withCount('tickets');
-        }])
-            ->whereDate('date', $this->date)
-            ->where('arrival_point_id', $this->arrivalPointId)
-            ->where('departure_point_id', $this->departurePointId)
-            ->where('is_open', 1)
-            ->get();
         return view('livewire.reservation');
     }
 
@@ -109,14 +101,7 @@ class Reservation extends Component
     {
         $this->selectedDeparture = null;
         $this->selectedDepartureId = null;
-        $this->departures = Departure::with(['schedule'=>function($q){
-            return $q->withCount('tickets');
-        }])
-            ->whereDate('date', $this->date)
-        ->where('arrival_point_id', $this->arrivalPointId)
-        ->where('departure_point_id', $this->departurePointId)
-        ->where('is_open', 1)
-        ->get();
+        $this->queryDepartures();
     }
 
     public function switchPoint()
@@ -425,5 +410,17 @@ class Reservation extends Component
     public function toggleonlyFilled()
     {
         $this->onlyFilled = !$this->onlyFilled;
+    }
+
+    private function queryDepartures(): void
+    {
+        $this->departures = Departure::with(['schedule' => function ($q) {
+            return $q->withCount('tickets');
+        }])
+            ->whereDate('date', $this->date)
+            ->where('arrival_point_id', $this->arrivalPointId)
+            ->where('departure_point_id', $this->departurePointId)
+            ->where('is_open', 1)
+            ->get();
     }
 }

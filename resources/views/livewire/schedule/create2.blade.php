@@ -19,6 +19,9 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    Atau gunakan menu upload unutk membuat jadwal. <a href="{{ route('schedule.upload') }}" class="btn btn-sm btn-primary ">Upload Jadwal</a>
+                </div>
                 <form action="">
                     @if($step == 1)
                         <div>
