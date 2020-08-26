@@ -41,6 +41,15 @@ Route::get('coba/{id}', function ($id){
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::get('/res', [\App\Http\Controllers\ReservationFormController::class,'index']);
+
+    Route::prefix('ajax/')->group(function (){
+        Route::get('/findArrivalForm/{city_id}', 'Ajax\ScheduleForm@getArrivalForm')->name('ajax.findArrivalForm');
+        Route::get('/findSchedules/', 'Ajax\ScheduleForm@findSchedules')->name('ajax.findSchedules');
+        Route::get('/getDeparture/', 'Ajax\ScheduleForm@getDeparture')->name('ajax.getDeparture');
+    });
+
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::livewire('/dashboard', 'dashboard')->name('dashboard');

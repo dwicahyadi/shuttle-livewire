@@ -1,41 +1,36 @@
-.card {
-    border-radius: 1.5rem;
+.animate__animated.animate__delay {
+    --animate-delay: 0.1s;
 }
 
-.rounded-sm {
-    border-radius: 1rem !important;
-}
+.animate__animated.animate__delay0 {
 
-.rounded {
-    border-radius: 1.5rem !important;
 }
-
-.rounded-top {
-    border-top-left-radius: 1.5rem !important;
-    border-top-right-radius: 1.5rem !important;
+.animate__animated.animate__delay1 {
+    --animate-delay: 0.5s;
 }
-
-.rounded-right {
-    border-top-right-radius: 1.5rem !important;
-    border-bottom-right-radius: 1.5rem !important;
+.animate__animated.animate__delay2 {
+    --animate-delay: 1s;
 }
-
-.rounded-bottom {
-    border-bottom-right-radius: 1.5rem !important;
-    border-bottom-left-radius: 1.5rem !important;
+.animate__animated.animate__delay3 {
+    --animate-delay: 1.5s;
 }
-
-.rounded-left {
-    border-top-left-radius: 1.5rem !important;
-    border-bottom-left-radius: 1.5rem !important;
+.animate__animated.animate__delay4 {
+    --animate-delay: 2s;
 }
-
-.rounded-lg {
-    border-radius: 2rem !important;
+.animate__animated.animate__delay5 {
+    --animate-delay: 2.5s;
 }
-
-.rounded-circle {
-    border-radius: 50% !important;
+.animate__animated.animate__delay6 {
+    --animate-delay: 3s;
+}
+.animate__animated.animate__delay7 {
+    --animate-delay: 3.5s;
+}
+.animate__animated.animate__delay8 {
+    --animate-delay: 4s;
+}
+.animate__animated.animate__delay9 {
+    --animate-delay: 4.5s;
 }
 
 .bg-c-blue {
@@ -120,4 +115,8 @@
 .ck-button input:checked + span {
     background-color:#911;
     color:#fff;
+}
+
+.full-height {
+    height: 100vh; overflow: auto;
 }

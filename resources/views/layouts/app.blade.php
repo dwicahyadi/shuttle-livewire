@@ -16,6 +16,11 @@
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://unpkg.com/darkmode-js@1.3.4/lib/darkmode-js.js"></script>
+    <script>
+        const darkmode = new Darkmode();
+        darkmode.showWidget();
+    </script>
 
 
     <!-- Styles -->
@@ -115,5 +120,6 @@
     </div>
 
     @livewireScripts
+    @yield('script')
 </body>
 </html>

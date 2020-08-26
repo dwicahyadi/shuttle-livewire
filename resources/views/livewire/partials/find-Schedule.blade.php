@@ -1,13 +1,13 @@
 <form class="p-2" wire:submit.prevent="findDepartures">
     <div class="form-group">
         {{--                        <label class="mx-2">Tanggal</label>--}}
-        <input type="date" wire:model.lazy="date" class="form-control">
+        <input type="date" wire:model.lazy="date" class="form-control" wire:change="findDepartures">
         @error('date')<br>{{ $message }}@enderror
     </div>
 
     <div class="form-group mb-4">
         <div class="input-group">
-            <select class="form-control" wire:model.lazy="departurePointId" wire:change="setDeparturePoint">
+            <select class="form-control" wire:model="departurePointId" wire:change="findDepartures">
                 <option value="">Berangkat dari</option>
                 @forelse($cities as $city)
                     <optgroup label="[{{$city->code}}] {{$city->name}}">
@@ -21,7 +21,7 @@
 
                 @endforelse
             </select>
-            <select class="form-control" wire:model.lazy="arrivalPointId" wire:change="setArrivalPoint">
+            <select class="form-control" wire:model="arrivalPointId" wire:change="findDepartures">
                 <option value="">Tujuan</option>
                 @forelse($cities as $city)
                     <optgroup label="[{{$city->code}}] {{$city->name}}">
@@ -66,7 +66,7 @@
                 <div class="flex-fill">
 
                     <strong class="clearfix">{{ substr($departure->time, 0,5) }}</strong>
-                    <small class="text-muted">Note: {{ $departure->note }}</small>
+                    <small class="text-muted">Note: {{ $departure->schedule->note }}</small>
                 </div>
                 <div>
                     <label class="badge badge-success">{{ $departure->schedule->seats - $departure->schedule->tickets_count }}</label>

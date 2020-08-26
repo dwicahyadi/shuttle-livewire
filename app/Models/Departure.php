@@ -44,4 +44,9 @@ class Departure extends Model
     {
         return $this->belongsTo(Point::class,'departure_point_id','id');
     }
+
+    public function options()
+    {
+        return $this->hasMany(Departure::class,'schedule_id','schedule_id');
+    }
 }
