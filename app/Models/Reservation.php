@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Reservation extends Model
 {
@@ -15,6 +16,7 @@ class Reservation extends Model
         'expired_at',
         'is_expired',
         'user_id',
+        'note',
         'transfer_amount',
     ];
 

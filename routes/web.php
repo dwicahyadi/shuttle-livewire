@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('coba', function (){
+    $data = DB::table('summary_reports')->select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(date, '%M %Y') month"))
+        ->groupby('month')
+        ->where('status','paid')
+        ->get()->pluck('data','month');
+    dd( $data->values()->toArray());
+});
 Route::get('/', function () {
     return redirect(\route('reservation'));
 });
@@ -34,9 +41,7 @@ Auth::routes();
 Route::get('pivot', function (){
    return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
 });
-Route::get('coba', function (){
-    DB::table('reservations')->where('expired_at','<=', Carbon::now())->update(['is_expired'=>true]);
-});
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -79,5 +84,6 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/report/income_statement', 'report.income-statement')->name('report.income-statement');
     Route::livewire('/report/settlements', 'report.settlements')->name('report.settlements');
     Route::livewire('/report/ocupancy', 'report.ocupancy')->name('report.ocupancy');
+    Route::livewire('/report/ticket', 'report.ticket')->name('report.ticket');
 
 });

@@ -21,7 +21,7 @@ class Reschedule extends Component
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
     public $search, $searchReults;
 
-    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod;
+    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $selectedReservationId, $totalSeats, $paymentMethod;
 
     public $phone, $name, $address, $departureId, $subTotal;
     public $selectedSeats = [];
@@ -147,6 +147,7 @@ class Reschedule extends Component
             $updateTicket->departure_id = $this->selectedDepartureId;
             $updateTicket->seat = $this->selectedSeats[$id];
             $updateTicket->save();
+            activity('reservation_log')->performedOn($updateTicket->reservation)->causedBy(Auth::user())->log('reschedule');
         }
 
         $this->emitUp('successRescedule');

@@ -61,6 +61,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="dropDownHistory" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">Laporan</a>
             <div class="dropdown-menu animate__animated animate__fadeIn animate__fast" aria-labelledby="dropDownHistory">
+                <a class="dropdown-item" href="{{route('report.ticket')}}">Rekap Penjualan Tiket</a>
                 <a class="dropdown-item" href="{{route('report.ocupancy')}}">Okupansi</a>
                 <a class="dropdown-item" href="{{route('report.income-statement')}}">Pendapatan</a>
                 <a class="dropdown-item" href="{{route('report.settlements')}}">Settlement</a>

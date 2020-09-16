@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Activitylog\Models\Activity;
 
 define('CODE_PESSENGER_RESERVATION', 'PSG');
 
@@ -27,11 +28,13 @@ class Reservation extends Component
     public $isNew, $isManifestForm, $isPrint, $isFindTicket, $isReschedule, $isEditCustomer, $onlyFilled;
     public $cities, $discounts, $cars, $drivers;
     public $departurePointId, $arrivalPointId, $date, $departurePoint, $arrivalPoint, $discountId, $discount;
-    public $search, $searchReults;
+    public $search, $searchResults;
 
-    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $totalSeats, $paymentMethod;
 
-    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber;
+    public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $selectedReservationId, $totalSeats, $paymentMethod;
+    public $activities;
+
+    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber, $ticketDeparturePointId, $note;
     public $selectedSeats = [];
     public $suggestCustomers;
     public $customer;
@@ -54,10 +57,11 @@ class Reservation extends Component
         $this->cars = Car::where('active', 1)->get();
         $this->drivers = Driver::where('active', 1)->get();
         $this->departures = [];
-        $this->searchReults = [];
+        $this->searchResults = [];
         $this->date = request('date');
         $this->departurePointId = request('departurePointId') ?? Auth::user()->point_id;
         $this->arrivalPointId = request('arrivalPointId');
+        $this->selectedReservationId = 0;
 
         if (!$this->arrivalPointId) {
             if ($this->departurePointId == 1) {
@@ -73,6 +77,7 @@ class Reservation extends Component
         $this->isTransfer= false;
         $this->onlyFilled= false;
         $this->uniqueNumber = 0;
+        $this->searchResults = [];
     }
     public function render()
     {
@@ -106,6 +111,7 @@ class Reservation extends Component
     public function findDepartures()
     {
         $this->selectedDeparture = null;
+        $this->selectedDepartureId = 0;
         $this->departures = Departure::with(['schedule'])->withCount('tickets')->whereDate('date', $this->date)
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
@@ -131,6 +137,7 @@ class Reservation extends Component
         $this->resetReservationForm();
         $this->subTotal = 0;
         $this->selectedReservation = null;
+        $this->selectedReservationId = 0;
         $this->selectedDepartureId = $departureId;
         $this->selectedDeparture = Departure::with(['schedule', 'tickets','departure_point','arrival_point'])
             ->where('id', $departureId)->first();
@@ -143,6 +150,7 @@ class Reservation extends Component
     {
         $this->isNew = true;
         $this->selectedReservation = null;
+        $this->selectedReservationId = 0;
         if (in_array($seat, $this->selectedSeats)) {
             $key = array_search($seat, $this->selectedSeats);
             unset($this->selectedSeats[$key]);
@@ -190,6 +198,7 @@ class Reservation extends Component
         $this->checkExistCustomere();
         $this->createNewReservation();
         $this->createTicket();
+        activity('reservation_log')->performedOn($this->reservation)->causedBy(Auth::user())->log('new reservation');
         SmsHelper::generateMsg($this->reservation->id);
     }
 
@@ -204,8 +213,9 @@ class Reservation extends Component
                 'payment_by' => Auth::id(),
             ]
         );
+        activity('reservation_log')->performedOn($this->reservation)->causedBy(Auth::user())->log('payment');
 
-        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, 'message'=>'Terimakasih. Pembayaran berhasil dilakukan']));
+//        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, 'message'=>'Terimakasih. Pembayaran berhasil dilakukan']));
 
         $this->emit('updateBill');
         $this->updateCustomerCountReservationFinish();
@@ -258,6 +268,7 @@ class Reservation extends Component
         $this->reservation->code = CODE_PESSENGER_RESERVATION . Auth::id() . date('ymdHis');
         $this->reservation->expired_at = $this->expire;
         if($this->uniqueNumber) $this->reservation->transfer_amount = $this->subTotal + $this->uniqueNumber;
+        $this->reservation->note = $this->note;
         $this->reservation->save();
         $this->updateCustomerReservationCount();
     }
@@ -279,6 +290,7 @@ class Reservation extends Component
             $ticket->reservation_at = now();
             $ticket->status = 'unpaid';
             $ticket->count_print = 0;
+            $ticket->departure_point_id = $this->ticketDeparturePointId;
             $ticket->save();
         }
     }
@@ -301,6 +313,8 @@ class Reservation extends Component
         $this->resetReservationForm();
         $this->selectedTickets = [];
         $this->selectedReservation = \App\Models\Reservation::find($reservationId);
+        $this->selectedReservationId = $reservationId;
+        $this->activities = Activity::inLog('reservation_log')->where('subject_id', $reservationId)->get();
     }
 
     private function updateCustomerReservationCount(): void
@@ -328,23 +342,28 @@ class Reservation extends Component
         $this->selectedReservation->tickets()->update(['is_cancel' => true]);
         $this->resetReservation();
         $this->emit('saved');
+        activity('reservation_log')->performedOn($this->selectedReservation)->causedBy(Auth::user())->log('cancel reservation');
+        return redirect()->to(route('reservation'));
     }
 
     public function cancelTicket()
     {
-        Ticket::whereIn('id', $this->selectedTickets)->update(['is_cancel' => true]);
+        Ticket::whereIn('id', $this->selectedTickets)->update(['is_cancel' => true, 'status' => 'cancel']);
         //        $this->selectedReservation->tickets()->update(['is_cancel'=>true]);
         $this->selectedTickets = [];
         $this->getReservation($this->selectedReservation->id);
+        activity('reservation_log')->performedOn($this->selectedReservation)->causedBy(Auth::user())->log('cancel ticket/reservation');
         if (!count($this->selectedReservation->tickets))
             $this->resetReservation();
         $this->emit('saved');
+        return redirect()->back();
     }
 
     public function cancelPayment()
     {
         $this->selectedReservation->tickets()->update(['payment_by' => null, 'payment_at' => null]);
         $this->resetReservation();
+        activity('reservation_log')->performedOn($this->selectedReservation)->causedBy(Auth::user())->log('cancel payment');
         $this->emit('saved');
     }
 
@@ -357,7 +376,7 @@ class Reservation extends Component
 
     public function updatedSearch($value)
     {
-        $this->searchReults = Ticket::where(function ($query) {
+        $this->searchResults = Ticket::where(function ($query) {
             $query->where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%');
         })->orderBy('id', 'DESC')->limit(10)->get();
@@ -370,8 +389,6 @@ class Reservation extends Component
         $this->getReservation($ticket->reservation_id);
     }
 
-
-
     public function initReschedule()
     {
         $this->isReschedule = 1;
@@ -382,6 +399,8 @@ class Reservation extends Component
     {
         $this->isReschedule = 0;
         $this->emit('saved');
+        activity('reservation_log')->performedOn($this->selectedReservation)->causedBy(Auth::user())->log('reschedule');
+        return redirect()->back();
     }
 
     public function updateCustomer()

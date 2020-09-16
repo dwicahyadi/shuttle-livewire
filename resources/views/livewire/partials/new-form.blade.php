@@ -47,6 +47,17 @@
             @endif>
     </div>
 
+    <hr>
+
+    <div class="form-group">
+        <label>Point Keberangkatan</label>
+        <select class="form-control" wire:model="ticketDeparturePointId">
+           @foreach($selectedDeparture->city->points as $point)
+                <option value="{{ $point->id }}">{{ $point->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
     <div class="form-group">
         <label>Harga</label>
         <select class="form-control" wire:model="discountId" wire:change="setDiscount">
@@ -65,6 +76,13 @@
                 Maksimal waktu transfer adalah <strong>{{ $expire }}</strong> atau reservasi akan dibatalkan secara otomatis.
             </div>
         @endif
+    </div>
+
+    <div class="form-group">
+        <div class="d-flex justify-content-between">
+            <label>Note (opsional)</label>
+        </div>
+        <textarea class="form-control" wire:model.lazy="note"></textarea>
     </div>
 
     <div class="form-group">

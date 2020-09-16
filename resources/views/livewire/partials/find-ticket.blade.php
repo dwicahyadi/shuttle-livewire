@@ -2,7 +2,7 @@
 
 <ul class="list-group">
     @forelse($searchReults as $searchResult)
-        <li class="list-group-item list-group-item-action @if($searchResult->is_cancel) text-danger @endif  @if($searchResult->reservation_id == ($selectedReservation->id ?? 0)) bg-primary  text-white @endif"
+        <li class="list-group-item list-group-item-action @if($searchResult->is_cancel ?? 0) text-danger @endif "
             @if(!$searchResult->is_cancel) wire:click="getFromSearch({{ $searchResult->id }})"  @endif
 
             wire:key="ticket{{$searchResult->id}}">

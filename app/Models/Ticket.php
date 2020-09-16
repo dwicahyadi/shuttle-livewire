@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Ticket extends Model
 {
-    protected $fillable = ['departure_id',
+    protected $fillable = [
         'departure_id',
         'phone',
         'name',
@@ -20,7 +21,11 @@ class Ticket extends Model
         'reservation_at',
         'payment_by',
         'payment_at',
-        'settlment_id',];
+        'settlement_id',
+        'departure_point_id',
+        'note'
+    ];
+
 
     public function reservation()
     {

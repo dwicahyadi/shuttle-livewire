@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Charts\CustomerPerMonth;
+use App\Charts\CustomerPerPoint;
+use App\Charts\FavoriteTime;
+use App\Charts\SampleChart;
+use App\Charts\TrendCustomer;
+use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
         Schema::defaultStringLength(191);
         if(Schema::hasTable('settings'))
@@ -38,5 +44,12 @@ class AppServiceProvider extends ServiceProvider
                     ->toArray()
             ]);
         }
+        $charts->register([
+            SampleChart::class,
+            CustomerPerPoint::class,
+            CustomerPerMonth::class,
+            FavoriteTime::class,
+            TrendCustomer::class,
+        ]);
     }
 }

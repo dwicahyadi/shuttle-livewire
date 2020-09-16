@@ -18,6 +18,11 @@
         <strong>{{ $selectedReservation->customer->name }}</strong>
     </p>
 
+    <p>
+        <small>Note</small><br>
+        <strong>{{ $selectedReservation->note ?? '-' }}</strong>
+    </p>
+
     <p>Tiket</p>
     <table class="table table-borderless">
         @if(count($selectedReservation->tickets))
@@ -75,5 +80,18 @@
 
     </table>
 
-    <hr>
+    <div class="bg-light p-0">
+        <strong class="m-4">Logs</strong>
+        @empty($activities)
+            <span>No activites logged</span>
+        @else
+            <ul class="list-group">
+                @foreach($activities as $activity)
+                    <li class="list-group-item border-right-0 border-left-0 bg-transparent">
+                        {{ $activity->description }} by <span class="text-primary">{{ $activity->causer->name }}</span> <span class="float-right">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($activity->created_at))->diffForHumans() }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        @endempty
+    </div>
 </div>

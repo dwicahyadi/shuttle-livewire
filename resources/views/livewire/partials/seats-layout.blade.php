@@ -4,12 +4,13 @@
     <tr>
         <td class="" width="{{ 100/$seatPerRow }}%">
             @isset($seats[1])
-                <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[1]->reservation->id }})">
+                <div class="border shadow-sm p-2 @if($selectedReservationId == $seats[1]->reservation_id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[1]->reservation->id }})">
                     <div class="seat">
                         <h4>{{ 1 }} @if($seats[1]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                         <div class="text-center">
                             <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[1]->name,10,'...') }} </strong><br>
                             <small class="bg-warning px-1">{{ $seats[1]->discount_name ?? 'Umum' }}</small>
+                            @if($seats[1]->departure_point_id != $selectedDeparture->departure_point_id) <strong><br>Beda Point</strong> @endif
                         </div>
                     </div>
                 </div>
@@ -37,12 +38,12 @@
             @for($col = 1; $col <= $seatPerRow; $col++)
                 <td class="">
                     @isset($seats[$i])
-                        <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[$i]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[$i]->reservation->id }})">
+                        <div class="border shadow-sm p-2 @if($selectedReservationId == $seats[$i]->reservation_id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[$i]->reservation->id }})">
                             <div class="seat">
                                 <h4>{{ $i }} @if($seats[$i]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                                 <div class="text-center">
                                     <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[$i]->name,10,'...') }} </strong><br>
-                                    <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum' }}</small>
+                                    <small class="bg-warning px-1">{{ $seats[$i]->reservation_id.' ---- '. $selectedReservationId  }}</small>
                                 </div>
                             </div>
                         </div>

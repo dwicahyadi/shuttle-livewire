@@ -49,7 +49,7 @@
             <div>
                 <ul class="list-group">
                     @forelse($departures as $departure)
-                        <li class="list-group-item list-group-item-action @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
+                        <li class="list-group-item list-group-item-action" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
                             <div class="d-flex">
                                 <div class="mr-2">
                                     <i class="text-black-50 far fa-clock fa-2x mt-2"></i>
@@ -79,7 +79,7 @@
                 <tr>
                     <td class="" width="{{ 100/$seatPerRow }}%">
                         @isset($seats[1])
-                            <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[1]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[1]->reservation->id }})">
+                            <div class="border shadow-sm p-2 " wire:click="getReservation({{ $seats[1]->reservation->id }})">
                                 <div class="seat">
                                     <h4>{{ 1 }} @if($seats[1]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                                     <div class="text-center">
@@ -112,7 +112,7 @@
                         @for($col = 1; $col <= $seatPerRow; $col++)
                             <td class="">
                                 @isset($seats[$i])
-                                    <div class="border shadow-sm p-2 @if($selectedReservation['id'] == $seats[$i]->reservation->id) bg-info @else bg-white @endif" wire:click="getReservation({{ $seats[$i]->reservation->id }})">
+                                    <div class="border shadow-sm p-2 " wire:click="getReservation({{ $seats[$i]->reservation->id }})">
                                         <div class="seat">
                                             <h4>{{ $i }} @if($seats[$i]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                                             <div class="text-center">

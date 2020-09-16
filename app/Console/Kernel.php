@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('reservation:updateExpired')->everyMinute();
+        $schedule->command('report:generate')->dailyAt('23.59');
     }
 
     /**

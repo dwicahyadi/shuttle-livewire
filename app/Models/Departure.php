@@ -42,4 +42,8 @@ class Departure extends Model
     {
         return $this->belongsTo(Point::class,'departure_point_id','id');
     }
+    public function city()
+    {
+        return $this->hasOneThrough(City::class, Point::class,'city_id','id','departure_point_id');
+    }
 }
