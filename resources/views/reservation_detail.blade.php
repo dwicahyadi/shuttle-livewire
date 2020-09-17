@@ -29,45 +29,66 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table">
-                <tbody>
-                @forelse($reservation->tickets as $ticket)
-                    <tr>
-                        <td width="10%">
-                            <img src="{{ asset('images/ticket.svg') }}" alt="ticket" class="img-fluid d-xs-none d-sm-none d-md-block">
-                        </td>
-                        <td width="40%">
-                            <strong>{{ $ticket->name }}</strong><br>
-                            Dari {{ $ticket->departure->departure_point->city->name }} - {{ $ticket->departure->departure_point->name }}
-                            <br>
-                            Menuju {{ $ticket->departure->arrival_point->city->name }} - {{ $ticket->departure->arrival_point->name }}
-                            <h5>Seat <strong>{{ $ticket->seat }}</strong></h5>
-                            <span class="clearfix">{{ $ticket->departure->date }} <strong>{{ $ticket->departure->time }}</strong></span>
-                        </td>
-                        <td>
+            @if($reservation->tickets->count() < 1 )
+                <tr>
+                    <td>
+                        <h4 class="text-danger">Wah status bookingan kamu sudah cancel :(</h4>
+                    </td>
+                </tr>
 
-                        </td>
-                        <td align="right">
-                            <small>{{ $ticket->discount_name ?? '' }}</small>
-                            <br><strike class="text-info">Rp.{{ number_format($ticket->departure->price ?? 0) }}</strike>
-                            <h3> <small>Rp.</small>{{ number_format($ticket->price) }}</h3>
-                            @if($ticket->payment_at)
-                                <small>Payemnt at: {{ $ticket->payment_at }}</small>
-                            @else
-                                <small class="text-danger">BELUM LUNAS</small>
-                            @endif
+            @else
+                <table class="table">
+                    <tbody>
+                    @forelse($reservation->tickets as $ticket)
+                        <tr>
+                            <td width="10%">
+                                <img src="{{ asset('images/ticket.svg') }}" alt="ticket" class="img-fluid d-xs-none d-sm-none d-md-block">
+                            </td>
+                            <td width="40%">
+                                <strong>{{ $ticket->name }}</strong><br>
+                                Dari {{ $ticket->departure->departure_point->city->name }} - {{ $ticket->departure->departure_point->name }}
+                                <br>
+                                Menuju {{ $ticket->departure->arrival_point->city->name }} - {{ $ticket->departure->arrival_point->name }}
+                                <h5>Seat <strong>{{ $ticket->seat }}</strong></h5>
+                                <span class="clearfix">{{ $ticket->departure->date }} <strong>{{ $ticket->departure->time }}</strong></span>
+                            </td>
+                            <td>
 
-                        </td>
-                    </tr>
+                            </td>
+                            <td align="right">
+                                <small>{{ $ticket->discount_name ?? '' }}</small>
+                                <br><strike class="text-info">Rp.{{ number_format($ticket->departure->price ?? 0) }}</strike>
+                                <h3> <small>Rp.</small>{{ number_format($ticket->price) }}</h3>
+                                @if($ticket->payment_at)
+                                    <small>Payemnt at: {{ $ticket->payment_at }}</small>
+                                @else
+                                    <small class="text-danger">BELUM LUNAS</small>
+                                @endif
+
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td>
+                                <h2 class="text-white-50">Tidak ada Transaksi</h2>
+                            </td>
+                        </tr>
+                    @endforelse
+
+
+
+                    </tbody>
+                </table>
+            @endif
+
+            <ul class="list-unstyled">
+                @forelse($activities as $activity)
+                    <li>{{ $activity->description }} by <span class="text-primary">{{ $activity->causer->name }}</span> <span class="float-right">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($activity->created_at))->diffForHumans() }}</span></li>
                 @empty
-                    <tr>
-                        <td>
-                            <h2 class="text-white-50">Tidak ada Transaksi</h2>
-                        </td>
-                    </tr>
+
                 @endforelse
-                </tbody>
-            </table>
+            </ul>
+
         </div>
     </div>
 </div>

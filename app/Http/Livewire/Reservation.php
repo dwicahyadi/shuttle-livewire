@@ -57,7 +57,7 @@ class Reservation extends Component
         $this->cars = Car::where('active', 1)->get();
         $this->drivers = Driver::where('active', 1)->get();
         $this->departures = [];
-        $this->searchResults = [];
+        $this->searchResults = null;
         $this->date = request('date');
         $this->departurePointId = request('departurePointId') ?? Auth::user()->point_id;
         $this->arrivalPointId = request('arrivalPointId');
@@ -77,7 +77,6 @@ class Reservation extends Component
         $this->isTransfer= false;
         $this->onlyFilled= false;
         $this->uniqueNumber = 0;
-        $this->searchResults = [];
     }
     public function render()
     {
@@ -380,6 +379,8 @@ class Reservation extends Component
             $query->where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('phone', 'like', '%' . $this->search . '%');
         })->orderBy('id', 'DESC')->limit(10)->get();
+
+//        dd($this->searchResults);
     }
 
     public function getFromSearch($ticketId)

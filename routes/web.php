@@ -23,7 +23,7 @@ Route::get('coba', function (){
     dd( $data->values()->toArray());
 });
 Route::get('/', function () {
-    return redirect(\route('reservation'));
+    return redirect(\route('home'));
 });
 
 Route::get('/myReservation/{reservationId}', function ($reservationId) {
@@ -33,7 +33,8 @@ Route::get('/myReservation/{reservationId}', function ($reservationId) {
 
 Route::get('/s/{reservationId}', function ($reservationId) {
     $reservation = \App\Models\Reservation::find($reservationId);
-    return view('reservation_detail',['reservation'=>$reservation]);
+    $activities = Activity::inLog('reservation_log')->where('subject_id', $reservationId)->get();
+    return view('reservation_detail',['reservation'=>$reservation, 'activities'=>$activities]);
 })->name('cust.view');
 
 Auth::routes();
