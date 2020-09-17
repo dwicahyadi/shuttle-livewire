@@ -289,7 +289,7 @@ class Reservation extends Component
             $ticket->reservation_at = now();
             $ticket->status = 'unpaid';
             $ticket->count_print = 0;
-            $ticket->departure_point_id = $this->ticketDeparturePointId;
+            $ticket->departure_point_id = $this->ticketDeparturePointId ?? $this->selectedDeparture->departure_point_id;
             $ticket->save();
         }
     }

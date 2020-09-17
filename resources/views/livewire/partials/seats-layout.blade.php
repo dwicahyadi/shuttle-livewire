@@ -43,7 +43,7 @@
                                 <h4>{{ $i }} @if($seats[$i]->payment_by) <span class="text-success">LUNAS</span> @endif</h4>
                                 <div class="text-center">
                                     <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[$i]->name,10,'...') }} </strong><br>
-                                    <small class="bg-warning px-1">{{ $seats[$i]->reservation_id.' ---- '. $selectedReservationId  }}</small>
+                                    <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum'  }}</small>
                                 </div>
                             </div>
                         </div>
