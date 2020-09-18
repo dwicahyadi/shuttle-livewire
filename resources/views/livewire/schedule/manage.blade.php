@@ -70,7 +70,7 @@
 
                         @else
                             bg-secondary
-                        @endif @if($departure->id == $selectedDeparture['id']) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
+                        @endif @if($departure->id == ($selectedDeparture['id'] ?? 0)) bg-primary text-white @endif" wire:click="getDeparture({{$departure->id}})" wire:key="{{$departure->id}}">
                             <div class="d-flex">
                                 <div class="mr-2">
                                     @if($departure->is_open)
