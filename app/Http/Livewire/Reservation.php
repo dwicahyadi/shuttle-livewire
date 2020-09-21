@@ -361,8 +361,8 @@ class Reservation extends Component
     public function cancelPayment()
     {
         $this->selectedReservation->tickets()->update(['payment_by' => null, 'payment_at' => null]);
-        $this->resetReservation();
         activity('reservation_log')->performedOn($this->selectedReservation)->causedBy(Auth::user())->log('cancel payment');
+        $this->resetReservation();
         $this->emit('saved');
     }
 

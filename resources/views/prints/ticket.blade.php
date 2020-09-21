@@ -29,7 +29,7 @@
         </div>
         <div>
             <small>Keberangkatan</small><br>
-            <strong>{{ $ticket->departure->departure_point->city->name }} - {{ $ticket->departure->departure_point->name }} </strong>
+            <strong>{{ $ticket->departure->departure_point->city->name }} - {{ $ticket->departure_point->name }} </strong>
         </div>
         <div>
             <small>Tujuan</small><br>

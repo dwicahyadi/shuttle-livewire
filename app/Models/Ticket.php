@@ -36,4 +36,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(Departure::class);
     }
+
+    public function departure_point()
+    {
+        return $this->belongsTo(Point::class,'departure_point_id','id');
+    }
 }

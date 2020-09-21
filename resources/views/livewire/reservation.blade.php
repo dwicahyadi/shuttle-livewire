@@ -95,11 +95,13 @@
                                     <img src="{{ asset('images/calendar (1).svg') }}" alt="reschedule" width="18">
                                     <br> Rescedule
                                 </button>
+                                @if(!$paid)
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmCancel">
+                                        <img src="{{ asset('images/trash.svg') }}" alt="cancel" width="18">
+                                        <br> Cancel
+                                    </button>
+                                @endif
 
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmCancel">
-                                    <img src="{{ asset('images/trash.svg') }}" alt="cancel" width="18">
-                                    <br> Cancel
-                                </button>
                             @endif
 
                             <div class="btn-group dropleft">
