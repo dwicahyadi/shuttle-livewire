@@ -148,6 +148,10 @@ class Reservation extends Component
     public function pickSeat($seat)
     {
         $this->isNew = true;
+
+        $this->discountId = 2;
+        $this->setDiscount();
+
         $this->selectedReservation = null;
         $this->selectedReservationId = 0;
         if (in_array($seat, $this->selectedSeats)) {
@@ -334,6 +338,9 @@ class Reservation extends Component
     {
         $this->isNew = true;
         $this->selectedReservation = null;
+
+        /*Hard Code Semntara*/
+        $this->discountId = 2;
     }
 
     public function cancelReservation()
