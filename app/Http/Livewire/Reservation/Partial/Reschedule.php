@@ -70,6 +70,7 @@ class Reschedule extends Component
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
+            ->orderBy('time')
             ->get();
         return view('livewire.reservation.partial.reschedule');
     }
@@ -96,6 +97,7 @@ class Reschedule extends Component
             ->where('arrival_point_id', $this->arrivalPointId)
             ->where('departure_point_id', $this->departurePointId)
             ->where('is_open', 1)
+            ->orderBy('time')
             ->get();
     }
 

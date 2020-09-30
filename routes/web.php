@@ -40,7 +40,7 @@ Route::get('/s/{reservationId}', function ($reservationId) {
 Auth::routes();
 
 Route::get('pivot', function (){
-   return view('pivot', ['data'=>\App\Helpers\ReportHelper::omzet(1,7,2020)]);
+   return view('pivot', ['data'=>\App\Models\SummaryReport::limit(1000)->get()]);
 });
 
 

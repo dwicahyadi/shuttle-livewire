@@ -31,7 +31,7 @@ class CustomerPerMonth extends BaseChart
         $chart = Chartisan::build()
             ->labels($data->keys()->toArray());
 
-        $chart->dataset('Sample', $data->pluck('data')->values()->toArray());
+        $chart->dataset('Jumlah Penumpang', $data->pluck('data')->values()->toArray());
         return $chart;
     }
 }

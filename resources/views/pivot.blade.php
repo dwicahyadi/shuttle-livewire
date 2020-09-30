@@ -29,7 +29,9 @@
     });
 </script>
 
-<div id="output" style="margin: 30px;"></div>
+<a href="{{ route('home') }}"><< Kembali ke home</a>
+
+<div id="output" style="margin: 10px;"></div>
 
 </body>
 </html>

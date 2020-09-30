@@ -12,7 +12,7 @@ class Dashboard extends Component
 
     public function mount()
     {
-        $this->month = date('m');
+        $this->month = request('month') ?? date('m');
     }
 
     public function render()

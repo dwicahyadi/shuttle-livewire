@@ -44,6 +44,7 @@
                                 <div class="text-center">
                                     <strong class="bg-secondary text-white px-1">{{ \Illuminate\Support\Str::limit($seats[$i]->name,10,'...') }} </strong><br>
                                     <small class="bg-warning px-1">{{ $seats[$i]->discount_name ?? 'Umum'  }}</small>
+                                    @if($seats[$i]->departure_point_id != $selectedDeparture->departure_point_id) <strong><br>Beda Point</strong> @endif
                                 </div>
                             </div>
                         </div>
