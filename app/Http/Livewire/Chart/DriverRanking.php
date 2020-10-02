@@ -16,7 +16,6 @@ class DriverRanking extends Component
 
     public function render()
     {
-        $data =
         return view('livewire.chart.driver-ranking');
     }
 }
