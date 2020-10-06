@@ -22,7 +22,7 @@ class CustomerStats extends Component
         $expiresAt = Carbon::now()->endOfDay()->addSecond();
 
         $this->total = Cache::get('stat_total_customer',function(){
-            return SummaryReport::whereMonth('date', $this->month)->count();
+            return SummaryReport::whereMonth('date', $this->month)->where('status','paid')->count();
         }, $expiresAt);
 
         $this->new = Customer::whereMonth('created_at', $this->month)->count();
