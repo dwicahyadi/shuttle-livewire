@@ -63,7 +63,7 @@
                             <div>
                                 <span class="clearfix">Dari : <strong>{{ $selectedDeparture->departure_point->name ?? '---' }}</strong></span>
                                 <span class="clearfix">Tujuan : <strong>{{ $selectedDeparture->arrival_point->name ?? '---' }}</strong></span>
-                                <span class="clearfix">Tujuan : <strong>{{ $selectedDeparture->date}}</strong></span>
+                                <span class="clearfix">Tanggal : <strong>{{ $selectedDeparture->date}}</strong></span>
                                 <small class="">{{ $selectedDeparture->code ?? '' }} </small>
 
                             </div>

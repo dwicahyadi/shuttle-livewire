@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Schedule;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Departure extends Model
 {
@@ -45,5 +47,15 @@ class Departure extends Model
     public function city()
     {
         return $this->hasOneThrough(City::class, Point::class,'city_id','id','departure_point_id');
+    }
+
+    public function getDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d M Y');
+    }
+
+    public function getTimeAttribute($value)
+    {
+        return Str::limit($value, 5);
     }
 }
