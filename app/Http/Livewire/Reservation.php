@@ -306,6 +306,7 @@ class Reservation extends Component
         $this->address = null;
         $this->selectedSeats = [];
         $this->paymentMethod = 'CASH PAYMENT';
+        $this->ticketDeparturePointId = null;
 
         $this->discountId = 0;
     }
