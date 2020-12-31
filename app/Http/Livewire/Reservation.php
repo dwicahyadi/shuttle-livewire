@@ -34,7 +34,7 @@ class Reservation extends Component
     public $departures, $selectedDepartureId, $selectedDeparture, $selectedReservation, $selectedReservationId, $totalSeats, $paymentMethod;
     public $activities;
 
-    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber, $ticketDeparturePointId, $note;
+    public $phone, $name, $address, $departureId, $subTotal, $isTransfer, $expire, $uniqueNumber, $ticketDeparturePointId, $note, $isMember;
     public $selectedSeats = [];
     public $suggestCustomers;
     public $customer;
@@ -182,6 +182,7 @@ class Reservation extends Component
             $this->address = $this->customer->address;
         }
         $this->suggestCustomers = null;
+        $this->isMember = $this->customer->member;
     }
 
     public function sumPrice()

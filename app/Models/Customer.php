@@ -10,5 +10,7 @@ class Customer extends Model
         'name',
         'address',
         'count_reservation_finished',
-        'count_reservation',];
+        'count_reservation',
+        'member'
+        ];
 }

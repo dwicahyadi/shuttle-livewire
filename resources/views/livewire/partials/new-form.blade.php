@@ -1,8 +1,15 @@
 @php($seats = $selectedDeparture->tickets->keyBy('seat'))
 <form onsubmit="return false" class="p-2">
     <div class="row">
+        @if($isMember == 1)
+            <div class="text-center p-2 col-12 bg-c-blue">
+                <img src="{{ asset('images/crown.svg') }}" alt="crown"  width="48">
+                <h4 class="text-white">Pelanggan Setia Surya</h4>
+            </div>
+        @endif
         <div class="form-group col-6">
             <label>Nomor Handphone</label>
+
             <input type="text" wire:model="phone" class="form-control" required>
             <span class="text-danger">@error('phone')
                 {{ $message }}
