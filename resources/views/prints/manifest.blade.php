@@ -14,7 +14,7 @@
 </style>
 <body onload="window.print()">
 @php($departure = $schedule->departures[0] )
-@php($tickets = $schedule->tickets()->whereNotNull('payment_by')->get() )
+@php($tickets = $schedule->tickets()->whereNotNull('payment_by')->orderBy('seat')->get() )
 <div style="width: 300px; page-break-before: always">
     <div style="text-align: center; margin-top: 5px">
         <img src="{{ asset('images/logo bw.png') }}" alt="logo" width="120">
@@ -92,7 +92,7 @@
 
     <table width="100%">
         <td align="center">
-            CSO <br><br><br>
+            CSO <b>{{ \Illuminate\Support\Facades\Auth::user()->point->name }}</b><br><br><br>
             {{ \Illuminate\Support\Facades\Auth::user()->name }}
         </td>
 

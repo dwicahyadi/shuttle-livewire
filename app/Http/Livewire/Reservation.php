@@ -149,7 +149,7 @@ class Reservation extends Component
     {
         $this->isNew = true;
 
-        $this->discountId = 2;
+//        $this->discountId = 2;
         $this->setDiscount();
 
         $this->selectedReservation = null;
@@ -175,14 +175,18 @@ class Reservation extends Component
 
     public function setCustomer($customerId)
     {
-        $this->customer = Customer::find($customerId);
+        $this->customer = Customer::withCount(['tickets'=>function($q){
+            return $q
+                ->whereDate('date','>=', Carbon::now()->subMonth(2))
+                ->where('status','paid');
+        }])->find($customerId);
         if ($this->customer) {
             $this->phone = $this->customer->phone;
             $this->name = $this->customer->name;
             $this->address = $this->customer->address;
         }
         $this->suggestCustomers = null;
-        $this->isMember = $this->customer->member;
+        $this->isMember = $this->customer->member ?? false;
     }
 
     public function sumPrice()
@@ -218,7 +222,6 @@ class Reservation extends Component
             ]
         );
         activity('reservation_log')->performedOn($this->reservation)->causedBy(Auth::user())->log('payment');
-
 //        dispatch(new SendSms(['phone'=>$this->reservation->customer->phone, 'message'=>'Terimakasih. Pembayaran berhasil dilakukan']));
 
         $this->emit('updateBill');
@@ -295,6 +298,7 @@ class Reservation extends Component
             $ticket->status = 'unpaid';
             $ticket->count_print = 0;
             $ticket->departure_point_id = $this->ticketDeparturePointId ?? $this->selectedDeparture->departure_point_id;
+            $ticket->date = $this->date;
             $ticket->save();
         }
     }
@@ -342,7 +346,7 @@ class Reservation extends Component
         $this->selectedReservation = null;
 
         /*Hard Code Semntara*/
-        $this->discountId = 2;
+//        $this->discountId = 2;
     }
 
     public function cancelReservation()
@@ -440,5 +444,13 @@ class Reservation extends Component
     public function toggleonlyFilled()
     {
         $this->onlyFilled = !$this->onlyFilled;
+    }
+
+    public function setToMember():void
+    {
+        $this->customer->member = true;
+        $this->customer->save();
+        activity('reservation_log')->performedOn($this->customer)->causedBy(Auth::user())->log('updated to Pelanggan Setia Surya');
+        $this->isMember = true;
     }
 }

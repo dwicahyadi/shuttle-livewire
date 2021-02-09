@@ -65,6 +65,7 @@
                 <a class="dropdown-item" href="{{route('report.ocupancy')}}">Okupansi</a>
                 <a class="dropdown-item" href="{{route('report.income-statement')}}">Pendapatan</a>
                 <a class="dropdown-item" href="{{route('report.settlements')}}">Settlement</a>
+                <a class="dropdown-item" href="{{route('report.operational-cost')}}">Biaya Operasional</a>
             </div>
         </li>
     @endcan

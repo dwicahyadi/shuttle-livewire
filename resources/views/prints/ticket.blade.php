@@ -37,7 +37,7 @@
         </div>
         <div>
             <small>Penumpang</small><br>
-            <strong>{{ $ticket->name }} / {{ $ticket->phone }}</strong>
+            <strong>{{ $ticket->name }} / ****{{ substr($ticket->phone,-4) }}</strong>
         </div>
         <div style="text-align: right">
             <h3>Seat {{ $ticket->seat }}</h3>

@@ -23,7 +23,8 @@ class Ticket extends Model
         'payment_at',
         'settlement_id',
         'departure_point_id',
-        'note'
+        'note',
+        'date',
     ];
 
 

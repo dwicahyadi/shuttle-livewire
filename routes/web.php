@@ -86,5 +86,6 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/report/settlements', 'report.settlements')->name('report.settlements');
     Route::livewire('/report/ocupancy', 'report.ocupancy')->name('report.ocupancy');
     Route::livewire('/report/ticket', 'report.ticket')->name('report.ticket');
+    Route::livewire('/report/operational_cost', 'report.operational-cost')->name('report.operational-cost');
 
 });

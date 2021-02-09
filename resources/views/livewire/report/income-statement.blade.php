@@ -23,7 +23,8 @@
 
                         <div class="form-group">
                             <label>Tahun</label>
-                            <select name="month" class="form-control">
+                            <select wire:model="year" name="year" class="form-control">
+                                <option value="2021">2021</option>
                                 <option value="2020">2020</option>
                             </select>
                         </div>

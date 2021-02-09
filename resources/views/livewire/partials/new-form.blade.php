@@ -6,6 +6,16 @@
                 <img src="{{ asset('images/crown.svg') }}" alt="crown"  width="48">
                 <h4 class="text-white">Pelanggan Setia Surya</h4>
             </div>
+        @else
+            <div class="text-center p-2 col-12">
+                <p>Total tiket selama 2 bulan kebelakang adalah : <b>@if($customer){{ $customer->tickets_count }}@endif</b></p>
+                <p>Dapatkan harga spesial di <b>Reservasi berikutnya</b> setelah memiliki 10 tiket</p>
+                @if($customer)
+                    @if($customer->tickets_count >= 10)
+                        <button wire:click="setToMember" class="btn btn-success" type="button">Jadikan "Pelanggan Setia Surya"</button>
+                    @endif
+                @endif
+            </div>
         @endif
         <div class="form-group col-6">
             <label>Nomor Handphone</label>

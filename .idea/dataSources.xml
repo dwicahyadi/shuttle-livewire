@@ -10,5 +10,15 @@
         <property name="serverTimezone" value="Asia/Jakarta" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="MySQL - shuttle@localhost" uuid="90889c17-4776-4c94-8126-2a53d3671a35">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/shuttle</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="serverTimezone" value="Asia/Jakarta" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>
