@@ -11,13 +11,13 @@ class ReportHelper
     {
         $data = DB::table('tickets')
             ->join('departures','tickets.departure_id','=','departures.id')
-            ->select(['date',DB::raw('count(tickets.id) as total_tickets'), DB::raw('sum(tickets.price) as amount_tickets')])
+            ->select(['departures.date',DB::raw('count(tickets.id) as total_tickets'), DB::raw('sum(tickets.price) as amount_tickets')])
             ->whereMonth('departures.date', $month)
             ->whereYear('departures.date', $year)
             ->where('departures.departure_point_id',$point_id)
             ->whereNotNull('tickets.payment_by')
-            ->groupBy('date')
-            ->orderBy('date')
+            ->groupBy('departures.date')
+            ->orderBy('departures.date')
             ->get();
         return $data;
     }
